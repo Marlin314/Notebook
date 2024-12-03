@@ -1,7 +1,7 @@
 # Notebook
 
 ### Version 1 BCS
-This is a project to explore a possible update to my BCS - Book Chapter Section system that I have used since about 2013 
+This is a project to explore a possible update to my BCS - [Book Chapter Section](https://github.com/Marlin314/Notebook/tree/master/src/BCS/Books/BCSsystem.html) system that I have used since about 2013 
 for producing my online programming language tutorials. It was written in JavaScript, keeps an entire book in a single
 HTML page, and allows the students to read the book section by section OR by skipping to the Table of Contents jump to any
 particular section.
