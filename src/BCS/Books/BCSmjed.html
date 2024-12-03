@@ -1,0 +1,93 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<link href='http://fonts.googleapis.com/css?family=Quando' rel='stylesheet' type='text/css'>
+<!-- BCS style sheet and code to produce this Book-Chapter-Section document-->
+<link href='../BCS.css' rel='stylesheet' type='text/css'><script src="../BCS.js"></script>
+
+<script>window.onload = function(){getMarkdown('daBook'); startBook();}</script>
+<!-- This book uses Java examples so I load the Java style sheet & parser and install the encoder -->
+<link href='../JsAndJava.css' rel='stylesheet' type='text/css'><script src="../JavaToHtm.js"></script>
+<script>indentEncoders['java'] = javaToHtml; /* javaToHtml defined in JavaFstHtm.js */ </script>
+
+<title>BCS sample</title>
+</head><body>
+<div id="stuff">dude, javascript must be, like, turned on.</div>
+
+<!-- You should change the title above to be your book title, then put all your BookMarkdown in this ginormous script block-->
+<script id="daBook" type="BookMarkdown">
+
+::B STOW - Structured Text Output
+::C Intro
+::S History
+==Structured Text Output
+This is a project I have been toying with for several decades without making much if any progress. I am attempting a new and perhaps more serious start on this project, and this BCS file is basically the code documentation.
+
+In a nutshell, I am attempting to change the way that we read and write code. I am trying to break the notion that Programming Languages are Languages. 
+
+The major break that I see is that language is fundamentally serial. One sentence follows another, one paragraph follows another. It is the sequence that is the way that we pass on thoughts to one another. However, code is NOT actually a sequence. It is true, that code does have sequential chunks, one statement after another, BUT those statements are generally wrapped up as function, given names, and there is NO required or preferred order for those functions within a class. None the less, we continue to use text editors, which were of course designed with sequential English text in mind, and have scrollbars, to roll up and down through a set of functions that we grouped into a class to find and view the functions in a class. I maintain that we would be better served by an editor that understands that there is no sequence. Or perhaps, said differently, there may well be better orders to list the functions than having a single historical presentation order.
+
+Similarly, programming languages are full of structures, like classes, functions, forLoops etc that contain substructure which are customarily represented by delimiters, such as quotes for statements (string literals) and braces for blocks. And yet, text editors allow you to delete any character anywhere. I maintain that if those braces come in pairs in order to represent the code structure, it is WRONG to allow the editor to delete one and not the other. If a 'for' loop requires a structure like: 'for(A; B; C){D}', then the for structure itself should be viewed as ATOMIC, indivisible. You can cut it and copy it or replace it, but you should not be able to delete just the 'r' in 'for'
+
+My claim is simple: We borrowed tools that we already had, 'English Text Conventions' and 'Typewriters' and 'Text Editors' and reused them for producing code, and those tools are not optimal. True - we have been evolving those editors into IDEs, but I believe it is inefficient. 
+
+--An example: Embedded Quotes and String Concat
+As you know, if you want to embed a quote in a quoted string literal you must use an escape character
+
+  "this string has a quote, \", embedded"
+
+I don't want to read that: I don't mind TYPING a backslah in front of a quote to tell me that it is embedded. I am a programmer, I know that it is my job to control what goes on in the code, BUT I don't want to READ that back-slash and look at it on the screen, especially when the IDE is already using false color to SHOW me clearly where my literal string begins and ends. And when you get right down to it, now that I have false color showing me exactly where my literal string begins and ends, there is NO need to show me the open and close quote delimeters either.
+
+In java I am used to reading this sort of stuff to glue values into strings
+
+  "the value of x is " + x + " and the value of y is " + y;
+  
+Other languages like javascript that do more text mashing have things like string interpolation:
+
+  `the value of x is ${x} and the value of y is ${y}'
+  
+Nice! fewer delimiters, well except for that ${} stuff that you needed to do to tell the compiler that you were switching from literal characters to an expression that needed to be evaluated. And once again I don't mind TELLING the computer what I want to do by typing in some characters but, please, remove ALL the garbage, those extra characters and let the colors tell me what I am doing.
+
+  the value of x is x and the value of y is y
+  
+I do NOT need to read what the compiler needs to read. 
+
+::S MetaTypes
+==Java MetaTypes
+Meta Language is language/vocabulary that is used to describe language. In English those would be words like "noun", "verb", "direct object", and esoteric things like "counterfactual subjunctives". In talking about the java language (or in fact nearly any other programming language) we need "programming metalanguage" that would be words like "class", "object", "methods", "functions", "abstract functions", "interfaces", "factory methods" - some of these are java keywords, some are OOP (Object Oriented Programming) lingo, and the last was from the Design Patterns book. Most programmers would be familiar with most of these words even if they don't program in Java.
+
+At the onset of this project I am thinking that I can render all of these metatypes down to a single unique character because I can then make parsing of the serialized form easier. e.g. I can use C13 to mean the 13th defined class, or P3 to mean the 3rd parameter of a function. A single letter followed by a number tells me class and location in a list of similarly typed elements. However, at the same time I worry that there may be too many metatypes and the encoding as single letters may be too confusing, so I am also thinking of a multi-character encoding which is essentially a hierarchical tree that is nearly as easy to parse.
+
+So as an example: in my one letter system I would use the letters C,I,E encode classes, interfaces, and enums. The letteres strongly hint the names. I have greater problems when I want to treat static variables as different from non-static variables. I choose letters G (as in Global variable) and M (as in Member variable). In a multi-letter system I would use CC, CI, CE for classes, interfaces and enums which more closely resembles the code structure. Classes, interfaces, and enums (when you are not talking about nested ones) are primarily File level constructs in the Java language, and thus have a lot of features in common. They all start with a package statement telling which directory they belong to. They all have imports to allow the used of short class names internally instead of requiring full file path names for classes used internally. So In all likelyhood the actuall structure/location of these different elements may be a base class, "Cls", that holds all the common matter and then some perhapse nested classes Cls.Cls, Cls.Inf, and Cls.Enu to represent the actual different objects that derive from that base. 
+
+--MT enum
+
+I will probably also want an enum that will represent all the meta-types, and I am inclined at this point to use the multi-letter names as the names for the enum. Enums in java can contain substructure, so the Enum itself can hang onto the single-letter encoding that I may use for serialization.
+
+I have an additional visual/symbolic representation that I will probably want associated with these meta-types. Many of the metaType objects are containers, directories contain classes, which contain functions, which contain parameters, So in reverse, a parameter belongs to a function, which belongs to a class (which might be nested and belongs to another class), which belongs to a directory (which could be a subdirectory). 
+
+In a tradational file system notation a full path looks something like this: foo/bar/baz.com - a simple notation based on the trivial structure that there are a list of directories terminated in a single file. As a result there is a single separator symbol. I want to adapt that to something like this: \dir1\dir2/Cls.foo(p1, p2)loc1;loc2- where a directory contains a directory which contains a class which contains a file which contains a parameter, and another parameter, and the function also contains a pair of local variables. It is not strictly a path because it had 4 leaves, but the meaning should be clear, the symbols both separate names and define the meta-type for the name. And it is certainly true that one could use this path notation to be a genuine path like \dir1\dir2/Cls.foo,p1 is a single unique element, of type parameter (parameters have two symbolic separators, "(" and ",") which simply allows this notation to strongly resemble something like an actual function signature.
+
+No, even as I typed that I changed my mind. I want single separators for everything. I will use "," for parameters and ";" for locals. I have some other ideas for these path strings but it is too early to talk about them.
+
+Given that background here is a draft of what some of the high level container style java metaTypes could be.
+
+  enum MT{
+    DD("sub Directory", "\\", 'D'), DR("Root directory", "\\\\", 'R'),
+    CC("Class", "/", 'C'), CI("Interface definition", "/?", 'I'), CE("Enum", "/@", 'E), 
+    VV("object variable (Member)", ":", 'M'), VS("static variable (Global)", "::", 'G'),
+    VP("function parameter", ",", 'P'), VS("function local", ";", 'L'),
+    FA("Abstract function", ".?", "A"), FF("non-static Function", ".", "F"), FS("static function (Helper)", ".:", "H"),
+    FO("Overriden function", ".^", "O"), FF("constructor", ".#", "K"), FB("function Block", "{", "B"),
+    TT("class Type", "#", 'T'), TP("primitive type", "##", 'Z'), TG("generic type", "<", 'U')
+
+
+    public String doc, symbol;
+    public char ch;
+    MT(String s1, String s2, char c){doc = s1; symbol = s2; ch = c;}
+  }
+
+
+
+
+</script>
+</body></html>
