@@ -1,7 +1,7 @@
 # Notebook
 
 ### Version 1 BCS
-This is a project to explore a possible update to my BCS - [Book Chapter Section](https://github.com/Marlin314/Notebook/tree/master/src/BCS/Books/BCSsystem.html) system that I have used since about 2013 
+This is a project to explore a possible update to my BCS - Book Chapter Section system that I have used since about 2013 
 for producing my online programming language tutorials. It was written in JavaScript, keeps an entire book in a single
 HTML page, and allows the students to read the book section by section OR by skipping to the Table of Contents jump to any
 particular section.
@@ -48,3 +48,7 @@ using the BCS tools to describe the new code that I want to write as I write it.
 And, yeah, this is nothing other than the first section, the Introduction, of that document that I intend to write.
 
 Marlin Nov 24
+
+Well, I have uploaded the BCS system but do not appear to be able to link to it directly here in this intro file. So if you want to see what a BCS html file it looks like you will need to Download the BCS folder onto your machine, look in the Books folder and locally launch one of the books, like BCSsystem.html, and let your browser display it. That book, if I remember correctly, tells you how to use the BCS system.
+
+Marlin Dec 24
