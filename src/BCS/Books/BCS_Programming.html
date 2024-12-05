@@ -51,14 +51,14 @@ z -
 ::C Evolution of Computer Language
 ::S Computers and Calculators
 == Computers and Calculators
-In my lifetime I have watched the meanings of these two words change. They used to be names of professions like "farmer" is the name of a person that works with a "farm" and "plumber" is the name of someone that works with "pipes" (originally made of "lead" or "plumbum"). A "calculator" was the name of someone that performs "calculations", a "computer", "computes" values.
+In my lifetime I have watched the meanings of these two words change. They used to be names of professions like "farmer" which is the name of a person that works with a "farm" and "plumber" is the name of someone who works with "pipes" (originally made of "lead" or "plumbum"). A "calculator" was the name of someone that performs "calculations", a "computer", "computes" values.
 
-The evolution involved building things like adding machines, where you would type in a number then pull down a lever to print the number and advance a roll of paper. That was called a "mechanical calculator". When they advanced to using an electric motor to advance the paper roll it was called an "electronic calculator" and eventually the tools got so fast and efficient, the names drifted. People started calling the tool that calculators used a "calculator" and the profession changed its name to being a "computer programmer", someone who writes "programs" (lists of instructions) for a computer.
+The evolution involved building things like adding machines, where you would type in a number then pull down a lever to print the number and advance a roll of paper. That was called a "mechanical calculator". When they started using an electric motor to advance the paper roll it was called an "electronic calculator" and eventually the tools got so fast and efficient, the names drifted. People started calling the tool that calculators used a "calculator" and the profession changed its name to being a "computer programmer", someone who writes "programs" (lists of instructions) for a computer.
 
 --Not Math
 While it is true that computers evolved from simple adding machines that only knew about numbers, they are of course vastly different now. We use computers for word processing, and watching videos, and sending email. They deal with images, and audio, and colors, and just about anything. Many people still think that because of that history, because they used to be adding machines that you must be some kind of mathematician in order to understand and write computer programs. This is wrong.
 
-Computer programming does require some organization skills but it is much more like office filing, where you write names on folders to hold documents that you need to look up later. It is all about organizaing how you will store data so that you can quickly get it when you need it.
+Computer programming does require some organization skills but it is much more like office filing, where you write names on folders to hold documents that you need to look up later. It is all about organizing how you will store data so that you can quickly get it when you need it.
 
 What I am going to do in this chapter over the next several sections is to talk about how computers evolved upwards from the simple adding machines that they used to be to become what they are today. So I will tell you a bit of what computers look like. I will tell you a little bit about the hardware, but since our focus is primarily programming I will talk more about software, and in this chapter the focus is primarily history. I will talk about how the Programming Languages evolved into their current form.
 
@@ -72,7 +72,7 @@ arguments, assemblyCode, binaryNumber, bit, blockStructuring, byte, class, cpu, 
 
 ::S Memory and CPU
 == Memory and CPU
-Two of the primary components of nearly any computer are !nmemory and the !nCPU. CPU stands for Central Processing Unit, which emphasizes that while you may have a lot of memory for storage, all the processing of data happens over in one centralized unit that contains the actually hardware (electronic circuits) that do things like addition. An older term for CPU that you may still occasionally hear is 'ALU' which stands for Arithmetic and Logical Unit, which emphasizes the types of processing that it does, arithmentic: addition, subtraction, multiplication, negation, etc. and logical: and, or, exclusiveOr, not, etc. comparison: >, <, >=, != etc. 
+Two of the primary components of nearly any computer are !nmemory and the !nCPU. CPU stands for Central Processing Unit, which emphasizes that while you may have a lot of memory for storage, all the processing of data happens over in one centralized unit that contains the actually hardware (electronic circuits) that do things like addition. An older term for CPU that you may still occasionally hear is 'ALU' which stands for Arithmetic and Logical Unit, which emphasizes the types of processing that it does, arithmetic: addition, subtraction, multiplication, negation, etc. and logical: and, or, exclusiveOr, not, etc. comparison: >, <, >=, != etc.
 
 Machines these days are often 'multi-core' machines and that just means that they have more than one single CPU. So a dual core machine would be one with 2 CPUs a quad-core would have 4 CPUs etc. But every machine needs at least one CPU and for this course we will just pretend that all systems are single core which is the way things were for at least half a century.
 
@@ -98,13 +98,13 @@ This practice of having the value in one slot be the address of a different slot
 
 Saying the same thing in a different way. I can look in slot 1 and see the number 23. I could THINK of that number as just being a number. Perhaps slot 1 is just keeping track of how many fish that I have in my large aquarium. But, I could think of that same value, 23, as being a reference to the value sitting in slot 23. In that case, the value, 23, is a !nreference to slot 23. 1 is a !npointer to slot 23, and perhaps the value in slot 23 is where I actually store the count of how many fish I have in my aquarium.
 
-The difference between the word 'reference' and 'pointer' is subtle (and therefor some people don't know the difference and confuse the two words). 23 is a 'number', it is a 'value', it is an 'address' of a slot, it is a way of getting to a slot, it is a 'reference' to a slot. When I write that number into memory, like at slot 1, slot 1 becomes a 'pointer'. A pointer is a place in memory that HOLDS a reference. 
+The difference between the word 'reference' and 'pointer' is subtle (and therefor some people don't know the difference and confuse the two words). 23 is a 'number', it is a 'value', it is an 'address' of a slot, it is a way of getting to a slot, it is a 'reference' to a slot. When I write that number into memory, like at slot 1, slot 1 becomes a 'pointer'. A pointer is a place in memory that HOLDS an address.
 
 Do NOT worry about this. This is NOT some subtle distinction that you MUST understand and answer correctly on tests. Many CS folks use the terms interchangeably. To me the difference is just this: If I tell you I have a 'reference' to something, I am telling you that I can get to that something, that I know where that something is. However I am NOT telling you exactly HOW to get to that something. References are abstract and non-commital, I am not telling you whether the address in written in my head, whether it is written on a piece of paper, whether what I actually have is a piece of paper telling me which book and which page to look at in order to find the written down address of that something. 
 
-The word 'reference' is vague, yeah I can get there. The word 'pointer' is specific - 'this slot in memory has the EXACT address' - a pointer is direct. An indirect reference could be a pointer to a pointer to something, and that is still a reference, but a pointer to a pointer to something is NOT a pointer to that something. It is a REFERENCE to the something but a pointer to a pointer not a direct pointer. 
+The word 'reference' is vague, yeah I can get there. The word 'pointer' is specific - 'this slot in memory has the EXACT address' - a pointer is direct. An indirect reference could be a pointer to a pointer to something, and that is still a reference, but a pointer to a pointer to something is NOT a pointer to that something. It is a REFERENCE to the something but a pointer to a pointer not the same thing as a direct pointer.
 
-We will not be discussing such chains of pointers in this book, I am merely mentioning that one of the organizational tools that is used by programmers is the notion of !nreference. In order to interact with data that is in memory you MUST know the address of where it is in memory so that you can READ from that slot or WRITE into that slot. But it doesn't really matter whether you know the DIRECT address of the data or whether you know an INDERECT address. In either case, you can follow the address or a chain of addresses to get to the data that you wish to read or modify.
+We will not be discussing such chains of pointers in this book, (that is what the C language is all about) I am merely mentioning that one of the organizational tools that is used by programmers is the notion of !nreference. In order to interact with data that is in memory you MUST know the address of where it is in memory so that you can READ from that slot or WRITE into that slot. But it doesn't really matter whether you know the DIRECT address of the data or whether you know an INDERECT address. In either case, you can follow the address or a chain of addresses to get to the data that you wish to read or modify.
 
 To summarize this side discussion on Reference and Pointers, and why I brought it up in this section on Memory is just this. Memory holds numbers of a certain size. A 16 bit computer (which you will probably never see except in my examples here) means that the registers in the CPU can handle 16 bits at a time. 
 
@@ -140,9 +140,9 @@ The purpose of the the CPU is to advance from one instruction (which is just som
 
 Just to toss out another vocabulary word, in the stone ages, when people were first building computers they tended to think of having one physical chunk of memory that was used for holding data that you were going to process and having an entirely different physical chunk of memory where you would store the instructions that your computer was going to execute. 
 
-In the 1940s a mathematician, John Von Neuman, suggested that if you kept your CODE, your instructions, in the same exact memory where you kept your DATA, then the computer would be more flexible. You could use a single machine either to solve problems that required only a little data but a lot of code, or to solve problems that had lots of data but only needed a little code. 
+In the 1940s a mathematician, John Von Neumann, suggested that if you kept your CODE, your instructions, in the same exact memory where you kept your DATA, then the computer would be more flexible. You could use a single machine either to solve problems that required only a little data but a lot of code, or to solve problems that had lots of data but only needed a little code.
 
-Nearly every machine built since then has followed this design suggestion which is called the 'Von Neuman Architecture'
+Nearly every machine built since then has followed this design suggestion which is called the 'Von Neumann Architecture'
 
 Summary: Memory is used to store numbers, which can be either data or actual machine instructions, and the CPU sits there fetching one instruction after another and executing each instruction. Each instruction usually fits in a word or two and each instruction typically either fetches something from memory to a register, or stores from a register to memory, or combines a couple register values using some operation into a new register value.
 
@@ -202,9 +202,9 @@ Here is some vocabulary (some of which is used ALL the time and some of which is
 
 The words bit and byte are quite standard and used all the time. Nibble, and Halfword are a bit archaic. Halfword in particular is a hangover from the days when IBM mainframe coumpters were 32 bit computers so the Word size was considered to be 32 bits wide. Over time the word 'word' has drifted from meaning a single size to being whatever size your CPU's registers happen to be, so if you have a 64 bit machine, the word side is 64 bits, and if you could still buy 16 bit machines, you would say it's word-size was 16 bits instead of saying that it was a Halfword sized machine. The words, short and long, are more standard because they were defined in the language C so that you could, as a programmer INSIST that you needed to do some calculation with 64 bit longs no matter what size the words were on any particular computer.
 
-Also, most programming languages after the invention of the C language have used the convention of writing "0x"  (that's zero x) in front of a number if it is in the hex language, so in most programming languages 12 means decimal 12 (which you could have written as 0xC). 0x12 would be decimal 18 (= 16+2). This notation for hex is broadly used.
+Also, most programming languages after the invention of the C language have used the convention of writing "0x"  (that's zero x) in front of a number if it is in the hex language, so in most programming languages 12 means decimal 12 (which you could have written as 0xC). 0x12 would be decimal 18 (= 16+2). This notation for hex is broadly used. Nearly every computer language has borrowed this notational convention from C (Which probably borrowed it from some other language.)
  
- A less commonly used convention, is the convention that if you wrote a number with a leading zero like 012, that meant that it was in base 8 (aka Octal). The language Java added that convention after it had been out for a few years, but I have never seen anyone used it. The reason that it is so little used is that very few machines are built these days that have 36bit word length. Octal was really only convenient if your word length was a multiple of 3. 
+ A less commonly used convention, is the convention that if you wrote a number with a leading zero like 012, that meant that it was in base 8 (aka Octal). The language Java added that convention after it had been out for a few years, but I have never seen anyone used it. The reason that it is so little used is that very few machines are built these days that have 36bit word length. Octal was really only convenient if your word length was a multiple of 3. This current java convention does mean that the number 08 will be an ERROR in Java because the radix 8 digits run from zero to 7.
 
 --Conversion between Hex and Binary
 The reason that we use hex at all is because it is much more compact and easier to read than binary and yet can be converted almost instantly (with just a bit of practice) into binary. That conversion works like this:
@@ -276,11 +276,11 @@ At Microsoft (in the very early days) we were actually cross-compiling. Meaning 
 
 If you go back a few pages and look at the picture that I drew for memory. You will see that I placed the code in this example at the address 2B00. I also set IP in the picture that I drew of the CPU to 2B00. Those two pictures were intended to go with the list of machine code that I placed in this section. 
 
-This is how machines worked back in the stone ages. You literally entered numbers into specific memory slots that was your code. You then entered a number into IP to tell the machine where your code started. Your code and when the machine halted, the calculation was finished. You then went and looked in memory addresses to see what numbers your program had calculated.
+This is how machines worked back in the stone ages. You literally entered numbers into specific memory slots that was your code. You then entered a number into IP to tell the machine where your code started. You would push a RUN button, and when the machine halted, the calculation was finished. You then went and looked in memory addresses to see what numbers your program had calculated.
 
-Much easier to do things now that every machine has keyboard for input, screen for output, and hard disk for offline storage. Humm.. that makes me realize that I never mentioned this fact about MODERN memory. Those slots in memory are volatile. They hold values only as long as the machine is powered up. When you power down, everything in memory is lost. You need a non-volatile storage device like a hard disk, so that you can 'boot up' which just means load a bunch of code (typically the Operating System) from your non-volatile storage into memory so that the machine has some code to run.
+Much easier to do things now that every machine has keyboard for input, screen for output, and hard disk for offline storage. Humm.. that makes me realize that I never mentioned this fact about MODERN memory. Those slots in memory are volatile. They hold values only as long as the machine is powered up. When you power down, everything in memory is lost. You need a non-volatile storage device like a hard disk or a thumb drive, so that you can 'boot up' which just means load a bunch of code (typically the Operating System) from your non-volatile storage into memory so that the machine has some code to run.
 
-This volatility was NOT there in the old days. Old memory was CORE memory, which consisted of little physical ring magnets with wires running through the center that represented a single bit of memory. You could flip the orientation of the magnet with a current pulse on the wires and could read the orientation as well. This memory remained intact when you powered down.
+This volatility of memory was NOT there in the old days. Old memory was CORE memory, which consisted of little physical ring magnets with wires running through the center that represented a single bit of memory. You could flip the orientation of the magnet with a current pulse on the wires and could read the orientation as well. This memory remained intact when you powered down.
 
 Hard drives and Magnetic Tape were devices to give you large non-volatile off-line storage for your computer.
 
@@ -289,10 +289,10 @@ The advantage of machine code is that since it represents exactly what a CPU is 
 
 The disadvantage of machine code is also fairly obvious: it is highly non-portable. The was no agreement among CPU designers as to what operations a CPU should use. CPUs are built with different registers, and different types of registers. So machine code (and assembly code) written for once CPU would not run on another.
 
-It was this disadvantage, the non-portability, AND the bulkyness of the code, that primarily led to the development of High Level programming languages. That is what will discuss in the rest of this chapter; the high level features that were represented in several different languages.
+It was this disadvantage, the non-portability, AND the bulkiness of the code, that primarily led to the development of High Level programming languages. That is what will discuss in the rest of this chapter; the high level features that were represented in several different languages.
 
 ==Outline for the rest of the chapter
-I am going to use history, the development of 4 different and influential high-level programming languages, as an organizational scheme for talking about the very common notions to nearly all high level languages. Languages don't develop in a vaccum, and language designers borrow/steal good ideas from previous languages.
+I am going to use history, the development of 4 different and influential high-level programming languages, as an organizational scheme for talking about the notions that are very common in nearly all high level languages. Languages don't develop in a vacuum, and language designers all borrow/steal good ideas from previous languages.
 
 All programming
 Next up: the first popular high level language, FORTRAN.
@@ -327,33 +327,30 @@ It is UNLIKELY that your teachers either taught or emphasized those format words
 --Polish, Reverse Polish
 Since any monadic operator takes only one argument, it must be written in either prefix or postfix form. I suspect that Most if not ALL of the dyadic operators that you know, like addition, subtraction, multiplication, and division, were always written in !ninfix notation.
   
-The comparison operations: <, >, <=, >=, == != in computer languages are also all dyadic and are written in 'infix' style, 'x does not equal 3' is written x != 3. Comparison expressions are indeed expression. They do combine values and return a single value. Unlike the math operators which use numeric operands and produce numeric results, the comparison operators use numeric operands and produce !nboolean results. The comparisons return a value that is either true or false.
+The comparison operations: <, >, <=, >=, ==&nbsp;!= in computer languages are also all dyadic and are written in 'infix' style, 'x does not equal 3' is written x&nbsp;!= 3. Comparison expressions are indeed expression. They do combine values and return a single value. Unlike the math operators which use numeric operands and produce numeric results, the comparison operators use numeric operands and produce !nboolean results. The comparisons return a value that is either true or false.
 
 So you are probably only familiar with infix notation for dyadic operators. However there are situations where both prefix and postfix notation has been used.
 
 In mathematics, in the 1920's a group of logicians in Poland, observed that you could eliminate both operator precedence AND also the parentheses needed to override precedence IF you wrote your operations in prefix notation. For example '(2 + 3) * 4' in prefix is: '* + 2 3 4' whereas '2 + (3 * 4)' in prefix is: '+ 2 * 3 4'. This observation meant that the logicians, who were writing proofs about what you COULD and COULDN'T say in math expressions could deal with a 'simpler' operation language. It was simpler for humans to TALK about the notation, NOT that it was simpler for humans to read and understand a single expression. Humans seem to prefer to read in 'infix'. In any case, ever since the 20's prefix notation is occasionally called !nPolish_notation.
 
-And just as an aside, there is a computer language, LISP, an old language from the 60s, that did NOT adopt infix notation and instead used prefix logical notation. In LISP you add two numbers like this: '(add 2 3)' or maybe it is '(+ 2 3)', it has been a long time since I used LISP. They included parentheses because the did not want to think of the addition operator as being dyadic, they wanted to do things like (add 2 3 19 -24), and the clever observation that prefix eliminates the need for parentheses depends on every operator having a known, fixed, !narity (monadic ops have arity of 1, dyadic ops have an arity of 2 - the arity of an operator is the number of operands that it requires.) So instead of eliminating parentheses LISP is an absolute confusion of parentheses. The old joke is that LISP stands for Long Interminable Strings of Parentheses.
+And just as an aside, there is a computer language, LISP, an old language from the 60s, that did NOT adopt infix notation and instead used prefix logical notation. In LISP you add two numbers like this: '(add 2 3)' or maybe it is '(+ 2 3)', it has been a long time since I used LISP. They included parentheses because they did not want to think of the addition operator as being dyadic, they wanted to do things like (add 2 3 19 -24), and the clever observation that prefix eliminates the need for parentheses depends on every operator having a known, fixed, !narity (monadic ops have arity of 1, dyadic ops have an arity of 2 - the arity of an operator is the number of operands that it requires.) So instead of eliminating parentheses LISP is an absolute confusion of parentheses. The old joke is that LISP stands for Long Interminable Strings of Parentheses.
 
-It was later observed that IF you wrote your expressions in postfix notation, where you write the operator at the end of the expression instead of at the front, the actual computation of the value of an expression is easier. So postfix is also used and is sometimes called !nReverse_Polish. 
+It was later observed that IF you wrote your expressions in postfix notation, where you write the operator at the end of the expression instead of at the front, the actual computation of the value of an expression is easier. In postfix you assemble all your arguments before you invoke the operator that consumes those arguments. So postfix is also used and is sometimes called !nReverse_Polish.
 
 The reason that reverse polish helps in evaluation is that in an infix expression like '(2 + 3)*4' where the prefix is '* + 2 3 4', the FIRST thing that you see, '*', is the LAST operation that you will be doing. This is a 'top-down' representation. 'I am doing a multiplication, ah, ok what is the first argument to that multiplication, oh it is the result of an addition of 2 and 3...'. 
 
 On the other hand, the reverse polish notation is: '2 3 + 4 *' which is a 'bottom-up' representation. FIRST you list the two operands, 2 and 3, then the operation, addition, that you will perform on them, 'oh, I'm going to add those 2 numbers, that would be 5'. In postfix you mention and calculate the value of each operand BEFORE you get to the operator that needs to operate on those operands. So postfix actually lists things in the order that you need to use them when performing a calculation. It was this observation that led to the development of high-level languages. It was the realization that you could write your code in an 'infix' notation that people seem to prefer, and then the compiler could rearrange that into the postfix order that is necessary to perform the calculation.
 
-As another aside, there is a language, FORTH, that like LISP also did NOT adopt infix notation. It did the reverse of LISP. FORTH does everything in postfix. In FORTH you write '2 3 +' to add 2 and 3. Unlike LISP, FORTH did not allow flexible arity of its operators so FORTH is essentially parentheses free. Because FORTH requires that you write things bottom up, in execution order, it FEELS more like an assembly language or machine code instead of a high level language.
+As another aside, there is yet another language, FORTH, that like LISP also did NOT adopt infix notation. It did the reverse of LISP. FORTH does everything in postfix. In FORTH you write '2 3 +' to add 2 and 3. Unlike LISP, FORTH did NOT allow flexible arity of its operators so FORTH is essentially parentheses free. Because FORTH requires that you write things bottom up, in execution order, it FEELS more like an assembly language or machine code instead of a high level language.
 
 Summary: Operator notation is a very brief language convention that is used to create expressions out of a small number of built in functions (usually named by symbols that are easily distinguished from either numbers or variable names), and those function are monadic or dyadic and all return values. Operator notation depends entirely on the interplay   
 
 
-
-
-     
 ::S FORTRAN (50s)
 == FORTRAN (50s) - operations, functions
 FORTRAN was release in 1956 and is considered to be the first popular high level language. The name stand for Formula Translation and the purpose of the design was to let programmers write their calculation MORE in the form of algebraic equations which is the way that they were thinking rather than one computer instruction at a time the way the electronic computers worked.
 
-The calculation that I did in assemble code in the previous section, if I compress it all onto one line looked like this:
+The calculation that I did in assembly code in the previous section, if I compress it all onto one line looked like this:
 
   mov R1,x; mov R2,y; add R2,R1, mov x,R2;
   
@@ -379,15 +376,15 @@ The other thing that FORTRAN did was incorporate another math notation, the func
 
 Euler's notation arose when he wanted to start talking about function that took MORE than just the two arguments than all the standard math functions like addition and multiplication. 
 
-I am assuming that you have seen something like Euler's notation previously but allow me to decode what he is doing in those two lines. I want to give names to what is going on using present day computer programming words.
+I am assuming that you have seen something like Euler's notation previously but allow me to decode what he is doing in those two lines. I want to give names to what is going on by using some present day computer programming words.
 
 The first line is a !nfunction_definition. It defines HOW you compute the function f. First it defines the function's !nname, 'f', next tucked inside parenthesis, '(x, y, z)', it gives a list of !nparameters that the function requires. 
 
 Note: parameters are NAMES that will be given to !narguments inside the definition of the function. Arguments are VALUES that will be passed INTO the function from the outside when you go to USE the function, parameters are NAMES that are written down in the DEFINITION of the function. 
 
-The point being that in a bit of math that looks like this: 'f(x)=x+2; k=f(3)+5' k will have the value 10, x is a parameter and 3 is an argument. When you used the expression f(3) to !nevaluate the function, you !npassed_in the argument of 3, the 3 effectively took on the parameter name x, so that you could use the definition of f and treat x as representing the value 3. The function !nreturned the value of 5, which could then be used in the operator expression, 'f(3)+5' to calculate a value for k.
+The point being that in a bit of math that looks like this: 'f(x)=x+2; k=f(3)+5' k will have the value 10, x is a parameter (a NAME) and 3 is an argument (a VALUE). When you used the expression f(3) to !nevaluate the function, you !npassed_in the argument of 3, the 3 effectively took on the parameter name x, so that you could use the definition of f and treat x as representing the value 3. The function !nreturned the value of 5, which could then be used in the operator expression, 'f(3)+5' to calculate a value for k.
 
-Euler's function notation was used as the template for what we do in computer programming. It splits the notion of DEFINITION of a function, f(x,y,z) from the USE of a function which PRODUCES (i.e. returns) a value. 
+Euler's function notation was used as the template for what we do in computer programming. It splits the notion of DEFINITION of a function, f(x,y,z) from the USE of a function which CALCULATES (i.e. returns) a value.
 
 To evaluate f(3+7, f(2,5,6), -19) The evaluation requires ARGUMENTS which are values that can come from any valid expression which can be single numbers, operator expressions, or other function calls (i.e. function evaluations)'
 
@@ -401,13 +398,13 @@ I am going to bring down the example I listed above of Euler's function notation
   k = f(3, 4, f(1,4,5)) 
   
     -- Java code --
-  public static int f(int x, int y, int z){ return 3*x + 7*y^2 - 2z - 15; }
+  public static int f(int x, int y, int z){ return 3*x + 7*y*y - 2z - 15; }
   public static int k = f(3, 4, f(1,4,5)); 
 
     --Python code--
     ????
     
-The Java language does type checking which requies that you DECLARE the type of every variable, or parameter that you use, and that you declare what type of thing any function returns. This is not an unreasonable addition to Euler's notation. He lived in a world where calculation was all about numbers. He wasn't trying to define a notation that would allow function to return video streams, or audio clips, or RGB Colors. 
+The Java language does type checking which requires that you DECLARE the type of every variable, or parameter that you use, and that you declare what type of thing any function returns. This is not an unreasonable addition to Euler's notation. He lived in a world where calculation was all about numbers. He wasn't trying to define a notation that would allow function to return video streams, or audio clips, or RGB Colors.
 
 He also lived in a world where a human would look at a notation like the definition of a function and say, "Ah, that = sign there means that this is the definition of the function. I can see the difference between that usage of the symbol and the way that we used it in the next sentence to define a variable k and assign it a value." So java includes words for the type of everything, and used Braces for the block of code that is being used to define a function. 
 
@@ -420,9 +417,9 @@ Next up: Algol, an algorithmic language from the 60's.
 
 Algol stands for 'Algorithmic Language' and was developed primarily as a way to unify the way that people wrote code for publication in journals so that you could show people an algorithm for a way to compute something. As a result it was a big language that specified lots of things and as a result it was complicated to write a compiler for the language which limited its use as an actual programming language. 
 
-It was also limited by the fact that one of the designers on the ALGOL committee, Nicholas Wirth, who was a professor that wanted a language which was simple enough to use to use for teaching, immediately simplified ALGOL down to reduced form which he named PASCAL. Because PASCAL was both easier to build and easier to teach, it was taught a lot and was thus much more broadly known and used than ALGOL ever was.
+It was also limited by the fact that one of the designers on the ALGOL committee, Nicholas Wirth, who was a professor that wanted a language which was simple enough to use for teaching, immediately simplified ALGOL down to a reduced form which he named PASCAL. Because PASCAL was both easier to build and easier to teach, it was taught a lot and was thus much more broadly known and used than ALGOL ever was.
 
-None the less Algol introduced several ideas that were so useful that they have essentially been used in nearly every language since it's introduction in the early 60s. The two that I want to mention here are Block Structuring and Recursion (which involves a function stack).
+None the less, Algol introduced several ideas that were so useful that they have essentially been used in nearly every language since it's introduction in the early 60s. The two that I want to mention here are Block Structuring and Recursion (which involves a function stack).
 
 == Block Structuring
 The idea of block structuring is probably best explained by looking at some fortran code side by side with some block structured code. I will use the example of an IF statement where we look at an integer variable K and do one thing if it is negative  and a different thing if it is zero or positive.
@@ -443,9 +440,9 @@ The idea of block structuring is probably best explained by looking at some fort
  }
  print("K IS NOW POSITIVE");
 
-The difference is this. FORTRAN was littered with NUMBERS known as LABELS and you could jump from one label to another. This was and simply modeling exactly what was going on in the machine code where you can at any time jump to another address. Unfortunately FORTRAN had made this even worse than it was in Assembly code. In assembly code you could write labels in English text. FORTRAN required numbers. So in assembly you could jump to 'CalculatePayroll:' in FORTRAN you would just jump to 23.
+The difference is this. FORTRAN was littered with NUMBERS known as LABELS and you could jump from one label to another. This was quite simply modeling exactly what was going on in the machine code; where you can at any time jump to another address. Unfortunately FORTRAN had made this even worse than it was in Assembly code. In assembly code you could write labels in English text. FORTRAN required numbers. So in assembly you could jump to 'CalculatePayroll:' in FORTRAN you would just jump to 23.
 
-Furthermore, there was NO requirement in FORTRAN that any of the numbered locations in your code be in sequential order. In my FORTRAN sample code I put the numbered line 30 in front of the line numbered 10. Of course most people did put their numbers in order but you could never be sure. FORTRAN code that jumped all over the place was called 'spaghetti' code. So if you were reading someone elses code and you come to an IF statement, you see 3 numbers. Those are the 3 places that you can jump to if the supplied argument was either negative, or zero, or positive. Where are those places? Who knows? You need to look all over the code.
+Furthermore, there was NO requirement in FORTRAN that any of the numbered locations in your code be in sequential order. In my FORTRAN sample code I put the numbered line 30 in front of the line numbered 10. Of course most people DID put their numbers in order but you could never be sure. FORTRAN code that jumped all over the place was called 'spaghetti' code. So if you were reading someone else's code and you come to an IF statement, you see 3 numbers. Those are the 3 places that you can jump to if the supplied argument was either negative, or zero, or positive. Where are those places? Who knows? You need to look all over the code.
 
 The Block Structuring that came in with Algol came from observing that most code came in sequential blocks, and instead of marking a block with a number at the front, you could mark a block with an open brace at the front and a close brace at the end. If you INDENT the code that comes between two braces you can LOOK back from a close brace and quickly see where the open brace was. If you look down from the open brace you can see where the close brace is. You are using LAYOUT rather than NUMBERED locations to specify blocks of code.
 
@@ -466,7 +463,7 @@ The circularity of the definition is obvious. n factorial is defined in terms of
  
 If you are working from the top down, which is what functions do, breaking big problems into smaller problems, you CAN'T return the answer to factorial(5) until you first find the answer to factorial(4) ...
 
-The way FORTRAN did a function was like this: Suppose you have a function that was defined as f(x,y) which takes two parameters. When you want to evaluate f(3,4), you need to store the two arguments, the two values 3 & 4 someplace in memory AS IF THEY WERE VARIABLES names x and y. FORTRAN did just that. When you defined f(x,y) it allocated two global slots, f.x and f.y, as the place to store those two values. Every time you want to evaluate the function f, first fill up those two slots in memory, then jump into the f code and it will calculate the result.
+The way FORTRAN did a function was like this: Suppose you have a function that was defined as f(x,y) which takes two parameters. When you want to evaluate f(3,4), you needed to store the two arguments, the two values 3 & 4 someplace in memory AS IF THEY WERE VARIABLES names x and y. FORTRAN did just that. When you defined f(x,y) it allocated two global slots, f_x and f_y, as the place to store those two values. Every time you want to evaluate the function f, first fill up those two slots in memory, then jump into the f code and it will calculate the result.
 
 Unfortunately that method does NOT work for a recursive function. If you put the numbers 3 and 4 in those two fixed slots, and started calculating f, and if sometime in the middle of the calculation of f(3,4) you need to know f(2,7), you can't just overwrite the 3 and the 4 sitting in the slots and expect to be able to resume that calculation correctly when you are finished calculating f(2,7). 
 
@@ -474,7 +471,7 @@ What you need, what ALGOL needed, was a mechanism to allocate some memory DYNAMI
 
 Well it turns out that a data stack is a simple structure that can do just that. When you push something on the stack, like a FRAME of data that holds the value 3 and 4 and
 
-So what ALGOL needed to do, if it was going to allow rec
+So what ALGOL needed to do, if it was going to allow recursion, was to
 IMHO recursion is of very limited use, but it really is useful in those special cases where you need it. FORTRAN did NOT support recursion at all. You could NOT have a function that called itself.
 
   
@@ -526,7 +523,7 @@ MY concern is that generic programming is a big topic. There are lots of moving 
 
 If I am being a Math guy and using a math style presentation, I must first explain what a !nclass is and what !nvoid means. I must tell you why you need square brackets after the word String, and why 'String' MUST be capitalized and why 'main' must NOT. I will be defining abstract notions for pages and pages before you ever see ANY code that actually works.
 
-This is NOT good teaching. Everyone knows that the way that you teach the little monkey to break open a nut is to pick up a nut, pick up a rock, break it open and eat it in fron of them. "Oh, I want to do that!". Just show them. Don't lecture them on the nature of rocks, ("Now don't use dirt clods to bash your nut. They will just break apart and won't break open the nut"). 
+This is NOT good teaching. Everyone knows that the way that you teach the little monkey to break open a nut is to pick up a nut, pick up a rock, break it open and eat it in front of them. "Oh, I want to do that!". Just show them. Don't lecture them on the nature of rocks, ("Now don't use dirt clods to bash your nut. They will just break apart and won't break open the nut").
 
 Safety lectures are also semi-optional: "Look, hold the nut by the sides, and smash the rock down on top. Trust me, if you hold the nut with your thumb on the top and smash down, you are NOT going to be happy with the result." Too much lecture before they ever get to eat that first nut and the little monkeys just wander off looking for easier food. Besides, the best way to learn about mashed thumbs is to mash a few thumbs.
 
