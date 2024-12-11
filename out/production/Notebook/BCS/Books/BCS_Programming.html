@@ -1,0 +1,1226 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <link href='http://fonts.googleapis.com/css?family=Quando' rel='stylesheet' type='text/css'>
+    <!-- BCS style sheet and code to produce this Book-Chapter-Section document-->
+    <link href='../BCS.css' rel='stylesheet' type='text/css'><script src="../BCS.js"></script>
+
+    <script>window.onload = function(){getMarkdown('daBook'); startBook();}</script>
+    <!-- This book uses Java examples so I load the Java style sheet & parser and install the encoder -->
+    <link href='../JsAndJava.css' rel='stylesheet' type='text/css'><script src="../JavaToHtm.js"></script>
+    <script>indentEncoders['java'] = javaToHtml; /* javaToHtml defined in JavaFstHtm.js */ </script>
+
+    <title>Programming</title>
+</head><body>
+<div id="stuff">dude, javascript must be, like, turned on.</div>
+
+<!-- You should change the title above to be your book title, then put all your BookMarkdown in this ginormous script block-->
+<script id="daBook" type="BookMarkdown">
+
+::B Programming
+::C Intro
+::S Vocabulary
+==Vocabulary
+
+a - abstract array and algorithm argument address assign annotation
+b - break boolean byte bit blockStructure binary bitwiseOp
+c - class comments catch char constructor case continue camelCase compareTo
+d - default double debug declare
+e - enum else exception extends equals elseIf escape
+f - function for float finally factory field final frame
+g - global guard generics
+h - hex hash heap hierarchy
+i - int if implements infix index interface import instanceof
+j - javadoc
+k - keyword
+l - local logic long literal
+m - member main mod maskBit memory machineCode
+n - null numeric not nested new native
+o - object operator or override openFile operand
+p - package public private protected prefix postfix precedence procedure pointer push pop parameter
+q -
+r - return recursion refactor reference readObj register random
+s - static synchronized strictfp String stack subroutine size super struct serializable sort switch short
+t - this try throw throws type tree transient ternaryOp thread
+u - 
+v - variable void volatile
+w - while writeObject
+x - xor
+y -
+z - 
+
+::C Evolution of Computer Language
+::S Computers and Calculators
+== Computers and Calculators
+In my lifetime I have watched the meanings of these two words change. They used to be names of professions like "farmer" which is the name of a person that works with a "farm" and "plumber" is the name of someone who works with "pipes" (originally made of "lead" or "plumbum"). A "calculator" was the name of someone that performs "calculations", a "computer", "computes" values.
+
+The evolution involved building things like adding machines, where you would type in a number then pull down a lever to print the number and advance a roll of paper. That was called a "mechanical calculator". When they started using an electric motor to advance the paper roll it was called an "electronic calculator" and eventually the tools got so fast and efficient, the names drifted. People started calling the tool that calculators used a "calculator" and the profession changed its name to being a "computer programmer", someone who writes "programs" (lists of instructions) for a computer.
+
+--Not Math
+While it is true that computers evolved from simple adding machines that only knew about numbers, they are of course vastly different now. We use computers for word processing, and watching videos, and sending email. They deal with images, and audio, and colors, and just about anything. Many people still think that because of that history, because they used to be adding machines that you must be some kind of mathematician in order to understand and write computer programs. This is wrong.
+
+Computer programming does require some organization skills but it is much more like office filing, where you write names on folders to hold documents that you need to look up later. It is all about organizing how you will store data so that you can quickly get it when you need it.
+
+What I am going to do in this chapter over the next several sections is to talk about how computers evolved upwards from the simple adding machines that they used to be to become what they are today. So I will tell you a bit of what computers look like. I will tell you a little bit about the hardware, but since our focus is primarily programming I will talk more about software, and in this chapter the focus is primarily history. I will talk about how the Programming Languages evolved into their current form.
+
+I would like to emphasize before you start reading that none of this (i.e. history) is essential. You could just dive right into programming, and start learning how things work now in some language and skip all this history. However in my opinion, it is easier to understand current practices and some of the words that are used, if you look at where the modern things came from.
+
+Mostly what this historical discussion does is lets me pass on some of the vocabulary that programmers use all the time and will help you learn some of the jargon.
+
+Words that we will introduce include:
+
+arguments, assemblyCode, binaryNumber, bit, blockStructuring, byte, class, cpu, stackFrame, function, garbageCollector, hexadecimal, machineCode, memory, memoryManager, objectOrientation, objects, operators, operands, parameters, recursion, registers, stack, structs, types, variable, word 
+
+::S Memory and CPU
+== Memory and CPU
+Two of the primary components of nearly any computer are !nmemory and the !nCPU. CPU stands for Central Processing Unit, which emphasizes that while you may have a lot of memory for storage, all the processing of data happens over in one centralized unit that contains the actually hardware (electronic circuits) that do things like addition. An older term for CPU that you may still occasionally hear is 'ALU' which stands for Arithmetic and Logical Unit, which emphasizes the types of processing that it does, arithmetic: addition, subtraction, multiplication, negation, etc. and logical: and, or, exclusiveOr, not, etc. comparison: >, <, >=, != etc.
+
+Machines these days are often 'multi-core' machines and that just means that they have more than one single CPU. So a dual core machine would be one with 2 CPUs a quad-core would have 4 CPUs etc. But every machine needs at least one CPU and for this course we will just pretend that all systems are single core which is the way things were for at least half a century.
+
+Memory is the place that you STORE information (for example storing a couple numbers like 23 and 42) and the CPU is the place where you PROCESS, or perform some !noperation on that data (for example adding those two numbers to get the result 65).
+
+==Memory 
+Memory is essentially one long array or list of !nintegers.
+
+<img src="Memory.png"/>
+
+Every slot in memory can store exactly one number, and each slot has an !naddress. In the picture The address is the number written to the left of the box and the box holds the one single number at that address.
+
+So in the picture above I placed the number 23 in the slot with the address of 1. I wrote the number C210 (pronounced "Charlie two one zero") in the slot with address 2B00 (pronounced "two Baker zero zero"). The first slot in the picture had address zero and the last slot had address FFFF (pronounced "Fox Fox Fox Fox").
+
+Do not be concerned that I have some letters (like A-F) mixed in with the digits. That is because I am following the customary practice of writing memory addresses in !nHex which is an abbreviation for the longer word !nhexadecimal. I will explain what I mean by hex in the next section, but for now, just take my word for it, everything I wrote in that picture of memory is just a number, the same numbers that you know and love, just written in a different language, the language of base 16 instead of the language of base 10. 
+
+The important things to note about memory address are: 1) Every slot has a single unique memory address, and if you have the address of a memory slot you can !nread the value sitting in that slot or you can !nwrite a new number into that slot. 2) all the slots in memory are a single fixed size - in the picture above I assumed that every single number that I wrote into memory was exactly 4 hex digits long. So even though I wrote the number 23 in one slot it was really in some sense 0023, but is was NOT 00023. (Of course we do this all the time on paper, we skip writing out leading zeros when we write down a number - I am just emphasizing that you can't store a HUGE number like 127365421825341298762436 into a single slot, there just isn't enough room.) 
+
+In this particular memory picture that I drew for you, the last address, FFFF, consisted of exactly 4 hex digits. FFFF happens to be the largest possible 4 hex digit long number. (Just like 999 is the largest possible 3 digit base 10 number that you could write.) I also just mentioned that each memory slot held a number that was 4 hex digits long. I want the make the connection clear: The number that you write into one slot in memory (for example the number 23 that is sitting there in slot 1:) can itself be treated as an address (it is NOT in the picture that I drew, but there is a slot 23: in memory and one could go look in that slot and see what number is there.)
+
+==Reference and Pointers
+This practice of having the value in one slot be the address of a different slot is quite common. We call it a !npointer. So if we are interested in the value that is sitting out there in slot 23, we would call the value sitting in slot 1 a pointer, slot 1 holds a !nreference to the value in slot 23.
+
+Saying the same thing in a different way. I can look in slot 1 and see the number 23. I could THINK of that number as just being a number. Perhaps slot 1 is just keeping track of how many fish that I have in my large aquarium. But, I could think of that same value, 23, as being a reference to the value sitting in slot 23. In that case, the value, 23, is a !nreference to slot 23. 1 is a !npointer to slot 23, and perhaps the value in slot 23 is where I actually store the count of how many fish I have in my aquarium.
+
+The difference between the word 'reference' and 'pointer' is subtle (and therefor some people don't know the difference and confuse the two words). 23 is a 'number', it is a 'value', it is an 'address' of a slot, it is a way of getting to a slot, it is a 'reference' to a slot. When I write that number into memory, like at slot 1, slot 1 becomes a 'pointer'. A pointer is a place in memory that HOLDS an address.
+
+Do NOT worry about this. This is NOT some subtle distinction that you MUST understand and answer correctly on tests. Many CS folks use the terms interchangeably. To me the difference is just this: If I tell you I have a 'reference' to something, I am telling you that I can get to that something, that I know where that something is. However I am NOT telling you exactly HOW to get to that something. References are abstract and non-commital, I am not telling you whether the address in written in my head, whether it is written on a piece of paper, whether what I actually have is a piece of paper telling me which book and which page to look at in order to find the written down address of that something. 
+
+The word 'reference' is vague, yeah I can get there. The word 'pointer' is specific - 'this slot in memory has the EXACT address' - a pointer is direct. An indirect reference could be a pointer to a pointer to something, and that is still a reference, but a pointer to a pointer to something is NOT a pointer to that something. It is a REFERENCE to the something but a pointer to a pointer not the same thing as a direct pointer.
+
+We will not be discussing such chains of pointers in this book, (that is what the C language is all about) I am merely mentioning that one of the organizational tools that is used by programmers is the notion of !nreference. In order to interact with data that is in memory you MUST know the address of where it is in memory so that you can READ from that slot or WRITE into that slot. But it doesn't really matter whether you know the DIRECT address of the data or whether you know an INDERECT address. In either case, you can follow the address or a chain of addresses to get to the data that you wish to read or modify.
+
+To summarize this side discussion on Reference and Pointers, and why I brought it up in this section on Memory is just this. Memory holds numbers of a certain size. A 16 bit computer (which you will probably never see except in my examples here) means that the registers in the CPU can handle 16 bits at a time. 
+
+This means that memory is naturally organized into slots that are 16bits wide. When you use one of those slots of memory as a pointer, it means that you are limited in HOW MUCH MEMORY you can directly address. Since the slots are 16bits wide and since the biggest number that you can fit into 16bits is about 64K it means that a 16bit computer can only directly address about 64K of memory, which is not very much. A 32bit number can be as big as about 4 Billion so a 32bit machine can hold about 4G of memory. A 64bit computer can directly address 16BillionBillion, or 16*10^18 bytes which is a LOT!.
+
+Because one of the things that we use memory for is pointers, it means that the size of a single slot in memory LIMITS how much memory you can easily address. 
+ 
+In any case, that is all that memory is. It is a place, typically a large place (billions of slots these days) that allows you to store data. That is all you can do with memory. You can read from it and you can write into it. If you want to DO anything with the numbers that are stored in memory you much fetch them into the CPU.
+
+==CPU
+The CPU is where all of the electronic circuits are kept that can perform the !noperations that the computer knows how to do. In keeping with the way that computers evolved upwards from adding machines, most of the operations that a computer can do are simple math operations like Addition, Subtraction, Multiplication, and Division, but there are others as well like the Bitwise Logial AND, OR, XOR, and comparison operations like LESS THAN or GREATER THAN OR EQUAL. 
+
+Nearly all of those very simple operations typically work on one or two !noperands, i.e. if you have 2 numbers you can add them. If you have a single number you can NEGATE it.
+
+Here is a picture of a typical CPU, and it is not very interesting.
+
+<img src="CPU.png"/>
+
+It is not very interesting because it looks almost identical to the memory picture. We have some slots with names on them. The difference is there are much much fewer slots. In the picture I drew I had 17. Sixteen of them were named R0,R1 up through RF and there was one isolated one named IP (called Eye-Pee - it stands for "Instruction Pointer").
+
+The first 16 are 'general purpose' registers and IP is a 'special purpose' register.
+
+Registers are JUST LIKE memory slots. They can hold exactly one single number of a fixed size. The difference is that the CPU is where things like the addition circuitry, and the multiplication circuitry live, and the registers are connected to those circuits. What this means is that the ONLY place that you can !noperate on a pair of numbers is if those 2 numbers are located in registers. Thus the job of the CPU is to FETCH (read) numbers from memory into registers, perform some operations, ADD, MUL etc, and then STORE (write) the result which is in a register back out to memory.
+
+==Instruction Set
+Every CPU comes with an instruction set, which is a mapping between numbers and operations that can be done on a particular machine, and the IP register, the Intstruction Pointer, points to the memory slot that holds the code instruction that the computer is performing.
+
+If you go to the slot that IP points to you will find the number C210. On this particular imaginary machine that I am showing you, the !nOpCode, C2, is a move instruction. It means move from memory into a register. The digit 1 that came after the C2 means that you are moving into register 1. Since the move instruction moves something from memory to a register you MUST have an address that you are fetching from and that address sits in the next slot. 
+
+So if IP points to 2B00, and 2B00 hold C210 followed by 0001, then the CPU will execute that fetch instruction. It fetches the value sitting at address 0001: which was 23 and puts that number into R1. IP then automatically advances to 2B02 which will be the next instruction for the CPU.
+
+The purpose of the the CPU is to advance from one instruction (which is just some number written in memory) to another and to perform the particular operation of each instruction.
+
+Just to toss out another vocabulary word, in the stone ages, when people were first building computers they tended to think of having one physical chunk of memory that was used for holding data that you were going to process and having an entirely different physical chunk of memory where you would store the instructions that your computer was going to execute. 
+
+In the 1940s a mathematician, John Von Neumann, suggested that if you kept your CODE, your instructions, in the same exact memory where you kept your DATA, then the computer would be more flexible. You could use a single machine either to solve problems that required only a little data but a lot of code, or to solve problems that had lots of data but only needed a little code.
+
+Nearly every machine built since then has followed this design suggestion which is called the 'Von Neumann Architecture'
+
+Summary: Memory is used to store numbers, which can be either data or actual machine instructions, and the CPU sits there fetching one instruction after another and executing each instruction. Each instruction usually fits in a word or two and each instruction typically either fetches something from memory to a register, or stores from a register to memory, or combines a couple register values using some operation into a new register value.
+
+Next up: we have a side bar, a discussion to 'remind' you how we write down number in different bases.
+::S Numbers
+==Numbers
+The whole numbers that we use in daily life for counting are typically written in base 10. That would be like this: 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,...
+
+Just for the record, because the word 'base' is so common and has so many other meanings, there is another word, !nradix, that is used exclusively to refer to the base of a number system. So it is just as correct to say that most numbers are written in radix Ten.
+
+Nearly everyone on the planet uses base Ten to represent their numbers and nearly every spoken language uses base ten names in the spoken language, so zero, one, two, three.. up to nine, are the spoken names for the digits, then we have few irregular words like, ten, eleven, twelve, but by the time we are up to twenty, English becomes fairly regular, pronouncing numbers like 'twenty seven' with a base 10 bias that allows us to instantly write it as 27.
+
+I would like to point out that the numbers do NOT share this linguistic bias. The numbers that are used for counting are in some sense just an unending stream of different names. The first number in the list is zero, the next has some different name, that number has a next number which gets a name different from the previous two and the names just go on and on. The base ten bias was just a pattern that we used to make it easy for us to generate a LOT of different names and it is just as easy to use different pattern and generate different names for that same infinitely long list of one number after another.
+
+I assume that you were taught how our Radix Ten number system works and were possibly also taught how to write numbers in a different base, like base 6. I want to remind you of that and to also point out that there are other mechanisms that could be used to give us an unending stream of unique names for numbers.
+
+First a reminder of base 10 with a picture of a spin odometer:
+
+<img src="odometer.jpeg" />
+
+This odometer is missing the front panel that would mask off or hide the fact that the digits are written on little wheels, because I want to talk about the mechanism. The number currently showing is 1011. These used to be common on all cars. I hope you have all seen them before.
+
+The idea is simple. As your car moves along the wheel on the right slowly dials upwards changing the last digit from 1 to 2. If you keep going it eventually shows 3, then 4, and so on. The wheel has the digits from 0 to 9 (a total of 10 digits - hence the term radix 10). 9 is the highest digit on the right most wheel and when it starts rolling upwards to show zero for the last digit, it also rolls the wheel just to the left of it upwards by one digit so that the whole thing reads 1020.
+
+The mechanism for counting is simple, any time any wheel is showing the highest digit on the wheel and must change back to 0 for the next digit, it also rolls the wheel to its immediate left one digit. This cascades which is why if the entire display showed 2999, then the next value on the display would be 3000.
+
+The right most wheel spins the fastest, everytime it has gone through a full cycle its neighbor moves up to one more digit. Thus each left neighbor is effectively counting how many times the wheel to its right has made a full revolution.
+
+--Binary - base 2
+Now there is nothing magic about placing 10 digits on each wheel. If we had only 6 digits on each wheel we would be counting in base 6. If we put only two digits on each wheel, (that would be only 0 and 1), we would be counting in binary. Counting in binary looks like this: 0 1 10 11 100 101 110 111 1000 1001 1010 1011 1100 ...
+
+--Hex - base 16
+If we put 16 digits on each wheel we would be counting in hex and it would look like this: 0 1 2 3 4 5 6 7 8 9 A B C D E F 10 11 12 13 14 15 16 17 18 19 1A 1B 1C ...
+
+Remember, these binary numbers and hex numbers are NOT different numbers. They are all exactly the same numbers, hex and binary are LANGUAGES that we use to attach names to the standard numbers. So in the language "binary", the number written 1100, is the number we would write in the language "decimal" as 12 (because 1100 means 1*8 + 1*4 + 0*2 + 0*1 == 8+4 = 12). That same "decimal" number, 12, in the language of "hex" it would be written C, (in hex A comes after 9 so A means 10, B means 11, C means 12).
+
+In hex F means decimal 15, so the number after F is  hex 10 (which is 1*16 + 0*1). In hex the number 2C is what we normally call 44 (= 2*16 + 1*12).
+
+If you studied different number bases in school, they probably emphasized exactly this business of converting from one base (like base 8) into base Ten or going from base Ten to some other base. Well as a programmer, I don't care about that AT ALL, and neither should you. We have computers that can do those conversions for you. What I DO care about is conversion between binary and hex. Why?
+
+--Digital Hardware done in Bits
+
+The word !nbit is a contraction of Binary Digit, it refers to something that holds only 2 values, a zero or a one. All of the memory storage in your computer is done in binary because electric switches are basically either on or off. They have two states. Voltages are high or low. Logic also works nicely with two values, true and false. So number storage on digital computers is done in bits. As a result binary is the right language for talking about HOW a number is actually represented in memory, and there are computer instructions/operations that deal specifically with those bit patterns. 
+
+Of course when you are talking about Memory Slots or Registers, those bits a grouped into blocks of a certain size. Which is why we talk about a 16-bit computer, or a 32-bit or a 64-bit computer.
+
+--Number Size and Capacity
+Here is some vocabulary (some of which is used ALL the time and some of which is archaic) for talking about the size in bits of a slot in memory. From smallest to largest. 
+
+0. A !nbit is one bit wide and can hold exactly 2 numbers, 0 and 1.
+2. A !nnibble is 4 bits wide can hold 16 numbers. It is one hex digit.
+2. A !nbyte is 8 bits wide, can hold 256 numbers. It is 2 hex digits.
+2. A !nhalfword or !nshort is 16 bits wide, can hold about 64K numbers. It is 4 hex digits.
+2. A !nword is 32 bits wide, can hold about 4 Billion numbers. It is 8 hex digits.
+2. A !nlong is 64 bits wide, can hold about 16*10^18 numbers. It is 16 hex digits.
+3.
+
+The words bit and byte are quite standard and used all the time. Nibble, and Halfword are a bit archaic. Halfword in particular is a hangover from the days when IBM mainframe coumpters were 32 bit computers so the Word size was considered to be 32 bits wide. Over time the word 'word' has drifted from meaning a single size to being whatever size your CPU's registers happen to be, so if you have a 64 bit machine, the word side is 64 bits, and if you could still buy 16 bit machines, you would say it's word-size was 16 bits instead of saying that it was a Halfword sized machine. The words, short and long, are more standard because they were defined in the language C so that you could, as a programmer INSIST that you needed to do some calculation with 64 bit longs no matter what size the words were on any particular computer.
+
+Also, most programming languages after the invention of the C language have used the convention of writing "0x"  (that's zero x) in front of a number if it is in the hex language, so in most programming languages 12 means decimal 12 (which you could have written as 0xC). 0x12 would be decimal 18 (= 16+2). This notation for hex is broadly used. Nearly every computer language has borrowed this notational convention from C (Which probably borrowed it from some other language.)
+ 
+ A less commonly used convention, is the convention that if you wrote a number with a leading zero like 012, that meant that it was in base 8 (aka Octal). The language Java added that convention after it had been out for a few years, but I have never seen anyone used it. The reason that it is so little used is that very few machines are built these days that have 36bit word length. Octal was really only convenient if your word length was a multiple of 3. This current java convention does mean that the number 08 will be an ERROR in Java because the radix 8 digits run from zero to 7.
+
+--Conversion between Hex and Binary
+The reason that we use hex at all is because it is much more compact and easier to read than binary and yet can be converted almost instantly (with just a bit of practice) into binary. That conversion works like this:
+
+Since 16 is an exact power of 2, in particular 2^4, this means that 4 bits can hold exactly 16 values. Here they are 0:0000, 1:0001, 2:0010, 3:0011, 4:0100, 5:0101, 6:0110, 7:0111, 8:1000, 9:1001, A:1010, B:1011, C:1100, D:1101, E:1110, F:1111
+
+A 16 bit binary number like 1101001101110101 is both 16 characters long and with all the repetitions of 1 and 0 is very hard to read. BUT if you take that same number and divide it into chunks of 4 bits each, 1101 0011 0111 0101, each block of 4 bits can be written as a single hex digit - 0xD375. And going back from hex to binary is the same process. 0x8000 is 1000 0000 0000 0000 so it has the single highest bit in the 16 bit word set.
+
+Because the memory slots are exact bits, the capacity of a single slot in memory is some power of 2. So the capacity of a halfword is exactly 2^16 which is some wierd decimal number number like 65536. The largest number that it can hold is one less than that, 65535, which is hard to remember (I said it was about 64K). BUT since a 16 bit number is exactly 4 hex digits long, If I write in "hex" I can tell you instantly that the biggest number that you can fit into 16 bits is 0xFFFF.
+
+That is the reason that we programmers at least occasionally work in hex, it is a better fit to the actual hardware.
+
+As I said earlier, this is a bit of a sidebar. You don't absolutely need to know binary and hex. You do need to know that they exist and that there is an exact straightforward mapping between binary and hex. Most applications do not require that you know how numbers are actually stored in a slot in memory. In fact, the real reason that I wrote this section on numbers was so that I could tell you this math/computer joke:
+
+There are 10 kinds of people in this world, those who understand binary and those who don't.
+
+Next: We will show you some examples of the way that code was written BEFORE the development of High Level Languages in the 50s. That would be machine code, which is all written in hex, because it is actual numbers on the machine, and Assembly code which translates directly into machine code but is written in something more like English.   
+
+::S Assembly Code and Machine Code
+
+== Assembly Code and Machine Code
+Machine Code and Assembly Code are very closely related. Machine code is essentially a list of numbers that the CPU can decode as instructions. Typically a single number that fits in a single memory slot, is a single instruction. Possibly that instruction also requires an address or some other number so possibly a second number is required to complete the instruction. As mentioned previously the CPU will have something like a register IP that points to the current instruction and the CPU simply marches down a list of instructions doing each one in order and updates IP as it marches along.
+
+Assembly Code is just that same list of instructions, one after the other except that instead of being written as numbers so that the machine can read them and do them, they are written in English letters so that humans can read them. Because of this simple one-to--one structure, where one line of Assembly represents one machine instruction, an !nAssembler, which is what they call the software that converts from Assembly code to machine code is fairly easy to write.
+
+I will give you an example of some machine code for the imaginary 16-bit machine that I have been talking about in this chapter.
+
+    Assembly       Machine
+  Part1:          // this is a lable; A symbolic name for the address of this code   
+  MOV R1,0x01     C210, 0001     // fetch value from slot 1 into R1
+  MOV R2,0x03     C220, 0003     // opcode=C2, regs=2, adrs=3 
+  ADD R2,R1       B621           // opcode=B6, regs=21 : R1 added into R2, result in R2
+  MOV 0x01,R2     C320, 0001     // opcode=C3, reg=2 adrs=1 : a store instruction
+  JMP Part2       8D00, 2BD0     // a jmp instruction loads a new address into IP
+  
+Every different CPU defines a set of OpCodes, which define which operations the CPU can perform, and by packing the op code with a list of registers and possibly an address you get the number that represents a single machine instruction.
+
+Assembly Language just gives symbolic names like ADD and JMP to op codes like B6 and 8D so that the programmer can remember that register addition is performed by the code B6. Some assembly languages will pick a name like MOV which represents several different op codes - which I did in this example. A choice like that emphasizes that you are just moving a value from one place to another. An alternative choice would be to use different mnemonics like FCH to mean 'fetch' from memory to register for opcode C2 and STO for 'store' from register to memory for opcode C3, which requires that the programmer learn more mnemonics.
+
+==Labels - symbolic names for code addresses
+In the code above I DEFINED a label, 'Part1:' but I never used it. And I had a JMP instruction that jumped to a label, 'Part2:' that I never defined. Labels were used to give symbolic names to locations in your code, so that when you completed one calculation, you could jump to some other calculation. The Assembler, when it was generating the code, would be keeping track of how many words long the code was so that it could calculate WHERE in memory each code position would land. If you did NOT use an assembler, but instead wrote directly in machine language, you, the programmer, had to figure out where everything was going to go if you ever wanted to JMP to some code location.
+
+I showed a JMP instruction which was also called an 'unconditional' jump, because it ALWAYS just loaded a new value into IP, effectively taking you to a new place in the code.
+
+The more common jump instruction, a 'conditional' jump, was JZ, which meant 'jump on zero'. Basically if you just did some math calculation, and the result of that calculation was zero, the JZ instruction immediately after the math would do the jump, changing the code address. IF the result had NOT been zero, the JZ instruction did nothing and IP just moved onto the address immediately after the JZ instruction.
+
+This jumping allowed decision making. It is called 'conditional branching'. Some condition or situation happens and you branch one place, if the condition does not happen you branch another place. All CPUs have some instructions to move around into different places in the code, and labels were a symbolic way of giving NAMES to different sections of the code.
+
+==Variables - symbolic names for data storage
+In the same way that you might want to give names to a place that you can jump to in your code, you might want to do the same thing for where you store your data. I did not use variables in the little code example I had above but it was a standard feature of assembly language. A line like: 
+  
+  X: DS 1 
+
+Would tell the assembler to attach the label X: to a single slot of memory (Define Storage 1 slot long). It does not put any code in that slot, it just remembers the location. If you did give a symbolic name to an address like that, you could use that name in some other instruction like this:
+
+  MOV R1,X
+  
+That instruction moves the value sitting in the slot named X into R1.
+  
+Labels and variables allowed the programmer to think in words rather than numbers. First I am going to do part1 then go to part2, and in the first part I am going to add x to y and store it back into x. We use language to think and giving names to things allows us to ignore the physical address of WHERE in memory things are happening. The electronic computer MUST know exactly where things are to fetch them and operate on them, human computers, on the other hand, don't much care WHERE something happens and would rather focus on WHAT happens in any given situation. Giving names to things is how we keep track of what is happening.
+
+--Personal History
+
+Most of the code that I wrote professionally at Microsoft while working on Windows 1.0 was written in assembly code. Prior to Microsoft I spent several years working in machine code. What I actually did was write down on paper the assembly code that I wanted, and then I would look up the opcodes in the manual that came with the computer to convert the assembly by hand into machine code, which I would then enter into the machine.
+
+The reason was quite simple. In my first job, the machine did not have a keyboard and a hard drive. It had front panel switches. You would set the switches to a binary number (I was thinking in hex) and enter one number at a time into memory. Since looking up opCodes in the data book was very time consuming it really did not take much time to simply memorize the opCodes for that particular machine. B6 was always register ADD.
+
+At Microsoft (in the very early days) we were actually cross-compiling. Meaning that we had a mainframe that did time-share. We could write our assembly code on the mainframe, compile or run the assembler on the mainframe, and then download the list of numbers onto a PC to run it. So I never had to look up op code numbers in the data book for the 8086 CPU. The assembler did that for me. When PCs got big enough that they had hard drives, code development quickly moved from being done on the mainframe down to being done directly on the PC.
+
+If you go back a few pages and look at the picture that I drew for memory. You will see that I placed the code in this example at the address 2B00. I also set IP in the picture that I drew of the CPU to 2B00. Those two pictures were intended to go with the list of machine code that I placed in this section. 
+
+This is how machines worked back in the stone ages. You literally entered numbers into specific memory slots that was your code. You then entered a number into IP to tell the machine where your code started. You would push a RUN button, and when the machine halted, the calculation was finished. You then went and looked in memory addresses to see what numbers your program had calculated.
+
+Much easier to do things now that every machine has keyboard for input, screen for output, and hard disk for offline storage. Humm.. that makes me realize that I never mentioned this fact about MODERN memory. Those slots in memory are volatile. They hold values only as long as the machine is powered up. When you power down, everything in memory is lost. You need a non-volatile storage device like a hard disk or a thumb drive, so that you can 'boot up' which just means load a bunch of code (typically the Operating System) from your non-volatile storage into memory so that the machine has some code to run.
+
+This volatility of memory was NOT there in the old days. Old memory was CORE memory, which consisted of little physical ring magnets with wires running through the center that represented a single bit of memory. You could flip the orientation of the magnet with a current pulse on the wires and could read the orientation as well. This memory remained intact when you powered down.
+
+Hard drives and Magnetic Tape were devices to give you large non-volatile off-line storage for your computer.
+
+--Advantages and Disadvantages of Assembly/Machine Code
+The advantage of machine code is that since it represents exactly what a CPU is capable of doing it allows you to get the most performance that is possible out of a machine. The code that you write is tuned specifically to the instruction set for that machine.
+
+The disadvantage of machine code is also fairly obvious: it is highly non-portable. The was no agreement among CPU designers as to what operations a CPU should use. CPUs are built with different registers, and different types of registers. So machine code (and assembly code) written for once CPU would not run on another.
+
+It was this disadvantage, the non-portability, AND the bulkiness of the code, that primarily led to the development of High Level programming languages. That is what will discuss in the rest of this chapter; the high level features that were represented in several different languages.
+
+==Outline for the rest of the chapter
+I am going to use history, the development of 4 different and influential high-level programming languages, as an organizational scheme for talking about the notions that are very common in nearly all high level languages. Languages don't develop in a vacuum, and language designers all borrow/steal good ideas from previous languages.
+
+All programming
+Next up: the first popular high level language, FORTRAN.
+::S Operator Notation 
+==Operator Notation Vocabulary
+I will try to keep this short because I believe that most of you already are quite familiar with operator notation from having taken high school algebra. Many computer languages adopted several features of algebraic/operator notation, particularly for doing their simple math calculation so this should be familiar, but computer language both added some extensions and also dropped some things which are customary in algebra, so the purpose of this sidebar to primarily to give you some vocabulary to talk about operators notation in a the ways that it shows up in computer languages.
+
+--Operators (Monadic & Dyadic), Operands (aka Arguments)
+When you write a simple !nexpression like 5 + -3 you are using operator notation. There were 2 !noperators in that expression, the first was addition, represented by the operator '+', which happens to by a !ndyadic operator (meaning that it takes 2 !noperands or !narguments ) and the second operator was the 'negation' operator represented by '-' that negated the positive number 3 into a negative 3. The negation operator is a !nmonadic operator (meaning that it takes only one operand or argument ). The entire expression has a single !nvalue which in this case is the number 2. 
+
+--Prefix, Postfix
+The negation operator is written in FRONT of its operand. This is called !nprefix notation, so negation is a !nprefix_monadic operator. It is always written: '-3', never '3-'. There are !npostfix operators as well, ones where the operator is written down AFTER its arguments. The 'factorial' function, which is written with the symbol '!', is an example. Factorial is a !npostfix_monadic operator. The factorial function is only applied to positive integers. n! is the product of the numbers from 1 to n so for example 4! is 1*2*3*4 = 24. The words, 'prefix' and 'postfix' are talking about where you 'fix' or 'position' the operator in relation to the operand(s).
+
+--Infix
+The addition operator, '+', being a !nbinary_operator (just another name for dyadic operator, the emphasis being that it has exactly 2 operands) has the option of 'fixing' the operator in-between its two operands and that it the standard notation in math. We write '2 + 3' rather than prefix: '+ 2 3' or postfix: '2 3 +' in both math notation and in computer languages.
+
+The fact that you DON'T use factorial on negative numbers means that an expression like -3! does have an unambiguous interpretation in math. It MUST be -(3!) because it could not be (-3)! so in some sense, factorial as a function, BINDS tighter to a number than the negation function. BUT one must be careful here. Mathematics and mathematical expressions are written for humans who interpret the expressions based on what they KNOW makes sense and NOT on some arbitrary set of rules. So for example if I told you that x=-3 and I want you to calculate -x!, you would probably look at that expression and say, 'Wait, I can't factorialize x, which is -3 directly, so they must have meant to apply the negation operator to the x FIRST to make it positive before I factorialize the result.' Math notation can be a bit lazy because it assumes that a human will 'clean it up' and make sense out of it.  
+
+None the less, standard algebra DOES include the notion of operator !nprecedence, an ordering of the operators that determine how tightly they bind to their operands, and computer languages also use precedence as well.
+
+--Operator Precedence
+The more classical use of precedence was in the rule that your teachers taught you when they told you to do multiplications and divisions BEFORE you do additions and subtractions. Thus the expression 2 + 3 * 4 is evaluated as 2 + (3*4), giving a value of 14, instead of being evaluated as (2+3) * 4, giving a value of 20. The multiplication operation bound the 3 more tightly to the 4 on its right than the addition operation bound the 3 to the 2 on its left.
+
+--Parentheses
+Standard algebra notation introduced their particular precedence rules primarily so that they could write polynomials like 2x^2 + 3x - 7 = 0 without the need to write any parenthesis. So exponentials were the highest precedence, multiplication next, and addition last. And then of course, they introduced parentheses as a way of OVERRIDING the precedence rules and forcing a different order if that is what you want e.g. 2*(3+4) where you DON'T want the multiplication to be done first.
+
+--Implicit Operators
+Well, computer languages, in their desire to make your simple math calculation look more like the notation you are accustomed to, retained that same precedence of multiplication over division and the same use of parentheses to override precedence when necessary. However most computer languages did NOT do one of the steps that is customary in standard algebra notation. They did NOT include the notion of 'implicit multiplication'. Standard algebra allows you to write '2x' to mean 'multiply x by 2'. Computer languages (or at least all the ones that I know) require you to write '2*x', you MUST write ALL the symbols for ALL the operators that you intend. Computer languages for the most part do NOT use implicit operators.
+
+It is UNLIKELY that your teachers either taught or emphasized those format words, prefix, postfix, and infix. They probably just told you, 'you write negative two like this: -2', but different programming languages did not all adopt traditional algebraic notation so there is some benefit in recognizing these different formats. In many ways those 3 word represent something that happens all the time in human languages which Linguistics classify as SVO (Subject Verb Object like English) SOV (Subject Object Verb like German) VSO (Verb Subject Object like ??? are there any prefix human languages that say the verb first?)
+
+--Polish, Reverse Polish
+Since any monadic operator takes only one argument, it must be written in either prefix or postfix form. I suspect that Most if not ALL of the dyadic operators that you know, like addition, subtraction, multiplication, and division, were always written in !ninfix notation.
+  
+The comparison operations: <, >, <=, >=, ==&nbsp;!= in computer languages are also all dyadic and are written in 'infix' style, 'x does not equal 3' is written x&nbsp;!= 3. Comparison expressions are indeed expression. They do combine values and return a single value. Unlike the math operators which use numeric operands and produce numeric results, the comparison operators use numeric operands and produce !nboolean results. The comparisons return a value that is either true or false.
+
+So you are probably only familiar with infix notation for dyadic operators. However there are situations where both prefix and postfix notation has been used.
+
+In mathematics, in the 1920's a group of logicians in Poland, observed that you could eliminate both operator precedence AND also the parentheses needed to override precedence IF you wrote your operations in prefix notation. For example '(2 + 3) * 4' in prefix is: '* + 2 3 4' whereas '2 + (3 * 4)' in prefix is: '+ 2 * 3 4'. This observation meant that the logicians, who were writing proofs about what you COULD and COULDN'T say in math expressions could deal with a 'simpler' operation language. It was simpler for humans to TALK about the notation, NOT that it was simpler for humans to read and understand a single expression. Humans seem to prefer to read in 'infix'. In any case, ever since the 20's prefix notation is occasionally called !nPolish_notation.
+
+And just as an aside, there is a computer language, LISP, an old language from the 60s, that did NOT adopt infix notation and instead used prefix logical notation. In LISP you add two numbers like this: '(add 2 3)' or maybe it is '(+ 2 3)', it has been a long time since I used LISP. They included parentheses because they did not want to think of the addition operator as being dyadic, they wanted to do things like (add 2 3 19 -24), and the clever observation that prefix eliminates the need for parentheses depends on every operator having a known, fixed, !narity (monadic ops have arity of 1, dyadic ops have an arity of 2 - the arity of an operator is the number of operands that it requires.) So instead of eliminating parentheses LISP is an absolute confusion of parentheses. The old joke is that LISP stands for Long Interminable Strings of Parentheses.
+
+It was later observed that IF you wrote your expressions in postfix notation, where you write the operator at the end of the expression instead of at the front, the actual computation of the value of an expression is easier. In postfix you assemble all your arguments before you invoke the operator that consumes those arguments. So postfix is also used and is sometimes called !nReverse_Polish.
+
+The reason that reverse polish helps in evaluation is that in an infix expression like '(2 + 3)*4' where the prefix is '* + 2 3 4', the FIRST thing that you see, '*', is the LAST operation that you will be doing. This is a 'top-down' representation. 'I am doing a multiplication, ah, ok what is the first argument to that multiplication, oh it is the result of an addition of 2 and 3...'. 
+
+On the other hand, the reverse polish notation is: '2 3 + 4 *' which is a 'bottom-up' representation. FIRST you list the two operands, 2 and 3, then the operation, addition, that you will perform on them, 'oh, I'm going to add those 2 numbers, that would be 5'. In postfix you mention and calculate the value of each operand BEFORE you get to the operator that needs to operate on those operands. So postfix actually lists things in the order that you need to use them when performing a calculation. It was this observation that led to the development of high-level languages. It was the realization that you could write your code in an 'infix' notation that people seem to prefer, and then the compiler could rearrange that into the postfix order that is necessary to perform the calculation.
+
+As another aside, there is yet another language, FORTH, that like LISP also did NOT adopt infix notation. It did the reverse of LISP. FORTH does everything in postfix. In FORTH you write '2 3 +' to add 2 and 3. Unlike LISP, FORTH did NOT allow flexible arity of its operators so FORTH is essentially parentheses free. Because FORTH requires that you write things bottom up, in execution order, it FEELS more like an assembly language or machine code instead of a high level language.
+
+Summary: Operator notation is a very brief language convention that is used to create expressions out of a small number of built in functions (usually named by symbols that are easily distinguished from either numbers or variable names), and those function are monadic or dyadic and all return values. Operator notation depends entirely on the interplay   
+
+
+::S FORTRAN (50s)
+== FORTRAN (50s) - operations, functions
+FORTRAN was release in 1956 and is considered to be the first popular high level language. The name stand for Formula Translation and the purpose of the design was to let programmers write their calculation MORE in the form of algebraic equations which is the way that they were thinking rather than one computer instruction at a time the way the electronic computers worked.
+
+The calculation that I did in assembly code in the previous section, if I compress it all onto one line looked like this:
+
+  mov R1,x; mov R2,y; add R2,R1, mov x,R2;
+  
+algebraic notation (FORTRANs version) would look more like this:
+
+  x = x + y
+  
+Instead of giving names to opcodes like ADD, SUB, MUL, DIV, MOV, standard math symbols and standard math notation, composed of !operators (like: + * - /) and !noperands (like: x, y, 3), was used.
+
+Well, nearly standard notation, I should say. FORTRAN used '=' essentially as a way to do storage, a assembly MOV instruction. I believe they used 'EQ' as the operator for testing equality. X EQ Y would be how you test if those two variables held the same value.
+
+The primary change was not JUST the used of shorter symbols, '+' instead of 'ADD'; It was also a change from requiring the programmer to make the register assignments that were necessary for the calculation to work. It became the job of the compiler to figure out which registers were available for work and to use them. It also altered the notion of sequence slightly.
+
+As you probably already know, math notation does NOT work strictly from left to right. In an expression like 2 + 3 * 4, you do not start on the left hand side and perform the addition of 2 and 3 first. Instead multiplication takes !nprecedence over addition and so you first multiply 3 * 4  and then add the 2. 
+
+The advantage of using algebraic notation for programmers in the days of FORTRAN was that the calculation which you wanted the machine to perform were often first written down in math notation. If you were then hand translating those into machine code you needed to rearrange them so that they happened in the proper order, which meant that the code that you finally produced did not look like the equation you started with. So the algebraic notation improved the documentation. It made it easier to read the code that you had written and see what it was doing.  
+
+-- Euler's Functional Notation
+The other thing that FORTRAN did was incorporate another math notation, the functional notation that had been standard since Euler defined it. You have perhaps already seen this in algebra classes. It looks like this:
+
+  f(x, y, z) = 3*x + 7*y^2 - 2z - 15
+  k = f(3, 4, f(1,4,5)) 
+
+Euler's notation arose when he wanted to start talking about function that took MORE than just the two arguments than all the standard math functions like addition and multiplication. 
+
+I am assuming that you have seen something like Euler's notation previously but allow me to decode what he is doing in those two lines. I want to give names to what is going on by using some present day computer programming words.
+
+The first line is a !nfunction_definition. It defines HOW you compute the function f. First it defines the function's !nname, 'f', next tucked inside parenthesis, '(x, y, z)', it gives a list of !nparameters that the function requires. 
+
+Note: parameters are NAMES that will be given to !narguments inside the definition of the function. Arguments are VALUES that will be passed INTO the function from the outside when you go to USE the function, parameters are NAMES that are written down in the DEFINITION of the function. 
+
+The point being that in a bit of math that looks like this: 'f(x)=x+2; k=f(3)+5' k will have the value 10, x is a parameter (a NAME) and 3 is an argument (a VALUE). When you used the expression f(3) to !nevaluate the function, you !npassed_in the argument of 3, the 3 effectively took on the parameter name x, so that you could use the definition of f and treat x as representing the value 3. The function !nreturned the value of 5, which could then be used in the operator expression, 'f(3)+5' to calculate a value for k.
+
+Euler's function notation was used as the template for what we do in computer programming. It splits the notion of DEFINITION of a function, f(x,y,z) from the USE of a function which CALCULATES (i.e. returns) a value.
+
+To evaluate f(3+7, f(2,5,6), -19) The evaluation requires ARGUMENTS which are values that can come from any valid expression which can be single numbers, operator expressions, or other function calls (i.e. function evaluations)'
+
+Euler's notation in some sense applies our most important linguistic notion, naming, to calculation. Naming basically means giving a simple name to some possibly complicated process, 'go eat your dinner'. You define how exactly you eat your dinner in one place, and then can use that name to refer to that method in any other process.
+
+--Some actual code
+I am going to bring down the example I listed above of Euler's function notation as used in math, and will show how that translates into computer languages like Java and Python that we will eventually be teaching. 
+
+    -- Math notation--
+  f(x, y, z) = 3*x + 7*y^2 - 2z - 15
+  k = f(3, 4, f(1,4,5)) 
+  
+    -- Java code --
+  public static int f(int x, int y, int z){ return 3*x + 7*y*y - 2z - 15; }
+  public static int k = f(3, 4, f(1,4,5)); 
+
+    --Python code--
+    ????
+    
+The Java language does type checking which requires that you DECLARE the type of every variable, or parameter that you use, and that you declare what type of thing any function returns. This is not an unreasonable addition to Euler's notation. He lived in a world where calculation was all about numbers. He wasn't trying to define a notation that would allow function to return video streams, or audio clips, or RGB Colors.
+
+He also lived in a world where a human would look at a notation like the definition of a function and say, "Ah, that = sign there means that this is the definition of the function. I can see the difference between that usage of the symbol and the way that we used it in the next sentence to define a variable k and assign it a value." So java includes words for the type of everything, and used Braces for the block of code that is being used to define a function. 
+
+--Summary
+FORTRAN had variables where you give names to stored values, it had functions where you gave names to processes that would calculate values, and it allowed algebraic notation for expressions that calculate and return values: the combination of operators and Euler-style function evaluation.
+
+Next up: Algol, an algorithmic language from the 60's.
+::S ALGOL (60s)
+== ALGOL - Block Structure, Function Stack, recursion
+
+Algol stands for 'Algorithmic Language' and was developed primarily as a way to unify the way that people wrote code for publication in journals so that you could show people an algorithm for a way to compute something. As a result it was a big language that specified lots of things and as a result it was complicated to write a compiler for the language which limited its use as an actual programming language. 
+
+It was also limited by the fact that one of the designers on the ALGOL committee, Nicholas Wirth, who was a professor that wanted a language which was simple enough to use for teaching, immediately simplified ALGOL down to a reduced form which he named PASCAL. Because PASCAL was both easier to build and easier to teach, it was taught a lot and was thus much more broadly known and used than ALGOL ever was.
+
+None the less, Algol introduced several ideas that were so useful that they have essentially been used in nearly every language since it's introduction in the early 60s. The two that I want to mention here are Block Structuring and Recursion (which involves a function stack).
+
+== Block Structuring
+The idea of block structuring is probably best explained by looking at some fortran code side by side with some block structured code. I will use the example of an IF statement where we look at an integer variable K and do one thing if it is negative  and a different thing if it is zero or positive.
+
+   -- FORTRAN -- (not real fortran by close)
+ IF K 10,20,20
+ 20 PRINT K
+ GOTO 30
+ 10 K = -K
+ GOTO 30
+ 30 PRINT "K IS NOW POSITIVE"
+ 
+   -- Java -- (not real ALGOL but close)
+ if(k < 0){
+   k = -k;
+ } else {
+   print(k);
+ }
+ print("K IS NOW POSITIVE");
+
+The difference is this. FORTRAN was littered with NUMBERS known as LABELS and you could jump from one label to another. This was quite simply modeling exactly what was going on in the machine code; where you can at any time jump to another address. Unfortunately FORTRAN had made this even worse than it was in Assembly code. In assembly code you could write labels in English text. FORTRAN required numbers. So in assembly you could jump to 'CalculatePayroll:' in FORTRAN you would just jump to 23.
+
+Furthermore, there was NO requirement in FORTRAN that any of the numbered locations in your code be in sequential order. In my FORTRAN sample code I put the numbered line 30 in front of the line numbered 10. Of course most people DID put their numbers in order but you could never be sure. FORTRAN code that jumped all over the place was called 'spaghetti' code. So if you were reading someone else's code and you come to an IF statement, you see 3 numbers. Those are the 3 places that you can jump to if the supplied argument was either negative, or zero, or positive. Where are those places? Who knows? You need to look all over the code.
+
+The Block Structuring that came in with Algol came from observing that most code came in sequential blocks, and instead of marking a block with a number at the front, you could mark a block with an open brace at the front and a close brace at the end. If you INDENT the code that comes between two braces you can LOOK back from a close brace and quickly see where the open brace was. If you look down from the open brace you can see where the close brace is. You are using LAYOUT rather than NUMBERED locations to specify blocks of code.
+
+Block Structuring REMOVED the freedom to put numbered sections anywhere you want in the code. So unlike the FORTRAN IF, which allowed you to jump to ANY 3 places located anywhere, you only got two places, the IF place and the ELSE place AND those places had to be in sequential blocks. You were FORCED to place things in certain spatial arrangements and in fact there were only a small limited number of spatial arrangements allowed, basically the IF (and its variant the SWITCH) and the WHILE (and it variant the FOR). There were raging debates as to whether those were sufficient to write all the code that you needed to write. You were GIVING up the freedom to put code anywhere, like you could in assembly code.
+
+BUT, you did NOT need to spend time looking around code trying to find where they put that block named 30, or even that block named 'CalculatePayroll'. You just looked inside the braces following a few limited patterns.
+
+It is an artifact of those early days of block structuring that the language Java had the word 'goto' JUST LIKE FORTRAN as a 'reserved word' and it is to this day UNIMPLEMENTED, meaning that you can not legally use it in a Java program. They were pretty sure that you didn't really need to use goto EVER, but who knows, maybe someone will discover some use case where it would be beneficial to jump to an arbitrary place like you could in assembly and FORTRAN.
+
+Virtually all languages since the 60s use some form of block structuring. Block structuring was basically the REQUIRED use of braces to delimit code blocks (PASCAL used words: 'begin' and 'end' instead of braces) and the OPTIONAL use of indenting to help a HUMAN see which open brace matched which close brace. Humans used the indent, computers used the braces to SEE the blocks. Python alone, so far, decided to elevate the INDENTING up to being required so that they could stop using the braces to mark blocks. So in Python both computer and human MUST use indenting.
+
+==Recursion and the Function Stack
+The other feature of ALGOL was to support recursion. Recursion (a form of circular definition) was used all the time in math definitions, and if ALGOL was going to let people publish algorithm in math journals, they needed to support recursion. 
+
+The example that everyone gives for recursion comes from math. It is the factorial function. n! is defined as 1 if n is 1 but as n*(n-1)! for all other values on n.
+
+The circularity of the definition is obvious. n factorial is defined in terms of n-1 factorial. Where does it all end? 5 factorial requires 4 factorial which required 3 factorial which requires 2 factorial which requires 1 factorial which requires - Oh wait, 1 factorial is defined directly and does not recurse. Ah that is the end 1! is 1 so 2 factorical is 2*1 == 2, so 3 factorial is 3*2==6 so 4 factorial is 4*6==24 so 5 factorial is 5*24 == 120. There you go. It is well defined.
+ 
+If you are working from the top down, which is what functions do, breaking big problems into smaller problems, you CAN'T return the answer to factorial(5) until you first find the answer to factorial(4) ...
+
+The way FORTRAN did a function was like this: Suppose you have a function that was defined as f(x,y) which takes two parameters. When you want to evaluate f(3,4), you needed to store the two arguments, the two values 3 & 4 someplace in memory AS IF THEY WERE VARIABLES names x and y. FORTRAN did just that. When you defined f(x,y) it allocated two global slots, f_x and f_y, as the place to store those two values. Every time you want to evaluate the function f, first fill up those two slots in memory, then jump into the f code and it will calculate the result.
+
+Unfortunately that method does NOT work for a recursive function. If you put the numbers 3 and 4 in those two fixed slots, and started calculating f, and if sometime in the middle of the calculation of f(3,4) you need to know f(2,7), you can't just overwrite the 3 and the 4 sitting in the slots and expect to be able to resume that calculation correctly when you are finished calculating f(2,7). 
+
+What you need, what ALGOL needed, was a mechanism to allocate some memory DYNAMICALLY, not in the static global pool, where it could store all the paramters and local variables that were necessary to run f(3,4) to completion, and IF f(3,4) depended on some other value of f, like f(2,7) it could allocate some more memory dynamically where it could store the values 2 and 7 and anything else that it needed to calculate f(2,7).
+
+Well it turns out that a data stack is a simple structure that can do just that. When you push something on the stack, like a FRAME of data that holds the value 3 and 4 and
+
+So what ALGOL needed to do, if it was going to allow recursion, was to
+IMHO recursion is of very limited use, but it really is useful in those special cases where you need it. FORTRAN did NOT support recursion at all. You could NOT have a function that called itself.
+
+  
+::S C (70s)
+
+== C - Structs, malloc, free, pointers
+todo
+::S Smalltalk Java (80s)
+== Smalltalk - Objects, Garbage Collection
+
+
+todo
+::S Thrashing
+==Thrashing
+I must apologize. I started to write this book on generic programming to introduce people of all ages and backgrounds to programming, without the bias of selecting a single language to teach. I find myself thrashing about, unable to find a good starting point. Perhaps this is just a bad idea and I should give it up. Perhaps I am just too old to do this. I have spent my life in programming, just know TOO many details and can't decide where I should start.
+
+--Top Down vs Bottom Up
+I worry that my math background is distorting my prsentation style. Math tradition strongly dictates that you first start out defining your starting point logically, proving little tiny things along the way and then end with the place that you want to get to. It is a very BOTTOM up approach. Start at the foundations.
+
+My computer programming experience, on the other hand tells me that often the best way to code and the best way to understand things is the TOP down approach. You hardly define anything. You describe a process by breaking it into only two or three steps. First you do the set up operations so that things are all in the right place, then you do the processing of those things and then you make a final pass to finish up. Here, I'll even write that down in code for you.
+
+::I java
+  void process(){
+    initializationAndSetup();
+    mainProcessing();
+    finalCleanup();
+  }
+
+This is more like writing an outline. In this form, if you want details about the finalCleanup, you can just go look at that and can skip/skim over the first two steps. The Outline, at this very TOP level, is basically a map, zoomed way back to give you the highlevel view of the landscape, and you can zoom in for details.
+
+And of course this top down design is SO VAGUE and so void of detail that in some sense it tells you nothing.
+
+A good programmer does both. You must know both approaches and you bounce back and forth between them all the time. You can't test code that has no detail. Bottom up, where all the details have been established, is THE way to go if you want to test that your code actually works. It is GREAT to know that you have a firm foundation, but if all you do is bottom up work, you may have built a rock solid foundation, and then built walls and doors and windows and OOPS, it's in the wrong place! I wanted to get to THIS POINT UP HERE, and I thought I was building the stuff I needed but DAMN, I didn't really understand the problem correclty when I started building that low level stuff. Sure, the low level stuff all works, it works fine, but it is all the wrong stuff.
+
+Top down, generally doesn't have that problem. Instead it has a completely different problem. "I'm gonna build this enormous dome here. It will keep the rain off, so I will need these shingles and these rain gutters, and cisterns so I can capture all the rainwater and reuse it. Let's see, that will weight this much so I will need supports that can hold all this weight and OMG - There is no ground here. This is a swamp, it can't support that weight.
+
+The simple truth is that on a big project you CAN'T see everything all at once. There are so many pieces that you will need, which you haven't built yet, that you CAN'T know that they will all fit together when you are starting out. So the best methodology is to know ALL the different ways to design and build things and to dance back and forth between them, building and checking and sketching and reworking.
+
+To be fair, to bring this back to where I started, Mathematicians know this. Mathematicians also work both ways all the time. The BIAS that mathematicians have is that the way that you write the paper AFTER you have done all the work and have verified that all the pieces work is STRICTLY BOTTOM UP. And that choice is NOT an accident, it is choice that optimizes for the thing that a mathematician wants which is, PLEASE check my work, and verify that I have not made a mistake somewhere and overlooked some little detail. Math papers are all about getting verification/testing by other skilled mathematicians. They are NOT about teaching math.
+
+MY concern is that generic programming is a big topic. There are lots of moving parts. Do I start way back in the beginning and teach you about !nbits and !nbytes and !nboolean_algebra and work my way systematically up to your first complete absolutely trivial Java HelloWorld program, which for the record looks like this:
+
+::I java
+  class HelloWorld{
+    public static void main(String[] args){
+      System.out.println("Hello, World!");
+    }
+  }  
+
+If I am being a Math guy and using a math style presentation, I must first explain what a !nclass is and what !nvoid means. I must tell you why you need square brackets after the word String, and why 'String' MUST be capitalized and why 'main' must NOT. I will be defining abstract notions for pages and pages before you ever see ANY code that actually works.
+
+This is NOT good teaching. Everyone knows that the way that you teach the little monkey to break open a nut is to pick up a nut, pick up a rock, break it open and eat it in front of them. "Oh, I want to do that!". Just show them. Don't lecture them on the nature of rocks, ("Now don't use dirt clods to bash your nut. They will just break apart and won't break open the nut").
+
+Safety lectures are also semi-optional: "Look, hold the nut by the sides, and smash the rock down on top. Trust me, if you hold the nut with your thumb on the top and smash down, you are NOT going to be happy with the result." Too much lecture before they ever get to eat that first nut and the little monkeys just wander off looking for easier food. Besides, the best way to learn about mashed thumbs is to mash a few thumbs.
+
+Teaching is an art. It is NOT bottom up and it is NOT top down, either. I don't know how to do it. I don't have a map for this presentation. I think I am just going to have to thrash through it. This course will be just a bunch of runs through the jungle. 
+
+Grandpa has spent his life running through the jungle, He knows a WHOLE bunch of stuff. So if you want to learn the jungle, let's just start running. Every day another run. Every day a different view, and different look, a different goal. Every day, talk talk talk, "here look at this." And, with any luck, you just might get a nut.
+
+To EMPHASIZE this non-direct approach I am going to TRY to alternate between a bit of bottom up definitions and a wee bit of top down code so that you will get both. 
+
+If you have ever worked with a standard textbook, you probably know the basic layout, first a Preface and Introduction which you can just skip entirely because after all, it is just like this text here where the author gasses on about how they tried to organize the book, and like who cares. 
+
+Next they have the bulk of the book that maybe actually teaches you the stuff. 
+
+Then comes the Appendices, which are basically little short essays where you explain to the students the stuff that they SHOULD have studied and KNOWN before they ever started reading the book, but HEY, just in case you didn't, here it is. Didn't want to break up the flow of the book by STARTING with the background material, it is put in the back JUST IN CASE you might need it.
+
+You may have a glossary, where you define technical words, a little mini-dictionary tuned to the words that you used and introduced in your text, and finally, an index where you can look up materials.
+
+Well, This course will be online. We don't have to follow classic book styles. I have different layout options. I don't have to put my appendices at the back. I can interleave them - go back and forth between bottom up and top down. I can alternate between background material, define some low level terms that I think MIGHT eventually pay off for you - and then switch to showing you a little more code that does something. 
+
+--Summary
+In this section, I did my the intro. I mentioned two very generic design strategies and gave them names !ntop_down and !nbottom_up. Humm, purple words, both here and up at the top where !nclass, and !nbits, and !nvoid, and !nbytes were also colored, probably for emphasis. Maybe those words will be in a glossary somewhere. I also showed you some Java code for the HelloWorld program that was full of unexplained stuff and no indication of what you actually need to do to get it to print the message, "Hello, World!". That was rather top-down. Maybe that is the nut for today. Perhaps tomorrow we will learn to crack it open and actually run that code.
+
+::S Language
+==Language
+This is most certainly an appendix. If you don't already know what a language is you are certainly NOT going to be reading this. I am NOT going to explain language to you. I am just verifying that you know and use some of the same words and language notions that I do. 
+
+You already know that languages have !nvocabulary, words for describing things, !nnouns, like "cats" and "dogs" and action words, !nverbs, like "fly", "run" and "jump". You also know that there are special sub-categories of nouns such as !nproper_nouns like "Bob" and "Mt. Everest". There are other special categories of nouns that you might NOT be aware of like, !nmass_nouns such as "luggage" and "cash".
+
+ASIDE - I am a native English speaker and I did NOT know that English had mass nouns until I learned a bit of linguistics in my late fifties. I certainly USED them all the time and I used them properly but I never noticed that this class of nouns existed and had a name. 
+
+On the other hand, people that learn English as a second language DO learn that English has a special category of nouns - ones that can't be counted. I can have one dog or two dogs and I can 'give a dog a bone'. However, I can't have one luggage or two luggage and while I can 'get the luggage' I can't 'get a luggage'. Mass nouns can't be counted and don't use the !nindefinite_article "a". So - "give me the cash", "give me the luggage", no problem. But - "give me a cash", "give me a luggage" just sounds wrong.
+
+Languages are full of words and also have rules, !!nsyntax and !ngrammar, and amazingly YOU made it all up! Well, you made up all the rules for your native language! You learned to talk about cats and dogs and you learned to count and to ask for some juice all without knowing that there were things like !nnouns and !nverbs. You were already rather fluent in your native tongue before you were ever introduced to !ngrammar, probably sometime in 'grammar school'
+
+ASIDE - Why is elementary school sometimes called grammar school? I learned that this name comes from the days of the Roman Empire. When your empire conquers some foreign state, you kill or replace the old rulers and kings with Roman rulers. You build roads so that it is easier to get around. You build irrigation so that it is easier to get water, and you set up 'grammar schools' so that you can teach the kids LATIN, because after all, they are now Roman subjects and must know THE language of the empire, so that they can talk to the new tax collectors, and you also teach them Math (sorry Arithmetic), because society always needs more !ncomputers and !ncalculators, and if you are really good maybe you too can become a tax collector.   
+
+END ASIDE
+
+Languages have !nmeta_language. I have been sprinkling it in all along here. I have been coloring some words in purple in this section to emphasize that they are meta-language. The difference is this, your !nlanguage is designed to talk about the things that you see and do in the world, i.e. "cats" and "dogs" and "Bob" but eventually you will want to use language to talk about the language itself. Meta-language are those words like !nnoun, !nverb, !nsentence !nparagraph, !ninderect_object that are the specialized language used to talk about language itself.
+
+Meta-language is not required for learning language. Kids learn their first language JUST FINE without any knowledge about or awareness of grammar. You knew about cats and dogs long before you knew about nouns and verbs. But nouns and verbs do indeed exist and they exist in ALL the languages of the world. And once you know the notions of 'nouns' and 'verbs' and 'inderect objects' and 'counterfactual subjunctives' it would be foolish to avoid those notions when you want to learn some other language or when you just want to talk about language.
+
+Programming languages are no different. They have syntax and grammar and vocabularies and meta-language, but at the same time, programming languages are not talking about cats and dogs, they are talking about !nbits and !nbytes, !nclasses and !nobjects, !narrays and !nlinked_lists and !nhash_tables, !nvariables and !nfunctions, !nassignment and !ndeclaration. It isn't so much that the language is alien, rather it is the fact that the landscape that you must run through daily is a jungle of alien vegetation and you will need to learn a whole new set of words to talk about the new stuff that you will be seeing.
+
+--Notation
+However, before we proceed I wish to call to your attention that ALL the meta-language and linguistics that I have been talking about so far (nouns and verbs, subjects and objects) are properties of Spoken Language, which is what the word 'language' generally connotes. There is however a much richer environment, namely !nwritten_language and an even broader category, !nnotation, which will need some of its own meta-language. We don't speak in !nCapital_Letters, and !nparagraphs, and !nchapters, !nbooks, and !noutliness but we write in them all the time. You can possibly read the math notation: '3+4' out loud as "three plus four" but by the time you are writing down calculus equations, you are writing down things that you can look at and read and understand but that you can't actually read out loud as language and have anyone understand. And no one would even pretend to read a blueprint, or an architectural floor plan, or a Beethoven symphony out loud.
+
+Writing and notation are SO MUCH MORE than spoken language. 
+
+Look at the text you are reading right now. What are those !ncapital_letters? What do they mean in spoken language? Well, English uses them one way, to start sentences and to start proper names. German uses them differently, to start all nouns, whereas Chinese doesn't have the notion of capital letters.
+
+What what are those !npunctuation_symbols, the !ncomas and the !nperiods and the !nquestion_marks? Are those spoken? Well, yeah, perhaps they do actually encode pauses in the speech patterns. 
+
+What about Quoted speech? "I said, 'What about quoted speech?'". Of course, had I been English rather than American (!ncounterfactual_subjunctive) I'd have written, 'I said, "What about quoted speech"?'.
+
+And yes, in the example above I specifically tried to write a quote that had a quote embedded inside of it. That is an example of !nnesting. We have two differently written quotation wrapper symbols so that you can see the difference between the outer wrapper and the inner wrapper and it almost goes without saying that two countries who can't even drive on the same side of the road also can't use !nsingle_quotes and !ndouble_quotes in the same way either. We will return to nesting later.
+
+The primary observation that I am trying to make is that writing IS a very different medium from speech and thus has extra rules and syntax in addition to those for the underlying spoken language.
+
+Written language also has !nlayout devices that really aren't part spoken language. I refer things like !nparagraphs and !nheadings, !nChapters, !nTables, !nquotes, !nblock_quotes, !nindexes, !nglossaries.
+
+We also have even more specialized layout, that aren't like chapter books, for example Plays:
+
+HAMLET: To be or not to be? That is the question.
+
+Since a play is ALL dialog, and since the actors need to know which character is saying each line, Lines are prefaced with the character's name and what they say is not written out using the quotation marks that are customary for quoted speech. And of course the character name is NOT intended to be read out loud (and neither are the stage directions).
+
+Consider an outline:
+
+  I. First Topic
+    A. One Major Consideration
+      1. A sub-note
+      2. A different sub-note
+    B. Yet another Major Consideration
+      1. details on Yet Another
+      2. more details on Yet Another
+  II. Second Topic
+  III. Third Topic
+
+Yes, the individual lines are English Text and can be spoken, but those numbers in the front are not intended for reading (and what is that I. II. III. nonsense - Oh yeah, Roman numerals, an archaic numbering system that was resurrected so that each different level of the hierarchy could be represented by a distinctive style of number).
+
+Outlines are not text, they are a notation for Hierarchical relationships. I.B.2 DESCENDS from I.B and it comes AFTER I.B.1.
+
+Um..Do you see where I am going with this? Do you remember that top-down code example that I gave in the previous section where I have a list of functions that shove the details down into other functions. Hierarchical structure IS how we design code and how do you WRITE down the code to represent that hierarchical structure. Well we use two DIFFERENT tricks that both borrowed from language.
+
+One of those tricks is !nnaming. We use generic names, 'cat' and 'dog' to distinguish between different types of animal. We use proper names like 'Spot' and 'Puff' to refer to specific members of those two classes of critter. (note the use of lowercase for words that are types and the use of upper case to notate specific individuals - have a good laugh when we finally get to the section in the book where we talk about coding conventions where types of things are spelled with capital letters, String, and specific objects are represented in lower case, aString.)
+
+Naming (!nreference) is probably the most important tool that we have ever discovered. It is practically the purpose of language. I can come up with a word 'lasagna' to represent a very specific sort of food that we can eat, with a somewhat complicated recipe and then a single very short phrase, "make the lasagna", can reference and indicate an entire procedure.
+
+
+--Accounting Invents Writing.
+
+ASIDE - Archaeologists have discovered artifacts at a site that consist of hollow clay balls that have some things rattling around inside them. When they look inside they find small clay animal figurines like say a cow and 3 goats. It is presumed to be some contract, or some account record, perhaps a memo of sale for some transaction. 
+
+More interesting, at a higher layer in the dig, meaning at a later time period at that same site they still find more hollow balls also with things rattling around inside but with this difference: now on the outside of the hollow sphere someone made impressions of the cow figurines and the goats that were on inside before they were sealed up. It is speculated that by making impressions on the outside, one no longer needed to break the seal and open up the ball up to see what was inside. 
+
+And then at an even higher layer, at an even later time epoch, they found flat tablets with impressions of goat and cow figurines. It appears that someone figured out that once you could read impressions on the surface of the clay then perhaps you did not actually gain anything by enclosing little figures inside a ball to keep a record. Amazing how tech keeps advancing, and equally amazing how long it can take people to see a better way. Progress is continuous refactoring. Debugging IS the job!
+
+END ASIDE
+
+We don't actually know where writing came from. We do know that the tech keeps changing. We moved from clay and sticks, to stone and chisels, to papyrus and pigments, to paper and pencils, scrolls, brushes, ink, movable type, books, ballpoint pens, typewriters, telegraphs, teletypes, PCs and truetype fonts. And as the tech changes, what we can and can't do easily changes and what we want to do with that tech also changes.
+
+::S Functions
+==Functions
+I want to talk about functional notation which is used all the time in programming. These are the 'verbs' of the language the 'actions', not the 'nouns' which are the data. I used teach nouns first. Your first words were likely 'mama' and 'milk'. We start with nouns and things, and then later progress to activities like 'crawl' and 'walk' and 'run'. So I would start out by telling you about data items like the number 3 or the character '3' or the String "3", those seemed somehow easier than an expression that actually calculates something like '3+4'
+
+However, I would like to talk today about the 'linguistics' of functional notation, how it evolved, first as math notation, and then further evolution as computer programming notation. And the reason is that in computer languages you will see all kinds of DIFFERENT ways of notating the single notion of a function. 
+
+--Euler's Function Notation
+Euler is the mathematician that introduced 'function' notation that basically looks like this: f(x). The notation conveys the notion that you have a !nfunction whose name is 'f' which take in a single !nargument that was given the !nparameter name x. Let me decode that for you.
+
+A function, to a mathematician, is some named !procedure, that takes in some !ninputs, which are also called !narguments, and possibly after performing some calculation, it !nreturns one single output result. 
+
+Note: for mathematicians that number 'one' was/is important. A function returns one value, not zero, not two. Programming languages do not match that notion. Historically, the language FORTRAN, respected the math notion and they defined FUNCTION to be a procedure that returned one result and used a different word SUBROUTINE to be a procedure that did NOT return a result. Later languages like C, decided that since all functions return some TYPE of object, an int, a real, a character, a String, ... they could just define a new TYPE named 'void' that wasn't exactly a type, it was simply saying that this particular function did NOT return anything. And suddenly there was no need to distinguish a function from a subroutine and the word 'subroutine' went into decline.
+
+I also must explain the difference between an !nargument, which is an input !nvalue to a function, and a !nparameter which is the !nname that is given to an argument when it is passed into a function. Let me write an example.
+
+::I text
+  f(x) = 3*x + 2   <- x is a 'parameter', the NAME of something that is passed in
+  f(5) = 17        <- 5 is an 'argument' a value passed f, which returned 17
+  
+The first line was a DEFINITION of a function. The stuff in the parenthesis were the names of the parameters, and they were written there so that you could look at the formula that DEFINED how to calculate the result of the function. You can see that it did multiplication and addition and had constants 3 and 2 and it used the passed in value to get the result. Different numbers passed in give different results.
+
+The second line was NOT a function definition, it was a USAGE of that function. It was the EVALUATION of the function at a particular value, namely 5.
+
+I call this to your attention because programming noobs often have trouble understanding the use of names. let me give a slightly more complicated example, a function with 2 parameters.
+
+  f(x,y) = 2*x + y - 3   <- function definition, 2 parameters x and y  
+  x=2, y=3        <- define two variables and give them values (OUTSIDE of f's definition)
+  f(x,y) = f(2,3)  = 4   <- evaluate the function = 2*2 + 3 - 3
+  f(y,x) = f(3,2)  = 5   <- evaluate the function = 2*3 + 2 - 3
+  
+The point is that the variables named X and Y LIVE in the outside world, out in my PROBLEM space, and those names have nothing to do with the names INSIDE the definition of the function. In order to evaluate the function f(y,x) I looked up the value of y, in PROBLEM space, got 3 and passed that INTO the function, I did the same with x so the values passed in were 3 and 2 in that order. Well the function DEFINITION said that the first value passed in will be named 'x' INSIDE the function. So the names of values OUTSIDE of the function have NOTHING TO DO with the names on the inside. So when you USE a function to evaluate it, like in f(y,x), y and x are ARGUMENTS they are values in the outside world, they are values being passed into the function. Once you get into the function, you look at the function definition, f(x,y) = 2*x + y - 3, x and y are now LOCAL name (local to the function) for the 1st and 2nd parameters. Parameters are Local names that only make sense when you are inside and executing the function.
+
+So Euler's function notation allowed you both DEFINE and to USE functions with any number of paramters (technically zero is allowed, f() = 3, a constant function with NO parameters, f(x) = 3, a constant function that takes one parameter which it ignores, f(w,x,y,z) = ... a function with 4 paramters) 
+
+Euler's notation also allowed function nesting.
+
+  f(x) = 3x + 2         <- we DEFINE f here
+  g(x,y) = 7*f(x) - 3*y <- we are USING f here in the definition of g
+  g(1, f(2))       <- we are USING f to create an argument and USING g; result is 11
+  
+So Euler's notation is widely used in programming, BUT with these modifications added to deal with situations that Euler never anticipated.
+
+First of all, Euler lived in a world full of numbers and it was pretty much assumed that the value returned from a function MUST be a number because that's all there is. NOW days with computers we work with Number, Text, Audio, Video, Lists of Addresses and LOTS of different types, so we require that you document the TYPES of things that you will be passing in as arguments (i.e. the types of the parameters) as well as the TYPE of that thing that the function returns.
+
+Secondly, Euler lived in a day when a computation was essentially a formula or something very close to that. 
+
+  factorial(x) = {f(0) = 1; f(n) = n*f(n-1);}
+  
+Euler allowed you to LIST several different formula and it was ASSUMED that you, as an intelligent mathematician could interpret what was meant. Hum.. f(0) is explicitly listed so that must be what I use for zero, all other numbers must go into that other formula. Oh I see f(1) = 1*f(0) which is 1*1 which is 1, f(3) will be 1*1*2*3 and so on. Ok I see factorial(5) will be the product of the first 5 integers. 
+
+What about f(-1)? Humm..that doesn't work at all, the calculation never ends and neither does f(3.14). Looks like this function is only defined for non-negative integers. Got it.
+
+That was math. Programing languages on the other hand have lots of available statements and commands, not just mathe formulae. They have 'if' statements and 'loops' and other stuff so we don't just write a list of formulae and expect the computer to 'figure out' which formula it was supposed to use, instead we write a sequence of instructions that performs the computation. 
+
+None the less, you can see that the final results are VERY close to Euler's notation.
+
+--Java code for factorial
+  int factorial(int n){if(n==0){return 1;}else{return n*factorial(n-1);}} 
+  
+--Python code for factorial
+  def factorial(n)
+    if n == 0:
+      return 1
+    else:
+      return (n * factorial(n-1))
+      
+Note: Python does NOT declare Types returned by function or Types of parameters. Python also requires indentation to isolate the blocks of code influenced by the if statement.
+
+However, while Euler's notation is still used everywhere, it is the mid-point of this discussion of function notation. There were function notations, math notations (operators) that pre-dated Euler, there were math notation (Polish logic) that came AFTER Euler, and there have been other changes to programming languages After FORTRAN borrowed and updated Euler's notation, ALL of which show up in programming languages at various places.
+
+==Operator Notation
+We have been using it all along. It is the math notation that preceded Euler. It is what you learned in grade school, '3+4'. It is what we used in the definition of Euler's functions, e.g. f(x) = 3*x + 2 
+
+Technically !noperator_notation like '3+4', involves an !noperator which is the function and !noperands whic are the arguments. In the expression '3+4' the function 'addition' is represented by the !nsymbol '+', and that operator is written in !ninfix placement meaning 'in' between its two arguments. The operator, '+', is called a !ndyadic, operation meaning that it takes exactly 2 parameters. 
+
+Math also has !nmonadic operators like NEGATE, written with the symbol '-' used in !nprefix placement in the expression '-19' and the function factorial written with the symbol '!' is also monadic and used in !npostfix placement like this '5!'. 
+
+It happens that dyadic operators can also be written in prefix style: '+ 3 4' and in postfix style '3 4 +', but you almost never see that in math. Math prefers to be infix. There is a reason for that which we will get to later. And when we finally get to object notation you will see that programming languages also prefer to be in infix. 
+
+It should be fairly obvious that the !nexpression 3+4 does in fact involve a computation where you added two numbers together. We could have written an Euler style function in java that would do that:
+ 
+  int add(int x,int y){return x+y;}   // define the function
+  add(3,4)  // use the addition function to calculate 3+4
+  
+You can see why, operator notation persists. It is shorter to write '3+4' than 'add(3,4)'
+
+Even if we changed the NAME of the function from 'add' to '+', Euler: '+(3,4)' is still too long.
+
+There is however a defect with operator notation, which is the primary reason that Euler developed his functional notation, to cure that defect. The problem is that INFIX operator notation really only work with operators that are at most dyadic. If your function took 3 parameters. Prefix would work fine, '+ x y z', and so would postfix, 'x y z +' but since infix is defined as placing the operator 'in between' the arguments, that is not well defined for 3 or more things.
+
+==Prefix Notation
+There is a sense in which Euler's notation is prefix. f(x), f(s,t), f(a,b,c) all list the name of the function FIRST and then follow with the list of their arguments. Prefix operator notation DID show up in math. It was called 'polish' notation for a while because there was a group of Polish mathematician that were working on logic (which, as far as math is concerned is primarily a meta-language - you don't use logic to describe mathematical objects, you use logic to describe what mathematician say when they write down mathematics. You use logic to describe describe the 'logical' arguments that mathematicians make when they attempt to prove something.)
+
+Symbolic Logic, as developed by Boole (who we remember with the keyword !nboolean) was the observation that one could do something that resembled algebra. You could write down formulae that looks like then algebra Distributive Law:  z*(x+y) = z*x + z*y, which can be used as a rule to manipulate terms in an equation and you could interpret '*' and '+' as logical operators like 'AND' and 'OR' and x,y,z are boolean values (true and false) instead of being numeric values.
+
+The Poles, when working on their logic proofs, found that the parenthesis that Normally show up in algebra, could be eliminated if you used 'prefix' format instead of the usual math style: 'infix with precedence' (I will show you precedence in just one minute). Basically the poles observed that if you write the distributive law like this:
+
+  = * z + a b * z a + * z b
+  
+It means exactly the same thing. (Try to decode it!) Each operator is Exactly dyadic. So + a b is a single value. So * z + a b is that same as *(z, +(a,b)) in Euler style when you leave out all the parenthesis. The Polish logic proofs were all simpler because they had eliminated the complexity of dealing with parenthesized expressions. prefix is hard to read. It is not convenient for Math, but it is convenient for logicians to PRETEND that mathematicians write all their equations in prefix notation instead of infix notation. It means that the math LANGUAGE that the logicians are studying is a simpler language to analyze. So mathematicians continue to work in infix notation for their operators, in Euler's notation for the functions that are not conveniently dyadic, and the logician, knowing that there is an equivalance between the infix notation and the prefix notation, can prove things that are TRUE for prefix notation and know that their results apply to the infix that the mathematicians actually use.
+
+  One of the oldest computer languages is LISP. Unlike FORTRAN (which stands for Formula Translation - meaning it used MATH formulas, good old infix notation formulas to represent its calculations) LISP decided that rather than supporting BOTH operator notation for simple dyadic functions like addition and multiplication and Euler's notation for any function that the programmer wanted to define - they would use a single rigid notation for EVERY function. They would use a prefix notation that looked like this (+ 3 4). The operator comes first, the arguments come afterwards and the whole thing MUST be wrapped in parenthesis. They NEEDED the parenthesis because unlike the Polish mathematicians that were dealing with simple math operators, they had to deal with users creating n-adic function with any number of parameters. So the parens were used to let you know when the list of arguments to a single operator ended. So (+ a b) is dyadic addition (+ a b c) is triadic addition, (+ (+ 1 2) (+ 3 4 5)) performs a dyadic addition of 1 and 2 getting 3, then a triadic addition of 3 4 5 getting a result of 12, and then lastly a dyadic addition of 3 and 12 getting 15.
+  
+  IMHO this was a poor decision when it was first done, and continues to be a poor decision by people work continue to work in LISP today. The feature that they got was JUST like the situation that the Polish mathematician had: it was easier to write the compiler/interpreter because the surface language, LISP, had less notation alternatives BUT the consequence was that LISP language itself is just about as unreadable as that polish Distributive law. The joke is that LISP stands for Long Interminable Strings of Parentheses. Basically they minimized the work needed to get a LISP system up and working and maximized the work of the programmer. 
+  
+Basically people are NOT good at reading DEEPLY NESTED parenthesized expressions. We will return to this notion when we talk about object notation and then once again when we talk about block structuring.
+  
+  (+ 1 (+ 2 (+ 3 (+ 4 (+ 5 6))))   <- do you see that this is wrong - not enough ) 
+  (+ 1 (+ 2 (+ 3 (+ 4 (+ 5 6)))))  <- ah much better
+   1 + 2 + 3 + 4 + 5 6             <- can you see that this is wrong? missing a +
+   1 + 2 +  + 3 + 4 + 5 + 6        <- can you see that this is wrong? too many +
+   1 + 2 + 3 + 4 + 5 + 6           <- ah, much better
+
+==Postfix Notation
+In the same way that LISP made the decision to minimize the time it took to get the LISP system up and working, there was another early language, FORTH, that did the same thing except that FORTH used postfix notation instead of prefix like LISP. Here is how you add 3 and 4 in FORTH
+
+  3 4 +
+  
+Forth did NOT use the parentheses that LISP did. This makes it only a tiny bit easier to read than LISP, but not much. 
+  
+The postfix notation that FORTH used was also called !nreverse_polish. It was not used in mathematics to my knowledge but it was used in building calculators. The first HP calculator that I used worked in reverse polish, and there was a reason for that.
+  
+There is a sense in which prefix is a !ntop-down notation. First you tell me the operation you are going to do, then its arguments. Look again at that long prefix Distributive Law expression. The first character is '='. That is the top operator, it is the top of the tree, you are equating two things which are big and complicated and follow after the main operation. Like an outline, the top of the hierarchy comes first. 
+  
+However from a computation sense, prefix and even infix are in some sense in the wrong order. Postfix, by placing the operators LAST, never shows you an operator until it has already produced all of the arguments that it needs. Postfix is !nbottom-up, assemble all the arguments before you ever do the function.
+
+Let me give an example, and I will use precedence in this example, even though I have not yet defined it. You already know what precedence is. You were told "Do your multiplications in an expression BEFORE you do your additions". That is precedence. Multiplication has a higher priority than addition and precedence is a way to save us from writing too many parnetheses in an infix operation. So when I write the espression 2 + 3 * 4, you know you should multiply 3 * 4 first, get 12 and then compute 2 + 12 to get 14. Multiplications first means that 2 + 3 * 4 == 2 + (3 * 4). And yes, if you wanted to do the addition first you would need parentheses, (2 + 3) * 4. 
+
+Postfix eliminates the need for parentheses all together AND puts things into execution order as well. Here are those same expressions both in infix, then in postfix
+
+  2 + 3 * 4   --   2 3 4 * +  
+  means -- push2, push3, push4, mul(removes 3,4 & push12), add(remove 2, 12 & push 14)
+  final result: 14
+  (2 + 3) * 4 -- 2 3 + 4 *
+  means -- push2, push3, add(removes 2,3 & push5), push4, mul(remove 5,4 & push20)
+  final result 20
+  
+And when you get right down to it, even Euler's notation f(2+3,g(x),5*7) is technically not really in execution order. The compiler must rearrange All of that to first compute 2+3 and get that argument ready, then compute g(x), and 5*7 and once it knows all of those values THEN it can call the function f and hand it the 3 arguments. WE may like to think top-down but the computer wants to work bottom-up.
+
+Any of the languages that allow you to use standard infix math notation for expressions (and that is nearly all of them) and that use Euler's functional notation are basically under the hood converting those infix expression and prefix notations into postfix form so that it can do the computation in the correct order.
+
+::S Generic Programming Languages
+== Generic Programming Languages
+
+One question I get asked is, "What programming language should I learn?" There are so many of them, where do I start? No one seems to like my answer which is start with all of them, and yeah, it is not an entirely serious answer because you DO have to start somewhere and you DO have to start seeing actual code in order to make sense of it.
+
+Perhaps a better way of interpreting my off the cuff remark is that it doesn't matter much WHICH language you start with because they really are pretty much all the same thing. Unlike human languages, whcih have had THOUSANDS of years to embelish and drift apart, computer language are so new (less than a hundred years) and so small (vocabularies on the order of a hundred words instead of the ten thousand of a typical spoken human language) that the similarities are obvious and the differences are small.
+
+In my career as a programmer I have worked in about 30 different languages. I don't think that that is in any way unusual. If you stay in programming you will learn many languages and it honestly does not much matter where you start. So my best advice is to not pay too much attention to the zelots that assure you that Python is the BEST language to start with, or that if you don't begin with a functional language like LISP you will be crippled for life and yada yada. The goal of the zelots is to assure you that THEIR favorite language really is the BEST, and my advice is, "BEST for WHAT?" as a noob you don't know what you want to do, and you won't know for some time so just relax and start anywhere.
+
+I think that Java is a fine place to start and that is what I usually teach but it really doesn't matter.
+
+What I want to do in this article is talk about computer languages in general, why they really are all the same (or nearly the same). I want to talk about the themes and patterns that underlie all of them, and that, my friends, is a risky business. Perhaps you don't want to start here, if you haven't studied any single computer language yet. This article is ABSTRACT, in the same way that a course in linguistics is abstract.
+
+If you study a single language like Russian, you will learn that the word for "dog" is "sobaka" and the word for "sister" is "sestra". If you learn Spanish you are instead learning about "perro" and I don't even know off the top of my head the word for sister in spanish. Totally Different Languages! 
+
+And yet, the thing that they all have in comment is NOUNS and VERBS and ADJECTIVES and nominal phrases and counter-factual subjunctives, (You do know counter-factual subjunctives, don't you? "Had I gone to the store I would have bought some bread". The "had I..." lets you know right up front that I did NOT actually gone to the store so I am describing NOT some fact about what I did but am talking about some situation that was NOT and actual fact.)
+
+And the point is that EVERY language that is worth anything MUST deal with things; Nouns, and action: Verbs, and qualities of nouns: Adjectives, and if you want to know about what languages DO in general you MUST learn a completely DIFFERENT vocabulary and concepts, from the language you are learning. The single language you are learning, Russian or Spanish, is all about words like DOGS and SISTERS, but if you want to learn about languages in general, you need to learn a completely different pile of concepts. You need to learn a meta-language, a language that it tailored to talk about languages in general. You need to learn about nouns, and verbs, and adjectives etc. 
+
+So that is my concern, if you are a noob, is that wading right into the abstract, the discussion of WHAT a language actually is, may be confusing if you don't already know a language (I mean a computer language). HOWEVER - even when you learn Russian or Spanish, you will NOT get very far into it before they MUST start to talk about Grammar and Syntax. They can't teach you PAST TENSE for VERBS if you don't basically know the difference between past tense and present tense. The notions of grammar are just barely under the surface of ANY language that you learn so PERHAPS there is some benefit for you to just start out right there, talking about the things that EVERY SINGLE LANGUAGE must do in some way shape of form, before you get into the details of THIS language uses a comma but THAT language uses a semi-colon to do the same thing.
+
+The reality is that some people work best from specifics to generalities and other people work best the other way around, give me the abstract skeleton first and then I can see that the differences are just the way that the meat hangs from the bones.
+
+This discussion will work from the abstract. It will focus on the vocabulary for describing WHAT goes on in ANY computer language rather than on WHAT you actually do in any single language to get some particular effect. So there will be lots of concepts and specialized vocabulary and NONE of this litany of words - noun, verb, adverb, pronoun, etc will get you any closer to knowing HOW exactly you put a verb into past tense in Italian. BUT it will make it easier for you to recognize the currents, and eddies, and flow that is going on in ANY language that you do study.
+ 
+::S Data Processing
+==Data Processing
+All programming is typically described as data processing, and indeed it is. The !ndata can be just about anything. It can be something simple like the single integer 3, it can be something more structured like an !narray (aka a !nlist) of numbers. It can be a single character like the letter 'a' or a list of characters typically called a String like "hello there!", or the data can be VERY complex like for example a single email message that has attachements and a video glued into the body. 
+
+Similarly the !nprocessing of that data can likewise be something very simple like storing a number in memory, or adding two numbers or it could be something more complex like play that video over here in this little portion of the screen. These processes, acting on the data, are usually called !nfunctions these days (largely because the notation for writing them down strongly resembles, and in fact evolved from, the standard math notation, f(x,y,z), for functions). Some of the other words used are !nsubroutine, !nmethod, !nprocess.
+
+So both the data and the functions come in both simple and more complex forms and any SINGLE programming language will use different !nnotations to write down these different things. 
+
+For example some languages (Java, Javascript, Ruby, C, FORTRAN etc.) use BOTH !noperator_notation: '3+4' (which is typically !ninfix notation - the !noperator, '+', sits IN between its two !noperands) for all the simple built-in primitive functions AND they also use functional notation: 'add(3,4)', for all the more complicated programmer-defined functions. Note: the function form is essentially a !nprefix notation where the operator, 'add' comes BEFORE the list of its arguments.
+
+However some languages (noteably LISP and FORTH) skipped out on this idea of using 2 different notations for their processes and decided that ONE notation was all you need. LISP decided that prefix notation was all you need and FORTH decided that !npostfix was all you need. Postfix puts the operator AFTER all the operands so '3 4 +'.
+
+To give you an example of both the similarities and differences between some languages here is an example of the same trivial calculation in several different languages selected to show how similar and how different they can be. 
+
+--JAVA
+  int x; // declares that I have a variable named x whose type in a single integer
+  x = 3; // assigns a value to that variable that we just declared
+  int y = x + 4; // declares a variable y of type integer, adds 2 numbers and sets y to 7
+  
+--JAVASCRIPT
+  var x; // declare a variable named x, javascript does not identify the type
+  x = 3; // assigns 3 to the variable x
+  var y = x + 4; // combined declaration and assignment
+  
+--LISP
+  (setq x 3) // declares a variable names x and assigns it the value of 3
+  (setq y (add x 4)) // declares y and set it to the result of adding 3 and 4
+
+--RUBY
+  $x = 3  // declare global variable x and sets it (assigns it) to 3
+  $y = x + 4  // declares and assigns a variable y the value 7
+  
+--FORTH
+  VARIABLE x  // creates a slot in memory names it x, doesn't know type
+  3 x !  // shoves the literal value 3 into the slot named x.
+  VARIABLE y  // creates a slot in memory named y
+  x @ 4 + y ! // fetches x and 4, adds them stores result in y
+  
+Short take away from the examples: EVERY language has !nvariables: named slots that hold data. EVERY language has !ndata_types (they distinguish between numbers and characters) The data ALWAYS has a type but Not every language cares about (or manages) the types of the variables which are just memory slots that can hold data. Java is a 'type checking' language that requires that you declare the types of its variables. EVERY language has a function that lets you add numbers together. 
+
+MOST use standard infix operator notation for primitive operations like 3 + 4. Some like LISP use only prefix notation (add 3 4), others like FORTH uses only postfix notation 3 4 +.
+
+So all languages have Integers, numbers. All have variables. All of them allow you assign a value to a variable, all of them allow you to use both variables and literal numbers in simple operations like addition. All the languages really do exactly the same thing, they just have slightly different syntax for how they do it. 
+
+Something that you MUST eventually know as a programmer is some of the vocabulary that I am shoving at you. You can't google for "How does lisp declare variables" if you don't know the word "declare" or "variable". These basic notions: declaration, assignment, datatype, literal - are the things that are common across ALL programming language even though the syntax that they use will all be slightly different. Once you know that what you want to do is: I have to declare some variable x, set it to 3, use it in some expression to add it to the literal constant 4 and then store that result in some other variable - you can look up the details, "lisp declare variable" in any particular language.
+
+It typically takes months maybe a year, to learn your first language. That is because you don't know what assignment is, you don't know what recursive functions are, you don't know what classes, and objects and factory methods and constructors, and abstract methods and interfaces are. It may then take as much as a year AFTER you know what the basic notions of programming are to become REALLY fluent in a single language (where you never look anything up and can do anything directly from memory). However once you know one programming language you can typically learn another one easily in a week. You're not fluent in a week but you can start working in a week. 
+  
+--Primitive data types
+The trivial simple types, like a single integer or a single character are often considered !nprimitive_types. They are primitive in the sense that typically your computer will have special hardware to directly operate on or deal with those primitive elements. For example most computers deal with integers differently than they do with floating point (aka decimal) numbers. If you divide the integer 7 by the integer 2 the result is the integer 3 with a remainder of 1, in integer math on a computer the remainder is thrown out and the result is simply the integer 3. On the other hand the floating point hardware divides the number 7.0 by 2.0 and gets a result of 3.5 - the floating point datatype is a different format of number that can retain values after the decimal point.
+
+So any programming language that wants to give you access to the capabilities of your underlying hardware needs to reflect some notion of the primitive types that are available on typical computer hardware so that YOU as the programmer can know the difference of whether you are doing something like an integer division versus a floating point division.
+
+--Programmer defined data types
+However, on the other hand, while there are indeed a handful of primitive types that the hardware can deal with directly, the whole purpose of computing is to be able to expand the types to things that you can deal with to be anything that you can think of. You want to have data types that represent Strings, and Strings arranged into paragraphs, and arranged into email messages, and Word documents. You want to have images, and video and music, and data base records (for example a single ADDRESS element might consist of line that is a NAME, a line that is a NUMBER and STREET, and a line that is a CITY and a STATE and a ZIP-CODE). In order to !nprocess data like that you DO want to be able to think of a single address as a single thing that you can do !ndatabase_CRUD with (Create, Read, Update, Delete).
+
+So nearly ALL programming languages have some notion of how YOU as the programmer can define new types of data, more structured and complex data where the structure is what you define.
+ 
+--Functions, Subroutines, Processes, Methods...
+In addition to the data side, with its primitive types and its programmer defined types, there is the processing side of programming. The word most commonly used these days is the word !nfunction, but you will still hear the other words as well.
+
+Functions have the same sort of split that data does 
+ and they also have the notion of allowing you to define new functions or processes to act on those data types that you define. For example it probably makes sense if you define some data type that holds audio data that you should be able to play it out the speakers of your computer. Similarly you should be able to "play" a video. On the other hand it probably does not make sense to "play" the number 3 or to "play" someone's address.
+
+Programming is the art of creating data structures that will HOLD the data that you want. You can probably already imagine that if you are building an email system you will have some structure that represents a single email message that must have a SUBJECT which is probably a short String, and two EMAIL addresses TO and FROM, and the some more complicated thing that is the MESSAGE that you send. That would only be the data structure representing a single chunk of email. You would also need a different type of data that represents a list of a bunch of email items, which could be your inbox, outbox, spam that some spam filter weeded out of the incomming, etc.
+
+So programming consists of creating data structures and defining !nfunctions or !nprocesses that you and perform on specific types of data. Those functions should be able to do any reasonable thing with your data. Create it, store it in memory, write it to disk, put it up on the computer screen in some format, play it out the speakers if appropriate, send it over the network, multiply it by 2 if appropriate, clone it, delete it, extract parts of it if it has parts, basically anything. 
+
+--Not Math
+I would also like to emphasize before we go any further that computer programming is NOT math. While it is true that computers evolved upwards to what they are today from very simple adding machines where the ONLY data they could deal with was integers, not even floating point numbers, and the ONLY processes you could do consisted of adding two numbers and the only storage that you got was basically the two numbers that you were adding (or rather one single accumulator number and your single action was to type in a new number and add it to the accumulator) - computers are WELL beyond those days now. Playing audio out the speakers in NOT math. Sending email is not math. Browsing the internet is not math.
+
+The primary skill needed of a programmer is NOT mathematics. While mathematics knowledge will not hurt you as a programmer it is not necessary. Programming, the act of thinking up data structures that will hold the data that you need, and thinking up the processes that you will want to perform on that data, more resembles office filing; where you have some papers that represent the data that you have and YOU need to figure out what folders to use to hold those papers and which drawers to put the folders in. 
+
+Filing is all about ORGANIZATION. What do we put where? What process do we need to implement so that the stuff in our files represents what we are doing for our clients. What should we call that thing?
+
+I point this out to overcome a social bias that sadly still exists in our country, a belief that you MUST be some kind of math geek to be a programmer or to get a job programming. This is simply NOT TRUE. Indeed, you do need to have learned how programming works but quite honestly at typical programming task is often nothing more than this, "hey that green bar there on our site is TOO dark can we used a lighter green there?" The programming task is to LOCATE in some massive unwieldy filing system that YOU did NOT design where is the number that represents the dark green that is used to paint that bar and then to change it to a number that is a lighter green.
+
+I kid you not, my career as a programmer, a programmer that worked at Microsoft in the early days and was one of the lead developers for the Windows operating system started at a small company where I was working as a mathematician. They had a computer problem: "We have a client that bought our computer system that prints out reports with our name at the top. They want to hand that report to their clients when they do analysis for their clients and they want THEIR name on the top of the report instead of OUR name at the top."
+
+"Sounds easy, the must be a place in the computer code that has OUR name written down and you just change it to be THEIR name, right?"
+
+"Do you know how to do that?"
+
+"What? Do I know where in the code you do that? No, I don't"
+
+"See it is not an easy problem. We will have to call our contractors that wrote the software. They are up in the Bay Area. And they will have to send us a bid for what it will cost to make the change. And then they will have to schedule a time to do the work and then they will punch us a tape and mail it to us. It will take at least a month to do that."
+
+"That's silly, a month for something that has got to be a really simple change. If I could just look at the code I could probably find the place where our name is written."
+
+"Do you know how to write code? Do you know how computers work? Do you want to learn?"
+
+"Um, sure. I'm not that busy on the math project, I supposed I could learn..."
+
+"Great. Here's the manuals." They handed me about three inches thickness of books and documents about the computer. "There's the computer. Figure out how it works and maybe we can do all our programming faster in house."
+
+I started learning how computers work and basically continued in that direction for the next 50 years. 
+
+If you can think up a name to write on a folder that will help you remember where you put some piece of paper - you HAVE the skills necessary to learn programming and to be a programmer.
+
+
+
+That is a bit like saying that ALL languages consist of Nouns and Verbs, and certainly, while that is maybe TOO much of a simplification it is still basically correct. The real heart of any language is the NOUNS, the !ndata, the THINGS that you are talking about, and the VERBS, or the activity, or the !nprocesses, or motion that those things are doing.
+
+
+
+--Example 1 - adding two numbers
+
+As a first practical example let us look at a very very simple calculation, one that you learned to do back in elementry school
+
+  3 + 4 
+
+--Operators and Operands
+Those 3 letters are an !nexpression that evaluates to a single value, 7. It is written in a format known as !nalgebraic_notation, meaning that it is written in standard math notation like you would see in an algebra class. More importantly that expression can also be called !noperator notation.
+
+In that particular expression, the operator is 'addition' which is represented by the !nsymbol '+' and the two numbers, on either side of the operator are known as the !noperands. The 'operator' is the process, 'Operand' is what we call a value that is 'shoved into' an operator. The particular operator of addition is a !nbinary_operator meaning that it requires 2 operands.
+
+Algebraic notation also has 'monadic' operatory, like NEGATE. 19 is a positive number, -19 is an operator expression that took a single operand, the number 19, and performed the process of negation, represented by the single symbol '-' applied in FRONT of the operand. 
+
+--Prefix, Infix, Postfix
+Placing an operator in FRONT of its operand(s) is known as !nprefix notation, the Operator is PRE the operands.
+
+Placing an operator BEHIND its operand(s) is known as !npostfix notation. In math the standard example of a postfix operator is FACTORIAL. 4! means the number 1*2*3*4, i.e. 24
+
+Most math operators: addition, subtraction, multiplication, division, raising to a power are binary ops, and in standard math notation these are written in !ninfix noation which means that the operator is written IN between the 2 operands.
+
+--Function notation
+Notice the definition of infix assumes that you have exactly 2 operands. As a result standard (infix) operator notation doesn't really work for !nfunctions that have more or less than 2 !narguments.  
+
+The mathematician Euler introduced the notation that looks like this: f(x,y,z) to represent a function (this function was named 'f'), which takes in 3 arguments or 
+
+
+ 
+--Prefix + 3 4, Infix 3+4, Postfix 3 4 + 
+ Almost every computer language allows you to write expressions just like that which will add two numbers. There are exceptions! The language LISP would write that same calculation like this: (+ 3 4) which is in a format known as !nprefix_notation (the name of the operator 'preceeds' the data). The language FORTH would do that same calculation like this: 3 4 + which is in a format known as !npostfix_notation (where the operator is named AFTER or POST the two data items), and if I remember correctly APL would do it like this +/3 4 which is also a prefix notation. 
+ 
+ The standard math notation, the way that most languages (C, Java, Ruby, Javascript, FORTRAN, ALGOL, Pascal, ...) do it: 3 + 4 is written in !ninfix notation (where the operator is IN between the two operands) and the reason for that choice should be obvious, it is because most people went to elementary school, learned simple math notation, which is infix, and so they borrowed that notation because you already basically know it.
+ 
+ There is a very slight problem that you may not have noticed immediately, which is that INFIX notation, by definition: you put the operator symbol IN between the two arguments, ASSUMED that the operator had only 2 arguments. This is pretty standard for math. Addition, subtraction, multiplication, division, raising to a power ALL take exactly two argument and produce one result, so infix works fine. So what do you do if you need MORE than two arguments? 
+
+--Function Notation
+ The mathematician Euler introduced !nfunctional notation (a prefix notation), which looks sort of like this: f(x,y,z) - this means that you have a function named 'f' and it takes 3 !narguments. Clearly this notation can run all the way from a function that takes no arguments, f() to ones that take hundreds f(a,b,c,d,...). And the fact is that ALL languages, have something that resembles Euler's notation to allow the programmer to define their own function so that they are NOT restricted to defining things that are as limited as binary operators.
+ 
+ In some ways, the languages Lisp and Forth (which are examples of purely prefix and postfix languages), are SIMPLE languages (I mean simple to build the language - not simple to USE!), because they jumped immediately to one single way to define Euler style functions that take any number of arguments and LEFT OUT the user friendly (because of your elementary schoo math education bias) infix notation. Most languages use BOTH. They use operator notation (infix) for simple math expression and use an Euler style (usually prefix format) for programmer defined functions.
+
+==Data has Type
+No matter which language you use, the data being processed consists of the two !nvalues 3 and 4 (which happen to be !nnumeric data, in particular they are !nintegers, and they also happen to be !nliterals which we will define a bit later). The only other thing in the expression is the 'name' of the process which in this case happens to be 'addition', represented by the !nsymbol "+" which is an !noperator. 
+
+And just to dump some more vocabulary on you right up front, '+' happens to be a !nbinary_operator, meaning that the operator takes 2 !noperands. There are also !nmonadic_operators, meaning that the operator operates on only 1 operand. The expression -19 for example can be though of either as a single "literal" that represents the single number negative nineteen OR it can be thought of as a single data item, the literal 19, that was OPERATED on by the monadic operator NEGATE, which negated the original number nineteen. So is the expression -19 just data, or was it data AND a processing step? Umm, hard to tell. Fortunately it doesn't really matter, the final result is the same.
+
+Let me
+
+== Data Types
+
+I pointed out that 3 and 4 are both integers. Well one of the important things about data is that ALL data has some notion of !ntype, aka !ndatatype, and often it has several data types. 3 and 4 are both numbers (which is a very general type that should include fraction and decimals as well) and they are both integers (which technically include negative numbers as well) and they also happen to both be positive integers or 'counting numbers'. 
+
+In just a bit we will immediately split the discussion of datatypes into ones that are 'primitive', very simple, atomic, and usually build directly into the hardware of your computer, and other ones that are more complex and structured, typically defined by the programmer.
+
+Nearly ALL languages use Algebraic Operator Notation as part of what they do, so we will cover operator notation in a little more detail in just a bit, but I want to show you a second example that is VERY similar to the first one but it is NOT something that you have seen in math classes.
+
+  "base" + "ball"
+
+You can probably guess that + is still an operator that will "add" two data items together, but what are those data items? They don't look like numbers and indeed they are not. "base" is of course and English word, it happens to be a !nString - which is used to mean an !nordered_list of !ncharacters (the characters are in effect beads on a string). In the language Java, and many others as well, when you "add" two strings together what you get is another single string that is the result of !nconcatinating those two strings together i.e. the single word/string "baseball".
+
+In MOST programming languages, when I put quotation marks around a word I am DISTINGUISHING that I want those letters to be a !nliteral_String. I want them to be character data NOT some expression that you evaluate so 3 + 4 is an expression with two numbers and an addition operator, but "3 + 4" is just a single literal String consisting of 5 characters (the spaces a characters too!).
+
+Most math notation that you saw in algebra classes, ASSUMED that the ONLY thing that you were ever working with was NUMBERS. All the operators, addition, subtraction, multiplication, division, raising to powers, factorial, etc. were things that you did to numbers or possibly to "variables" like x that were place holders for numbers. Math did not deal with Strings of characters.
+
+So that bring us to one of the fundamentals of data in ALL computer languages which is that data has a !ntype, and most of the operators built into whatever language you use do different things based on what type of data you feed them so for example MOST languages will evaluate these expressions and what you get depends strongly on type.
+
+  3 + 4   // adds two numbers produces the number 7
+  "3" + "4"  // adds two Strings produces the String "34"
+  3 + "4"  // a mixture promotes the 3 to "3" so produces "34"
+  3 + 2 + "4" // first numerically adds 3 to 2 gets 5, promotes to "5" produces "54"
+
+In these, the operator, +, looks the same but what it actually does depends strongly on the types of the values that you supplied to the operator, so yeah, under the hood there is NOT just one addition operator, there are several different ones and the language LOOKED at what argument types you were using and selected the appropriate operator.
+
+Here are some of the built-in types aka !nprimitive types from the language java
+
+  3   <- this is of type integer
+  '3' <- this is of type character
+  "3" <- this is of type String (Strings can be many characters, characters can be only 1)
+  3.0 <- this is a floating point number, a decimal number
+  
+Those are only some of the built in data types. Data can in fact be almost anything. In addition to the primitive types which are basically things that the computer hardware can do directly there are many more complex structured types of data that are NOT defined in the language itself but rather are things which YOU as a programmer get to define. Those are things like email messages, or word documents, or mp3 Music tracks, or video, or player attributes in your realtime strategy war game. 
+
+So we will need to distinguish between things, both data and processes, that are very fundamental and built into the language, vs the higher order data types and processes that you get to define and get to build in your program.
+
+== Primitives
+
+
+
+
+ 
+::S Preface
+
+==Intro
+Unlike the other books that I have written to introduce programming this one is NOT a straightforward tutorial. Rather it may be considered as a collection of sidebars, extra material that sits alongside the other tutorials. The intent at present is that I will eventually update my other texts with comments saying: "If you want to know MORE about this then look over at chapter 3 section 5 of my 'Programming' book."
+
+The intent is to make this more Encyclopedic in nature and less tutorial. Presumably, if I do this correctly, other teachers in other teaching programs could reference material here as well. That is NOT to say that I will not lecture here. I will. In fact, what I can do here is to actually go into MORE detail than I would in a tutorial. A tutorial needs to keep moving on and keep the pace up, largely because most tutorials must strive for breadth - showing you everything briefly - so that you can know the basic lay of the land. 
+
+Sidebars, on the other hand, are there for the material that does NOT belong directly in the tutorial for what ever reason. 1) Here is a bit more depth on that topic that we just covered that you might find interesting but that is NOT necessary for understanding the material. 2) Here is an historical aside for those of you that want to know WHO did this work. 3) Here is a topic that is RELATED to what we just covered, we choose to skip it now cause it does not belong in a tutorial. (Physics teaching is full of this type of side bar - they teach the rules that Galleio developed for moving objects and then throw up a side bar telling you, "These rules are NOT really correct, Einstein's theory of relativity changed all those rules in subtle ways - but you don't know enough yet to understand relativity so, just warning you, we will eventually replace the rules that we just showed you - so learn them and use them for now but be aware we are eventually going to throw them all out.")
+
+I my youth, I though that sidebar were an indication of laziness on the part of the author. A Sidebar is material that the author determined did NOT fit into the narrative, and then decided to include anyway, as a footnote or - just a sidebar. A good author would either fit it properly into the narrative so that the narrative flows along and includes that extra information OR should leave it out.
+
+Since then I have come to understand that different learners have different styles and the meta-analysis of teaching methodologies all indicate that hybrid approaches are generally better for the simple basic reason that if you TELL the students "X" in ten different ways and 5 different modalities: audio, video, text only, animation, images and problem sets - some students will learn from some, some will learn from a mixture, some others will learn from them all and other just won't learn no matter what.
+
+Some of the things that I expect to present here come primarily from a book on the history of computer technology that was quite expansive. It didn't start with modern electronic computers, instead it started with the way that we write down numbers, greek and roman numerals, the invention of the digit zero, the positional number system, the abacus, The development of the decimal numbers for represinging the reals, the development of logarithms which quickly led to the slide rule. They mentioned other obsolete early computer hardware like Napier's Bones for speeding multiplication calculations, and progressed on through mechanical calculators, and electronic calculators and modern computers.
+
+Do you need to know ANY of that in order to program a modern computer? No, you don't. That is what makes ALL that rich history just a sidebar. 
+
+Surprisingly, the book did NOT go into the development of writing, and pencil and plaper, and algebra, and symbolic computation, and boolean algebra, and linguistics which in some sense ARE used every time you need to WRITE code. It needs to be written in a language and simple things like the FACT that you need to understand that when you write an expression like 3+4*5 you EXPECT the system to understand the algebraic CONVENTION that the multiplication takes precedence over the addition and gives you are result of 23 instead of 35 (which is what you would get if you did the addition first).
+
+That book on computer technology, recognized that writing down numbers was NECESSARY and part of computer history, but somehow the invention of FORTRAN, C, Python, and JAVA was not.
+
+The thing that is WRONG with writing a book like this one is that most of this history is irrelevant to what you need to learn in order to program computers. I learned most of this AFTER I had been programming for years, and wondered how things came to be like they are. And that is at the heart of what it means to be a sidebar. This is NOT your meat and potatoes. This is dessert! If you want to eat your desert first, cool!
+
+Enjoy!
+  
+::S Computers
+== Computers, Calculators, Programmers
+In da old days, in my life even, the meaning of these words changed. They were all professions at one time, now only the last is. Plumbers are people that work with "plumbum" i.e. lead i.e. lead pipe (From the ancient latin name for lead, one assumes that plumbing is an old profession - even though pipes are no longer made of lead). Farmers are people that work on farms. Computers are people that Compute things. Calculators are people that calculate things. The movie "Hidden Figures" commented on this, introducing you to some of the women that were "computers" for NASA.
+
+Calculator is another very old profession that comes from a word which also has an old latin root, namely "calculus" which we still use today to refer to a portion of math that was developed by Newton and which is still taught typically to college freshmen. Dentists also use the word to mean hard calcified build up on your teeth, and the root word in latin means something more like pebbles. And indeed, pebbles ARE just what you need if you are going to be a "calculator".
+
+In the next several sections I will show you how you can compute with pebbles scattered on a marked piece of cloth (and the ever so slightly more refined variant of loose pebbles, where the pebbles scattered into marked locations on cloth are replaced by beads on sticks called an "abacus")
+
+Discussions of how to compute with rocks, will force us to confront HOW exactly we notate and name numbers (Roman Numerals, Arabic/decimal numbers, Spoken English numbers, binary numbers, Octal and Hexidecimal numbers), and ultimately that discussion about NOTATION will lead us to the notion that ALL computation can be reduced to long lists of binary numbers.
+
+::C Code
+::S Dependent Values
+==Dependent Values
+In graphics code it it often the case that there will be both shared values and dependent values. An example of a shared value would be something like the left margin on a page. Many lines of text may want to reference that xMargin.
+
+The point of a shared value is that you basically want clients to get a pointer to that value rather than the value itself, that way if the value of the xMargin changes, anything that refers to the value can see the change.
+
+Similarly, there are many other values, like say the first level of indent on some block of text that is an offset from some other value. In the case of an indent, the indent is clearly some offset from the xMargin.
+
+If you are laying out a bunch of lines, given that each line is set below the previous line, it is quite natural to think of the y coordinate for line[i] to be an offset of line[i-1].height from the y coordinate of line[i-1].
+
+There is certainly no NEED to represent things in this way. In a sense, there is no need to create dependency chain if you don't INTEND to allow the user to grab a single line and move it and have all the the lines that follow it CONTINUE to follow it.
+
+A different an perfectly reasonable alternative would be to allow each line to keep a single vertical offset from a shared yMargin or other y-coordinate. Then a bunch of lines can all be moved as a block, but you can't drag one line in the middle of that block. 
+
+--Word Tree
+The actual use case, that led me to this article on dependent values, was this: I wanted to produce a graphic. It would consist of words that were related to one another in a hierarchical sense, hence a tree. For example the notion of VARIABLE includes several types like PRIMITIVE, ARRAY, STRUCTURE, etc. The notion of PRIMITIVE has sub-categories like LOGICAL and  NUMERICAL, which itself has sub-categories of INT, LONG ...
+
+I wanted to create a picture where the words cluster around one another based on those relationships and I knew that a simple paint application would not make it easy to create the picture that I wanted.
+
+I decided to build a little application that would help me produce that picture. I could type a word in and it would show up on the screen. I could then click on the word and drag it around and drop it somewhere else on the screen to get the layout that I wanted. In particular, when I drag a 'boss' word around I wanted all the 'kid' words that belonged to it to move as well. I decided that I could use drag and drop to create the dependencies as well, Basically if you drop word B onto word A, then word B become dependent on A. You can then drag B and drop it where ever you want it to be in relationahip to A and when you later drag A, B will remain in that relative position, 
+
+I wrote the Word Tree code. It worked fine, and that is what we are going to write here today, but after I did it, I realized that I liked the idea of dependency values, I could use them for other graphics purposes, and thus I should clean them up and make them into a reusable graphics helper class rather than have them buried in a bit of throw away code that helped me draw a picture.
+
+Oh, by the way, here is the picture. <img src="Program Notions.png"/>
+
+So instead of starting with the project of constructing a Word Tree, I am going to start with the little cleaned up helper class DV, for dependent values.
+
+::I java
+  class DV{ // Dependent Value 
+    private int delta = 0; // offset from dad, the value that you depend on
+    private DV dad = null; // if you are just a shared value dad is null
+    
+    // no constructor - or rather default give you a shared value of 0
+    
+    public int v(){return delta + dadV();} // your value is offset from dad's value
+    public void setV(int k){delta = k - dadV();}
+    public void setDelta(int d){delta = d;}
+    public void setDV(DV dv){...}
+    private int dadV(){return dad==null ? 0 : dad.v();}
+  }
+  
+I wrote two helpers that set the delta value. setDelta() does it directly, but I expect to make more used of setV(int k) which, when you supply it with a value k SHOULD respect the dependencies that you have already created. In envision code like this:
+
+  DV xMargin = new DV();
+  xMargin setV(100); // margin is now set to 100
+  DV firstIndent = new DV();
+  firstIndent.setDad(xMargin); // so indent value depends on margin value
+  firstIndent.setV(110); // at this point firstIndent.v() should return 110
+  // the alternative would have been to call firstIndent.setDelta(10);
+  // .. which you used depends on whether you think in final global coords or offsets. 
+  
+I left setDV unfinished so that I could mention a concern. Notice that the function v(), which extracts a value is recursive. It is essentially following a chain of dependencies that could be quite long (though in practice I expect them to be fairly short). Each value is calculated by first calculating dad's value. 
+
+IF you are are not careful in the construction of these dependency lists you COULD create a circular list, for example you could set a DV to be dependant on itself. If you do create a circular dependency, then looking calculating its value becomes an infinite recursion and you blow out the return stack. So BEFORE I allow you to setDV(newDV) for some DV A, I first check if newDV already has A in its chain. If newDV.contains(A) then I refuse to let you change A to depend on newDV. So we need a helper:
+
+  public boolean contains(DV newDV){
+    if(this == newDV){return true;}
+    return dad==null ? false : dad.contains(newDV);
+  }
+
+And now with that helper we can write setDV
+
+  public void setDV(DV newDV){
+    if(newDV == null){delta = v(); dad = null; return;}
+    if(!newDV.contains(this)){delta = v()-newDV.v(); dad = newDV;}
+  }
+
+Does any of this work? Well I wrote both of the helpers setV() anb setDV() so that they would leave the value v() unchanged. So if you had a DV A, and A.v() == 113, you should be able to call A.setDV to change the value that A depends on and A.v() should still be 113. This will allow me to write test code that creates hundreds of DVs in an array, and then make random calls setting either V or DV for any thing in the array, and the value results all remain the same. 
+
+This of course doesn't prove that the code is working correctly, perhaps the code is changing NOTHING, but if any assumptions were wrong it should print out errors.
+
+So here is some test code:
+
+  public static void testDV(){
+    boolean failed = false;
+    Random rnd = new Random();
+    final int N = 100; DV[] dvs = new DV[N]; 
+    for(int i = 0; i<N; i++){dvs[i] = new DV();}
+    for(int i = 0; i<100000; i++){
+      DV dv = dvs[rnd.nextInt(N)]; 
+      int v = rnd.nextInt(2000)-1000;
+      dv.setV(v); // set value of dv
+      if(v != dv.v()){failed = true; System.out.println("test failed setV");}
+      dv.setDV(rnd.nextInt(10)==1 ? null : dvs[rnd.nextInt(N)]);
+      if(v != dv.v()){failed = true; System.out.println("test failed setDad");}
+    }
+    if(!failed){System.out.println("DV passes tests");}
+  } 
+
+Put that static code into the DV file, build a main routine and call that test code to see if it works.   
+  
+--Build a testDV app.
+  
+Now let us see if we can build something that will allow us to do some further testing of DV in the sort of setting that we expect, a graphics application.
+
+  class TestDV extends Window{
+    public TestDV(){super("Test DV", 1000,750);}
+    public static void main(String[] args){(PANEL=new TestDV()).launch();}
+    public void paintComponent(Graphics g){
+      g.setColor(Color.RED);
+      g.fillRect(100,100,100,100);
+    }
+  } 
+
+We run that just to check that we can draw something on the screen, then change the RED to WHITE and the rect to (0,0,5000,5000) so that it has a white background.
+
+--Boxes
+
+In order to drag boxes around on the screen we need to have a little Box helper class so at the bottom add
+
+  //---------------------Box-------------------
+  public static class Box{
+    public DV dx = new DV(), dy = new DV();
+    public int w = 50, h=20;
+    
+    public Box(int x, int y){moveTo(x, y);}
+    
+    public void moveTo(int x, int y){dx.setV(x); dy.setV(y);}
+      
+    public void show(Graphics g){
+      g.setColor(Color.CYAN);
+      g.fillRect(dx.v(), dy.v(), w, h);
+    }
+  }
+    
+In order to test the box routine let's add a static Box before the constructor so that we have a box to draw
+
+  public static Box box = new Box(100,100);
+  public TestDV{super("Test DV",1000,750);}    
+    
+and we need to modify paintComponent to draw that box
+
+  public void paintComponent(Graphics g){
+    g.setColor(Color.WHITE);
+    g.fillRect(0, 0, 5000, 5000);
+    box.show(g);  
+  }  
+  
+run that a see that it draws the one box. We will want to be able to draw several boxes so it is time to build a List helper class inside the Box class so that we can build a Box.List
+
+  //----------------------List-------------------
+  public static class List extends ArrayList<Box>{
+    public void show(Graphics g){for(Box box:this){box.show(g);}}
+  }
+  
+Add in a static variable to keep all the boxes, and generate two of them.
+
+  public static Box.List boxes = new Box.List();
+  public static Box a = new Box(100,100);
+  public static Box b = new Box(50, 150);
+  
+And change the line in paintComponent that used to show a single box to show the List of all boxes
+
+  boxes.show(g);
+
+Change the Box constructor so that it adds every new Box that is created to the list of all the boxes.
+
+  public Box(int x, int y){moveTo(x,y); boxes.add(this);}  
+    
+When we run that we should be able to see the two boxes.    
+
+--Drag the boxes
+
+In order to drag we need to be able to detect when the mouse hits a box so add a hit method in the Box class
+
+    public boolean hit(int x, int y){
+      int bx = dx.v(), by = dy.v();
+      return x>bx && y>by && x<bx+w && y<by+h;
+    }
+
+We also will want a hit routine in the List class that instead of returning a boolean, it returns the Box that was actually hit.
+
+      public Box hit(int x, int y){
+        for(Box box:this){if(box.hit(x,y)){return box;}}
+        return null;
+      }
+
+With those two routines in place, we need to react to the Mouse in the TestDV app
+  
+  public Box draging = null;
+  public void mousePressed(MouseEvent me){
+    draging = boxes.hit(me.getX(), me.getY()); repaint();
+  }    
+  public void mouseDragged(MouseEvent me){
+    if(draging != null){draging.moveTo(me.getX(),me.getY()); repaint();}
+  }
+  public void mouseReleased(MouseEvent me){
+    if(draging != null){draging.moveTo(me.getX(),me.getY());; repaint();}
+  }
+
+--Dependency
+
+Now finally after all of that we can finally and a dependency and see if the DV code actually does what we wanted it to. We need to add a static block to create a dependency.
+
+First add a method to Box so that we can make the dx and dy of one box depend on those values in another box
+
+  public void setDad(Box dad){dx.setDV(dad.dx); dy.setDV(dad.dy);}
+  
+And then use that routine in a static block to make the second box relate to the first one. 
+  static{b.setDad(a);}  
+    
+</script>
+</body></html>
