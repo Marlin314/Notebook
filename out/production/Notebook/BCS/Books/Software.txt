@@ -1,0 +1,363 @@
+Software
+
+Hardware vs Software 
+
+It is an old story, Nature vs Nuture, been going on for millions, no Billions of years, and yet it is brand new with the computer age. It is as new as the latest release of the latest video game or the latest computer language, and yet it is as old as mathematics and language.
+
+(Um.. BTW what is the latest computer language, anyway? Would that be COBOL, PL/I, Forth, Java, Python, Clojure, LISP, Pascal, Haskel, ERLANG, ... I can keep listing ones that I have programmed in, but I have no idea who you are or when you live. So much of what I have spent my life doing was in efemeral languages that come and go like mere wisps in the fog. Hopefully English, as I know it, survives for a bit longer, so that what I say won't crumble into dust immediately. This aside was just calling to your attention the fact that hardware is things like rocks and gothic cathedrals, that last for geologic time scales but software is like a sand castle, only standing majestically until the next wave. I won't waste your time anymore on this aside - but I do have a poem of Ovid's that I must tell you later. Perhaps at the end of this chapter. ) 
+
+I have spent my life writing Software and would like to talk about some of the things I have seen and also some of the things that I expect to see, or rather things that I think my children or grand children might see. And hey, while I am at it, since I am writing for my grandkids (and other people's grandkids as well, I mean seriously, even if you are in your nineties, you had a grandpa and yer not dead yet, so you are someone's grandkid), I will suggest some playful passtimes to add into the mix of reading Dr. Suess, and playing video games, and studying Euclid, and learning to count to a million, memorizing the first 50 digits of pi, learning to write all the chinese characters, you know - stuff like that. FUN STUFF!
+
+In the interests of disclosure, since perhaps you are not actually MY particular grandkids, I am indeed a mathematician, (as are we all!). I studied physics as an undergrad (a family trait of sorts - my paternal grandfather, Jay, taught physics, my dad studied physics and was an electrical engineer, I studied physics and became a programmer) I studied pure mathematics in graduate school, but my working life has been programming computers. 
+
+The primary story that I wish to call to your attention is that software is cool. It is layered on top of the hardware. It can be used to make the hardware do things that it was never intended to do. It changes things. It can change things rapidly. It is MAGIC! It IS the future.
+
+I will end this intro, such as it is, not with the Ovid quote that I promised (gonna save that for later) but with a formative comment that my grandfather, Jay, made to me when I was in college, before he died in the 1970s. This is of course a paraphrase.
+
+"Marlin, you have NO IDEA how much change I have seen in my lifetime. You will never see anything like it. I was born in 1895. The Wright Brothers did not fly their plane at KittyHawk until 1905. So I was a kid before man could fly. There were people who said Man will NEVER fly. I didn't think they were right. I believed that my generation would prove them wrong. But never in my dreams did I imagine that I would see not only the development of aircraft, but the development to aircraft that could cross the ocean, the development of fighters and bombers and two world wars that used them, the development of jets, the development of a commercial airline industry, the development of rockets, the landing of a man on the MOON, that FACT that we could watch that landing on TV. I grew up in a sod house in Kansas. No electricity, no radio, no television, no washing machine, no refrigerator, no cars, tractors, highways... Can you believe it, we put someone on the MOON, and we did that in one lifetime, and I got to watch it all happen! You will NEVER see that kind of change in your lifetime."
+
+ He is right. I will never see anything like that. He lived through a Cambrian Explosion of hardware diversity. The electrification of the world led to the home appliances, the dishwashers, and telephones, gadgets galore. It's already happened. It may continue, niches will continue to be filled but certainly the big things have already happened. What's left for my generation to do?
+ 
+ And I though of the thing that I was interested in, AI. I translated that "Man will never fly" comment that he heard and didn't believe into the one that I heard but didn't entirely believe, namely, "we will never have a thinking machine". Oh yeah! My generation is gonna change that.
+ 
+ To be completely honest, we have NOT changed that comment yet. We don't have thinking machines, yet. People still say it, but they are not quite so sure anymore, they are just a little more on the fence, maybe one day, eh.
+ 
+ Well I'm not dead yet, grandpa. You certainly never saw the changes I have seen in computers and software, and we haven't even had our KittyHawk moment yet. We've just been doing the wind tunnel tests so far. But no lie, when we get this sucker into the air you WON'T BELIEVE IT!
+ 
+ --
+Figs and Fig Wasps
+The Terminator and the Toaster
+Language and written language
+
+
+---
+What are the chunks of a java Project
+packages and files
+classes - nested, members, globals, functions, helpers, initIeStaticBlock
+
+----
+
+I wanted to pass on some comments about the discussion last night. 
+
+I found it difficult when you all were talking about characterizing what Arthur had written up as "min max" and "re-enforcement learning" and some name like "bellman's algorthim" (I didn't know the name and have probably used the wrong one here.)
+
+I didn't object last night, and still don't object to what you were saying. I assume part of what we need to do in preping this work for possibly publication in your community is that we need to learn and assume the vocabulary that is used in your community. So I tried to spend more time listening and less time talking.
+
+But today is a new day so I thought I would pass on the mental friction that I find in that vocabulary. I have a particularly hard time with talking about this as "learning", and even "min-max" and I admit up front that it may be that I am just not thinking about this correctly. None the less, here is how I think about the calculation that I DID NOT DO but merely suggested to Arthur and he jumped on it.
+
+I think of this not as a game but as a probability question. My model is a trivial game, we trade a single die back and forth and see who can roll the number 2 first. What is the probability, P, of winning that game?
+
+  P = 1/6*1 + 5/6*(1-P) 
+ 
+which I read as "one way in six of winning in one roll and 5 ways in 6 of passing the dice to the enemy and then he (being in the same state that I was just in) Loses." Either I win directly or I win because the enemy loses.
+
+Solve for P and you get 6/11, so indeed as expected close to 50% but slightly better if you have the die and it is your turn.
+
+I don't see any min-max, I don't see any re-enforcement, I don't see any learning at all, this is just a probability calculation.
+
+In a more complicated game, like chutes and ladders, your single die roll moves you along a track with a hundred cells. In that game you must move off by an exact roll. So the above solution only describes a single state in the game, that state being that both you and your opponent are on the very last cell of the game trying to roll a 1. What if you are on a different cell from you opponent, suppose you are 2 from the end and he is 1 from the end. Does he have an advantage? 
+
+To solve the probability, we change notation slightly. P11 is the P from above when you are both 1 away from the end. P21 means that YOU, the person whose turn it is, is 2 from the end and the enemy is 1 from the end.
+
+Now we must evaluate:
+
+  P21 = 1/6*(1-P11) + 1/6*(1) + 4/6*(1-P12)
+  
+I either rolled a one and passed the dice to the enemy who then loses from HIS state P11, or I rolled a 2 and won directly, or I pass the dice and he lost from HIS state of P12. Uh-oh now I hove to solve for P12
+
+  P12 = 1/6*(1) + 5/6*(1-P21)
+  
+person 1 away has no option of moving closer to goal, so either wins directly or hands dice back to guy sitting in slot 2.
+
+Now we can substitute the definition of P12 into the first equation and solve for P21. If you do you will find that P12 in spite of the more complicated calculation is exactly the same 6/11 that was P11. This is not unexpected because of course, your probability of winning from position 2 is exactly the same as the probability of winning from position 1 so that extra term that involved moving to another position did not affect your probability of winning.
+
+Now of course, what I have done here is symbolic calculation to get the value of P12 and indeed I did a symbolic calculation, solving an equation, to get P11. I will not do that on the computer.
+
+What I do instead is the essentially a Markov trick. I use the same formula and treat it as a computer statement that updates a value from previous values. I can simply assign any random probability value to P11 like .1 and then iterate the formula
+
+  P11 = 1/6 + 5/6(1-P11)
+  
+in one step we get  
+  P11 = .1 -> 1/6 + .9*5/6 = 5.5/6  // which is certainly closer to 6/11 than .1 was
+  
+Markov claims (and I believe) that if all your formulas are properly normalized probabilities AND all your state are ultimately accessible this iteration will converge to the proper single probability.
+
+To "solve" the game of chutes and ladders (and yes, that is a silly game, for the game is a race with not a single choice ever by either player, they just roll and move and the state, where the players are on the board, changes), to compute the probability of winning from any state like Pn,k you do the same thing. 
+
+  if(n>6) //i.e. we can't win directly
+    Pn,k = 1/6*(1-Pk,n-1) + 1/6*(1-Pk,n-2) + ... 1/6*(1-Pk,n-6)
+  else
+    Pn,k = 1/6*1 - 5/6*(1-Pk,n)
+  
+The semi-markovian thing that I do for this calculation, is to load a table P[n][k] with 10,00 random values, choose n and k as two random ints between 1 and 100, and do the iterative update for that probability at random index in the table. 
+
+(This is NOT a single matrix operation which is what Markov did and justified but in the fullness of time I believe that it does the same thing - converges to the single array of Probabilities that all satisfy the 10,000 relational functions that describe the game of Chutes and Ladders. Markov proved that a sequence of matrix multiplication converged  - I claim, without proof, that updating elements one at a time in random order does NOT upset the validity of the convergence that Markov gets when he does things in parallel with a matrix operation.)  
+  
+OK so chutes and ladders had NO choices, not a good example, but suppose I have multiple markers on the board at the same time and with each dice roll I get to choose which marker to move to match the dice roll. And by the way, that is the game of Ur.
+
+Well, if I have 3 markers that I could move, If I move marker 1 I hand to board over to the enemy in state S1, if I move M2, he gets board S2, if I move M3 he gets S3. What choice should I make?
+
+I assumed, without proof, that it NEVER benefits me to reduce my probability of winning. The enormous probability table that I evaluate for the entire game tells me the value of every single state in the game so I always move to the most valuable state. The probability table is of course assuming that the highest probability dictates my choice and my enemy, who is playing the exact same game uses the exact same table and also makes the same choices.
+
+So what If my opponent verres away from the highest probability selection and makes a move taking him away from his highest probability of winning. Swell, we are now in a state where I have an even higher probability of winning that I expected to get. Sweet! roll the dice, maximize my probability for the state I happen to be in and kick his ass!
+
+This is a probability calculation. We don't do it symbolically, we do it iteratively, but it is just a calculation. It is not learning. Nothing is being re-enforced. I am not looking at mins and maxes. I am calculating the probability of winning for every possible state in the game ASSUMING that both me and the enemy have NO CHOICE but to select the one single action dictated by the optimal values in the table.
+
+As I have said all along, I don't believe that anything that we have done in the WAY that we solved the problem is particularly novel. All these methods are known.
+
+I am the one that WONDERED if there might be a paper here because, after Arthur coded it up, I had a GREAT time playing with the system! I wanted to share that experience with others. The paper that I wanted to write was not a, "hey check out these markov methods for doing a convergent probability calculation.", it was more a, "here's how I spent several weeks playing UR with a GOD, what I learned along the way, and why YOU should play this too, cause it is WICKED fun!"
+
+Arthur is the one that coined the name "GOD" for his probability table and assigned a gender roll of "Her", and I liked it and continue to use that vocabulary. My paper, which I probably couldn't get published except in a 4th grade classroom - "tell us what you did this summer" goes like this:
+
+I learned to play UR when I was forwarded the YouTube video link (which I recommend) by the dude (Irving Finkle) from the British Museum that translated the cuniaform tablet that had the rules of the game and thus "rediscovered" this ancient game. In the video He plays one game with someone. They comment on game play and possible strategies as they play. Looks cool, I wonder if my daughter would play a few games with me.
+
+We did, she beat me the first couple game, which I ascribe to luck and she ascribes to skill, "Dad, you did it again, you missed the chance to move to a 'go again' square. Why would you NOT want a extra FREE MOVE?" Ok, Yeah, oops, didn't see that. I'll be more careful. We play some more and eventually I win a few games. I like to think we play pretty even, now that I've won a few. My daughter points at the lifetime score record that shows otherwise. Yeah, right, look at the trend lines, I am improving.
+
+As a CS dude, who has "solved" chutes and ladders (sorry, did the calculation to determine the probability of winning from every possible board state) I start to wonder if I could do the same for UR. "How many states are there in UR?" 7 black markers 7 white markers scattered on a board with 20 cells - um about a billion states. I got several gig of memory in my machine, it just might all fit...lets see if I can write the code.
+
+I mention it to my good buddy, Arthur, also retired mathematician and coder, and we are off an running. The race is on. Who can write this up the fastest? He is smarter than I, but I have a head start cause I have been thinking about this for a few days. 
+
+Besides, he is off in a rat's nest of looking at code to page this probability array out to disk so that he can save the results at some point and resume the calculation later. And he is worrying about the order of iteration through the array to speed up the convergence. We don't need any of that, this will all fit into memory at once and the calculation will be fast. Premature optimization is the root of all evil!
+
+Well, needless to say Arthur, was not "prematurely optimizing". The calculation did NOT fit into memory all at once. The order of iteration does affect the compute time, and is even more important if you find yourself paging to disk all the time. He properly, saw what needed to be done to get the game of UR solved before I did, and had his code generating results before I realized that my code was not going to work without a substantial rewrite.
+
+And while I was busy rewriting my code to do the calculation, he has his working and started writing the code to slap on a user interface, one that looked like the game of UR. I was so far behind I gave up on even finishing the calculation in spite of the fact that there is always the risk in a numerical calculation like this that you make a mistake that is never seen. Dual independent programming and comparing the results is the gold standard for numerical calculations - but damn his game already works and I want to play!
+
+He encouraged me to continue and at least verify the probability table, "because I think that there is a bug in my code somewhere".
+
+"Why do you think that?"
+
+"Well I've played several games, a lot actually, now for several hours and I haven't yet won a game. I think she is cheating with the dice or something."
+
+"No way, send me a copy."
+
+Well, he was right. GOD is GOOD! She kicks my ass. And then again. And then again.
+
+Unlike my daughter, she does NOT tell me, "You missed a 'go again' move." In fact I watch her pass up a 'go again' move. WTF? Why did she make THAT move?
+
+Well, no, I did not actually expect her to talk to me and tell me why she did this or that. And then I realized that even if she COULD talk her exact and proper answer to ANY question of "Why did you move A there instead of B," is TRIVIAL to her. I know what she WOULD/SHOULD say. "I looked up two numbers in a table of a billion numbers and the one associated with A was bigger than the one associated with B". She does not deliberate moves and look at alternatives. She is not thinking, "If I move here it will open my man up to attack but if instead I do.." Her calculations are virtually instantaneous, look up 3 or 4 numbers and pick the big one. She is not marching down some game tree doing alpha/beta pruning so that she can look 23 ply deep and then firing off a bunch of huristics and min/maxing her way to a guess of what looks like the best move in this situation. SHE is GOD! She just knows the best move. 
+
+If She could talk, Her explanation of why She makes a move will be seriously lacking to a mortal like me. Her real answer is always, "because that was the best move". Yes, I know, but WHY was that the best move? Why did you leave that man out there in the open? Why didn't you move him out of threat and get closer to the moving him off? 
+
+She does not think like me! She performed an optimal calculation from the ground up. She has baked all the tradeoffs and side concerns into one single real number for each state of the game, and if you ask, "Why is THIS state worth X?", the answer to that question is equally trivial, "because THAT number is the weighted sum of these three other states that are just down stream from THIS state."
+
+So I play the game and find her play deeply mysterious and I lose. I do this for several hours and then, I win one. Skill? Am I getting better? Probably not, just lucky dice rolls, but she is not unbeatable.
+
+Arthur modifies the game slightly. Adds a "help me play" mode to his user interface. When in help mode, if I try to move a piece, AND it was not the RIGHT move according to GOD, the piece doesn't move. 
+
+The whole nature of the game play changes. I am no longer playing UR against the God of UR, I am playing an entirely different game now: God is now playing a game against Herself, and I am playing the game of: See if you can guess what GOD will do in this situation.
+
+I am no longer thinking about what happens if I leave that man exposed, I am now thinking, What would GOD do? Would God leave that man exposed? I've seen her do it many times. Did she do that in this particular situation? Unlikely. I bet that She would just 'load the gun' at this point? I started inventing names for things that GOD does. I invent names for things that any player might do. "Capture the war star", "dash for the exit", "move off the board", "chase that enemy piece", ...
+
+I google around to see if anyone is playing UR, if anyone has strategy tips and yes, indeed they do, and it does read like human advice, and it does make sense. "You should not race two men down the board at the same time - why? Because the average rate that you can move across the board it fixed by the dice roll, and two men move at only half the average speed as one man, so a single man chasing your two has a better chance of catching up AND has double the chance of hitting one."
+
+NOW that's what I'm looking for. Sound advice. Advice that makes sense, that GOD can't give me...
+
+..Except that isn't what She is doing. Well, not exactly. She does wierd stuff.
+
+She loves the war star. She loves to grab that 'go again' star in the 'war zone'. And why wouldn't she. I love the war star. Camp a man half-way down the board on a space where it can NOT be captured, where it blocks the enemy from making some moves (and to be fair, it also blocks me as well from making some moves) and gives you a good play to attack from if the enemy ever tries to rush a man downfield.
+
+Except...for that last part. I have seen her roll the dice, get a number that lets Her attack a man downstream of the war star with Her war star man. She can send him all the way back to the beginning AND at the same time get her man even further advanced across the board... and she declines that capture and instead 'loads the gun', brings one of her off board markers into one of her four safe entry cells. WTF? She LOVES the war star more that I do. She won't leave it even to attack, well sometimes she will. What is She doing?
+
+If I had to characterize her game play, and in truth, all I can do is talk about how what she does differs from what I was doing, is that She loves the war star, will almost always take it if she can. She does NOT love her entry safe zone stars (prefers to leave them open as an option - she prefers to save a 'go again' move for later). She loves to 'load the gun'. And she does not seem to show much concern for moving a threatened men down stream toward the goal and out of threat.
+
+Over the next month as I played off and on, I got better at the game of guessing God's next move. I mean talk about re-enforcement learning. Every time I click on the right move, it moves - Yeah, got it in ONE. Every wrong move - nothing happens - What did I miss, what other move should I have made - Oh of course I could have loaded the gun. Really! Instead of attacking from the war star. REALLY??
+
+So yeah, I got better. I didn't keep records, sorry, but I estimated that I was selecting the right move 85% of the time, and yeah, I did play game not in 'help me play' mode and I could now win games against God when I tried my best to mimic her style.
+
+And then, with no change to my play that I am aware of, I still play at about an 85% right level, I suddenly had an AH HA moment. Her play (and mine copying it) seemed weird to me and suddenly I had an insight that contradicted what I had first though was an insightful sensible piece of advice, and which I no longer believe is good advice. GOD had indeed showed me the way!
+
+Spoiler alert! I will pass it on, but seriously, I really wish you would STOP reading this and catch up, watch the YouTube video, learn the game (the rules are trivial), play some UR with humans, write some code yourself to solve the game, or bug some geek to write you some code, then play with GOD and let her show you that way.
+
+What I realized was this. That sensible advice was: don't race 2 men at once across the board, 1 is much less risky. Well that is sensible and it is almost right. What GOD saw is even better! What is better than racing 1 man across the board? Race NO men across the board.
+
+God is immortal. She lives forever. She does not need to finish this game in the next 5 minutes so she can eat dinner or go do homework. She is in no hurry for this game to end so that She can get on with other chores or life. 
+
+When you hit my men they must restart. When I hit your men they must restart. In theory, we could just trade hits back and forth FOREVER in some infinite loop. And you know what, if you play forever, you NEVER LOSE. Having 2 men downstream from a chasing enemy is bad risk, having 1 man downstream is a lesser risk - BUT IT IS STILL A RISK, having NO men down stream at all, EVER, is even less risk. 
+
+God loves to load the gun. Wants that safe on-board zone loaded with men to maximize her options to SHOOT any enemy that gets into the early war-zone, and if the enemy steps into that zone she will shoot. That move kills an enemy AND it opens up a space in the safe on-board zone that she can possibly reload.
+
+Does she make ANY attempt to rescue that soldier that just entered the early war zone? Nope. Dead meat, load the gun!
+
+What do you actually mean by 'move that man' out of danger. A man down stream is bad. A man further down stream is even worse. That man you just left sitting in the early war-zone was cannon fodder. Already dead. Forget about him. You can't save him. Load the gun.
+
+Now will the game ACTUALLY last forever? Does she really NEVER move a man toward the exit. Nope. I told you I can only fathom her moves about 85% of the time. MOSTLY she seems to not care about her men in the early war zone, but certainly with a bad dice roll, when she can't load the gun (usually because it is already loaded), possibly the only move is to advance down stream. 
+
+Once you are past the war-star do you bolt for the exit? No, just load the gun and kill anything in the early war zone. Think of your downstream guy as dead. And eventually, once again, you will get into the situation where the only move you have is to advance the forward guy. Do you bolt for the exit now? Not really. I mean sure, if bad rolls up in the early war zone lead to a situation where the enemy is now really chasing the down stream guy, well ok, move it to the safe exit zone.
+
+And yes, at some point in the game, I know not where, you cross over a boundary, you are into the end game. Not so many men left on the board, time to lose your love of the war-star time to bolt occasionally to the exit.
+
+That was the most fun for me, having this mental shift where I felt that I could better characterize Her playing style, where it seems less mysterious.
+
+So what do you do after you've sat for a month at the foot of GOD and taken her divine instruction, why you go cruise the internet and see if there are any online UR games that you could be playing. Ah, here's one, it has an AI opponent, oh good, it has multiple levels. Let's set it up to the hardest most extreme level. You roll and move. It rolls and moves, you roll and move, it rolls and moves.. WTF? God would NEVER have made that move! I mean, I don't think so. In just a few more moves, it is clear, this advanced AI is NOT GOD, those are not HER moves. I am going to crush this stupid AI. And indeed for the most part I do.
+
+Yes, it is silly to take delight in something like this. As a CS guy I can guess what that UR AI is up to. They are doing an alpha-beta tree search down several dozen ply and have a heuristic at the end that estimates the value of a board at each leaf node, and almost for certain the valuation heuristic in a race game is to see how far your men are down field, how close to the exit, with probably an adjustment in the ply search if you are in any immediate threat. Standard computer game playing tactics that have been used forever to play a REAL MAN's game like chess. Practically the definition of AI.
+
+Well, I no longer have a lot of respect for a sensible heuristic like seeing how far ahead you are in a race game. God showed me another way - don't play to win - don't play to exit - play like you are immortal. Play to live forever. Play to never lose.
+
+So that is the end of the UR story, well for me, I haven't played for over a year. It was one brief fun experience, and I wanted to pass it on for this reason: 
+
+I know, from reading Kasparov and others who play chess at a high level, that they can learn things about chess playing by playing against AIs that can do things that they don't see for themselves. 
+
+I can NOT experience that with chess. I am so bad a chess that I would be unaware of subtle shifts in play that a chess AI could make. Yeah, I can play a chess AI, dummed down to stupid level so that I could win occasionally but that is DIFFERENT from playing with a GOD. Chess is not solved. UR IS SOLVED.
+
+Furthermore, UR, was if we are to believe the history, was a popular game for some 5 thousand years. It DOES appeal to humans, or at least it did. And unlike chess, it is easy enough that you can dive right in and play against humans and make a fair showing. In only a month or so of off and on play I was able to get an insight into a deeper level of play than that given by mere humans. 
+
+I found it very interesting that I could learn to play the game better and better with no real understanding of WHY the play was better. I just keep asking myself, "what would GOD do?"
+
+I don't think most of us can get that from chess, or go, but I believe that UR is more accessible.
+
+And yes, there is a part of me, probably natural in a CS guy, that believe that this is just a glimpse at a potential future ahead of us, as machines are able to do more and more robust and complicated calculations and can look at more data that any of us possibly could and can do statistical reductions and analysis that guides the machines into giving us the best advice that they can. Right now, people make noise about how biased AI is, how they can't trust its decisions without more transparency and insight into how it is making its decisions and what it is doing. 
+
+And I remember my month watching GOD play UR. This was not some random ass little neural net trained on some suspicious data. This was just a pure math calculation, a little more like 2+2. I COULD trust GOD. That play was correct, and if I didn't like it, well, that's not really God's problem now is it. If I couldn't see WHY it was right, GOD would NOT explain it to me, at least not in words that I could understand. She was patient and happy to show me what was right, and if I spent a little time with it, I could learn some of what was right.
+
+I like to believe that in the fullness of time, when we have become more comfortable with our computer overlords telling us what we should do in order to get along better, economically, medically, socially, environmentally, etc that we will be able to both trust their advice and trust in our own ability to eventually internalize and understand that advice. 
+
+Will we EVER trust our computer overlords? I don't know. Can you trust the God of UR? Can you ever come to trust insight that CAN NOT explain itself? UR is a playful way to see what it can be like to learn from a teacher that can not explain anything.
+
+BTW - At some point Arthur coded up the misere version of the game. This is UR where you play to lose. Instead of being the FIRST to get all pieces off the board you play to stay on the board as long as possible.
+
+I will NOT be telling you the insights that I learned from playing that game. I am unable to win a single game in that mode. I have no insight into the logic. While the God of UR is good, the God of Misere-UR is scary-good. You make some plays, you stick someone out where she can hit him, and she steps around it. She gets her pieces in front of your and OOPS you have to take one, which is good for her. I find that I can't discern any early game or any mid game.
+ 
+ All I know is that somehow my pieces seem to have gradually, slowly, surely, ended up down stream. Entropy grinds away, and I feel pushed ever so carefully up to the edge of a cliff, and then suddenly I seem to have no option but to lose one man over the edge. And then another, and with fewer men I have fewer options and more must go over the edge. She DESTROYS me. Always. I just couldn't face it anymore. Too hard.
+   
+---------
+
+
+An outline of a different way (linear algebra) to see the derivation of the closed form fib formula. 
+
+1. Observe that a sequence of reals can be considered a single point in an infinite dimensional vector space (component-wise addition and scalar multiplication by a real).
+2. Define "fib-like" sequence as any sequence starting R1, R2, and proceeding by following the fib recursion Rn+2 = Rn+1 + Rn.
+3. Observe that being fib-like is closed under both addition and scalar multiplication and thus ALL fib-like sequences live in a 2D sub-space.
+4. Define "power series" as any sequence that starts at R1 and continues by Rn = R1^n.
+5. Observe that (OMG!) you CAN have a sequence that is both fib-like AND a power series, the requirement being that R1^n+2 = R1^n+1 + R1^n, (you can factor out the R1^n to get a simple quadratic, R1^2 = R1 + 1 - the quadratic that gives you PHI, the Golden Ratio,)
+6. The two roots, (1 +/- sqrt(5))/2 give you TWO power series sequences which, being independent vectors, span the 2D space of all fib-like vectors and thus one can write ANY fib-like vector as some linear combo, A*R1 + B*R2, of those two roots. 
+7. Find the A and B that give you a series starting 1,1 (solve the 2 linear equations with 2 unknowns) discover A = 1/sqrt(5) and B = -A and there you go, the closed form is:
+
+fibN = (R1^N - R2^N)/sqrt(5) 
+ 
+
+psuedo code for game solving
+
+
+  double[] p = new double[nStates];
+  initP(){for(State s : allStates){p[s] = 1.0;}} // init to any random junk
+  
+  double[] solve(Game g){
+    double[] p = new double[g.nStates];
+    randomize(p); // initialize to random probabilities
+    while(!converged(p)){
+      State s = randomState();
+      double value = 0.0;
+      for(Action a : allActions(s)){
+        double v = value()
+      } 
+    }
+  }    
+
+ 
+ ------
+ Yee-haw (ooh-ooh)
+ Texas, Texas, (ooh-ooh) Texas
+
+ Came into this world
+ Daddy's little girl
+ And daddy made a coder out of me (ooh-ooh)
+ Daddy taught me R  
+ And Python in the car (ooh-ooh)
+ And daddy likes some plus plus with his C
+ 
+ We played Commander Keen
+ Late nights, glowing screen
+ Tech girl is what I had to be
+ He said, "ch mod that foo exe
+ And give me root access"
+ And oh, that's when he gave to me
+ 
+ With a bug and his mouse nearby
+ He told me not to cry
+ Oh, my daddy said compute
+ Oh, my daddy said compute
+ Don't put comments in your codes
+ Leave that for the lesser choads
+ My daddy said compute
+ Oh, my daddy said compute
+ 
+ He held in his arms
+ And he taught me to be strong
+ He told me when he's gone
+ "Here's what you do
+ When up against the wall
+ And the weaker coders bawl
+ Oh my daddy said compute
+ Oh my daddy said compute
+ Ooh-ooh
+ 
+ (Yee, woo) ooh-ooh (yee-haw) woo
+ Daddy made me write
+ Code isn't always right
+ But he said. "Girl, it's your Second version" (ooh-ooh)
+ He always played it cool
+ But daddy was no fool
+ And right before he died he said remember
+ 
+ He said, "sh bang that script header
+ pipe that grep to the printer"
+ That's when daddy looked at me
+ Nasty bug, with his mouse nearby
+ He told me not to cry
+ Oh, my daddy said compute
+ Oh, my daddy said compute
+ 
+ no comments in your codes
+ That's for them other choads
+ My daddy said compute (yee)
+ Oh, my daddy said compute (yee-haw)
+ 
+ 'Cause he held in his arms
+ And he taught me to be strong
+ And he told me when he's gone
+ "Here's what you do
+ When code just doesn't work
+ And you feel like a jerk
+ 
+ Oh, my daddy said compute
+ Oh, my daddy said compute (woo)
+ Ooh-ooh (woo)
+ Ooh-ooh (woo)
+ Ooh-ooh (yee)
+ Ooh-ooh (yee-haw)
+ 
+ My daddy warned me about bugs like you
+ He said, "Baby girl, they're blocking you
+ And stopping you"
+ My daddy warned me about bugs like you
+ He said, "Baby girl, they're stalking you
+ And shocking you
+ 
+ 'Cause when a bug comes into town
+ just rip it out or write around"
+ Oh, my daddy said compute (yee)
+ Oh, my daddy said compute (yee-haw)
+ "'Cause when a bug lifts up its head
+ Track it down and kill it dead"
+ Oh, my daddy said compute
+ Oh, my daddy said compute
+ 
+ constructNode
+  =f=i=c)ic)=i.r)=i=)ef=)).=)r
+ --------------
+ @b break;
+ @c continue;
+ @e else{\n @ \n}
+ @i if(@){\n @ \n}
+ @f for(@;@;@){\n @ \n}
+ @k case @: @
+ @l for(@ @:@){\n @ \n}
+ @r return @;
+ @s switch(@){\n @ \n}
+ @t try{\n @ \n}
+ @w while(@){\n @ \n}
+ @x catch(@){\n @ \n}
+ @y else if(@){\n @ \n}
+ @z finally{\n @ \n}
