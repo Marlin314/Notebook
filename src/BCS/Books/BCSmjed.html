@@ -9,7 +9,7 @@
 <link href='../JsAndJava.css' rel='stylesheet' type='text/css'><script src="../JavaToHtm.js"></script>
 <script>indentEncoders['java'] = javaToHtml; /* javaToHtml defined in JavaFstHtm.js */ </script>
 
-<title>BCS sample</title>
+<title>MJE Notebook</title>
 </head><body>
 <div id="stuff">dude, javascript must be, like, turned on.</div>
 
@@ -24,9 +24,9 @@ This is a project I have been toying with for several decades without making muc
 
 In a nutshell, I am attempting to change the way that we read and write code. I am trying to break the notion that Programming Languages are Languages. 
 
-The major break that I see is that language is fundamentally serial. One sentence follows another, one paragraph follows another. It is the sequence that is the way that we pass on thoughts to one another. However, code is NOT actually a sequence. It is true, that code does have sequential chunks, one statement after another, BUT those statements are generally wrapped up as function, given names, and there is NO required or preferred order for those functions within a class. None the less, we continue to use text editors, which were of course designed with sequential English text in mind, and have scrollbars, to roll up and down through a set of functions that we grouped into a class to find and view the functions in a class. I maintain that we would be better served by an editor that understands that there is no sequence. Or perhaps, said differently, there may well be better orders to list the functions than having a single historical presentation order.
+The major break that I see is that language is fundamentally serial. One sentence follows another, one paragraph follows another. It is by sequences of words that we pass on thoughts to one another. However, code is NOT actually a sequence. It is true, that code does have sequential chunks, one statement after another, BUT those statements are generally wrapped up as a function and given a name. There is NO required or preferred order for those functions within a class. Nonetheless, we continue to edit code using text editors, which were of course designed with sequential English text in mind. They have scrollbars, to roll up and down through a set of functions that we grouped into a class to find and view the functions in a class. I maintain that we would be better served by an editor that understands that there is no sequence. Or perhaps, said differently, there may well be better ways to list the functions than having a single historical presentation order.
 
-Similarly, programming languages are full of structures, like classes, functions, forLoops etc that contain substructure which are customarily represented by delimiters, such as quotes for statements (string literals) and braces for blocks. And yet, text editors allow you to delete any character anywhere. I maintain that if those braces come in pairs in order to represent the code structure, it is WRONG to allow the editor to delete one and not the other. If a 'for' loop requires a structure like: 'for(A; B; C){D}', then the for structure itself should be viewed as ATOMIC, indivisible. You can cut it and copy it or replace it, but you should not be able to delete just the 'r' in 'for'
+Similarly, programming languages are full of structures, like classes, functions, forLoops etc that contain substructure which are customarily represented by delimiters, such as quotes for statements (string literals) and braces for blocks. And yet, text editors allow you to delete any character anywhere. I maintain that if those braces come in pairs in order to represent the code structure, it is WRONG to allow the editor to delete one and not the other. If a 'for' loop requires a structure like: 'for(A; B; C){D}', then the 'for' structure itself should be viewed as ATOMIC, indivisible. You can cut it and copy it or replace it, but you should not be able to delete just the 'r' in 'for'
 
 My claim is simple: We borrowed tools that we already had, 'English Text Conventions' and 'Typewriters' and 'Text Editors' and reused them for producing code, and those tools are not optimal. True - we have been evolving those editors into IDEs, but I believe it is inefficient. 
 
@@ -35,29 +35,603 @@ As you know, if you want to embed a quote in a quoted string literal you must us
 
   "this string has a quote, \", embedded"
 
-I don't want to read that: I don't mind TYPING a backslah in front of a quote to tell me that it is embedded. I am a programmer, I know that it is my job to control what goes on in the code, BUT I don't want to READ that back-slash and look at it on the screen, especially when the IDE is already using false color to SHOW me clearly where my literal string begins and ends. And when you get right down to it, now that I have false color showing me exactly where my literal string begins and ends, there is NO need to show me the open and close quote delimeters either.
+I don't want to read that: I don't mind TYPING a backslash in front of a quote to tell me that it is embedded. I am a programmer, I know that it is my job to control what goes on in the code, BUT I don't want to READ that back-slash and look at it on the screen, especially when the IDE is already using false color to SHOW me clearly where my literal string begins and ends. And when you get right down to it, now that I have false color showing me exactly where my literal string begins and ends, there is also NO need to show me the open and close quote delimiters either.
 
 In java I am used to reading this sort of stuff to glue values into strings
 
   "the value of x is " + x + " and the value of y is " + y;
   
-Other languages like javascript that do more text mashing have things like string interpolation:
+Other languages like javascript (and Ruby?) that do more text mashing have evolved notation like string interpolation:
 
   `the value of x is ${x} and the value of y is ${y}'
   
-Nice! fewer delimiters, well except for that ${} stuff that you needed to do to tell the compiler that you were switching from literal characters to an expression that needed to be evaluated. And once again I don't mind TELLING the computer what I want to do by typing in some characters but, please, remove ALL the garbage, those extra characters and let the colors tell me what I am doing.
+Nice! fewer delimiters, well except for that ${} stuff that you needed to do to tell the compiler that you were switching from literal characters to an expression that needed to be evaluated. And once again I don't mind TELLING the computer what I want to do by typing in some characters but, please, remove ALL the garbage, those extra characters, and let the colors tell me what I am doing.
 
-  the value of x is x and the value of y is y
+the value of x is !nx and the value of y is !ny
   
-I do NOT need to read what the compiler needs to read. 
+I do NOT need to read what the compiler needs to read. As a human it is in my skill set to read and understand and even prefer text like: I can speak English, und Deutsh, and even a bit of 日本語.
 
-::S MetaTypes
+Last but not least, the reason that I described this project as Structured Text rather than as an IDE is that I want to remind myself (at least occasionally) that programming languages are not the only structured text that I, and other folks need to write. HTML, SQL, Regular Expressions and other such quazi-languages are also code and need some help.
+
+::S Serialization
+==Serialization of code
+I mention serialization early on in this project because I think that that is another thing that is WRONG with the way that we think about computer languages.
+
+Consider any standard PC application like say Excel. As you know you can open your spreadsheet, enter your data, create some formulae, change some column widths and save the whole thing out as an Excel file.
+
+Can you open that Excel file with a word processor, look at that pile of ascii characters and see where exactly in the Excel file they stored the width of that column that you changed those few characters and reset the column width back to what it was?
+
+I trust that you find that notion as ridiculous as I do. Why should anyone (other than a Linux geek) expect to be able to read and understand a serialization format? The way that Excel encodes all the data that it represents on the screen when it stores it in a file should be none of your business. That serialization format is Excel's job. The whole reason that you hava an application is so that you can interact with your data, your spreadsheet, your document, your architectural diagrams, your genomic data, WITHOUT needing to know the format that was used to write that data into a serial file.
+
+Computer languages, on the other hand, are ancient technology. They were developed long before the notion of serialization (or even PCs and applications) was even a glimmer in anyone's eye. It long before we had terminals, and graphics and color. They were developed in the days of punched cards when computers were so tiny that they might not even be able to hold an entire source deck (file? what's a file?) in memory all at once.
+
+Don't get me wrong, Compilers and the Theory of Computer Languages that were synergisticly co-developed in the 1950s were a brilliant creation. The theory of parsing, formal languages, and context free grammars gave us very efficient tools for defining and processing language. But they presuppose that the proper way to represent code is TEXT. Black and white unadorned ASCII text. No pictures, no colors, no boxes, no lines, no diagrams. The comments in your code are just more of the same. ASCII text. no photos, no tables, no lists.
+
+But that is NOT the point. Your CODE does not have pictures in it. Your IDE may false color your code for your benefit but the IDE still assumes that the only thing that you want to edit in an exact sequence of ascii characters that you plan to stuff to your compiler. It assumes that CODE is an exact literal sequence of characters that you will stuff to your compiler.
+
+Let me show you a picture, because this is a web page and I can do that. Here is a typically diagram that I might draw on a napkin as I am thinking about how to write some code to reverse a singly linked list. (This used to be a standard Microsoft interview question back in the day when programmers worked in C and you wanted to see if they understood how C deals with pointers and lists.) The picture shows what I will do in a while loop that goes through the list changing one link at a time, moving something from a 'toDo' list to the 'reversed' list. All it does is show me a picture of the way things looked 'before' I change one link, C, to point back to its former predecessor, B.
+
+<img src="ReverseLinkedList.png" />
+
+Those pictures and ones like it are the way that I visualize what I need to do in the code which is moving pointer around in graphs, or trees, or other linked structures.
+
+I once (decades ago while at Microsoft in the 80s) wrote some code that let me graphically edit boxes and arrows - the boxes represented C data structures. They held a vertical stack of names which represented the fields in that data structure. Any field could be the start of an arrow that pointed to some other box. I drew two copies of the graphics One in the BEFORE half of the screen and the same one in the AFTER half of the screen. If I changed an arrow (either endpoint) in the BEFORE panel it would change in both panels, but a change in the AFTER panel only changed the AFTER picture. On any change, my little app would then spew out the ascii text that was the C code needed to effect the permutation of the pointers that the pictures represented. Effectively it was a tool to let me draw a picture which would be converted into a C-code fragment.
+
+QuickSort, Splay Trees, Fibonacci Heaps etc. are taught in Algorithms courses using pictures like these where you can SEE what is going on. I see NO reason why we should not think of these kinds of pictures as CODE. It is graphical code, just not textual code. I believe that our IDEs should support this kind of code viewing/development.
+
+I don't believe that there is any magic way to get a compiler to read a graphic like that. I am happy to leave compilers as the sad little text parsing wonders that they are. I can make my graphics editor emit the code that the compiler needs to see. BUT, and this is the major point that I am trying to make, I see no reason that a developer needs to LOOK at the text that just happens to go into the compiler, any more than they need to look at the machine code or the IL code that the compiler generated. The code is NOT the serial language of ascii text that the compiler consumes. The code is the ideas that you have in your head and should include the diagrams that you needed to draw to figure out and write down what you were going to do.
+
+I do NOT want to eliminate language as the basis of code. Over the decades I have seen far too many failed attempts to generate "Graphical programming" starting way back with Flowcharts in the 50, and UML diagrams, icon filled toolbars, and even more esoteric visions. Many of them have failed IMHO because they try too hard to do everything graphically as if somehow this wierd icon I have never seen before means more to me (or will mean more to me after I memorize it) than a word like COPY. No, I don't want to dispose of words and word meanings and all the other linguistic tools and clues that we use for programming. Written language supports both random access look up, the way a word maps to a dictionary meaning AND serialization, where you can string those words into a sequence that means something new. That must NOT be eliminated from programming. I just want to upgrade our tools for visualizing and producing code from the assumption that code IS that serialized ascii stream that you pass to a compiler.
+
+::S Previous Attempts
+It is the end of 2024 as I type this now, and I have been toying with some of these ideas for several decades now, but those ideas have never coalesced into anything resembling a single project. I am attempting now to share some of those ideas and to start actually building some of them into some code.
+
+I tend to think of code as rather like painting an enormous mural that will fill huge walls with lots of details here and there, and before you paint that mural you first do studies. You draw some faces. You try some expressions. You scribble out how the farmer should be holding his scythe over here. You draw just the hand of God almost touching Adam to see how that will look. And once you convince yourself that you have enough nesting material to weave an entire nest, then you paint the mural.
+
+Well that is the theory. In practice, you never did enough studies. They don't fit together quite as you thought they would. Your prep was not enough and the first thing the war does is destroy all your planning. So it goes. I will try to list here some of the things I have done in the past that were intended to aid in what is still a rather ill-defined end product.
+
+0. BCS - BookChapterSection
+2. JavaChunks - a java parser of sorts
+2. SkipList style trees
+2. One Letter Parsers.
+2. Uses: Fcn: UsedBy: comments
+2. log based byte sized delta time stamps
+2. TimedLinks
+2. .LOG in notepad
+2. Notebook
+2. Relative Coordinate Views
+3.
+
+==BCS
+This is the one chunk of code that is most complete. I have been using it for over a decade to produce my online java teaching materials. It is essentially a markdown system that lives in a couple of javascript files that allows me to put an enormous blob of my own private markdown format into a singl HTML file and the referenced JavaScript will shred the markdown text into chunks which it can paint on the screen as A single book, with a Table of Contents page that will act as links to let you hop to any section of any chapter of the book, and the sections include Headings and Paragraphs and CodeFragments. The code fragments are false colored similar to IDE code presentations and I can easily highlight new vocabulary words when I introduce them. And yeah, I don't need to say much more because if you are reading this text it is because you are using that system now.
+
+In some ways, it is the success of that code (successful for me - I have not really convinced anyone else to use this system, but then I have never honestly tried.) is what has persuaded me to look at doing an extension - an attempt to allow BCS to do even more.
+
+I originally used BSC simply to allow me to write up course work where I explain how some code that I wrote works, but to do it in a way that resembles the way that code lurches into being - with some simple code first and some testing code to see that it is working, and then adding some new features, with some more testing. I wanted to teach, and I do teach, how code evolves over time - where you start when you are building an app.
+
+Over the years, though, I have found more and more that I don't want to write all my code first and then to try to go back, try to remember what I did first, and try to write a document that shows what I did. Instead, I want to start the document first, write a little bit of code here in my BCS system, copy it over to the IDE, fix the bugs, copy it back to the BCS document and have the code and the document co-evolve.
+
+The only thing that I don't currently like about my BCS system is that the code that I write about in my books is all in fragments, do this here, now go over to that class and add this. I am walking my students through code at earlier stages/versions where it does NOT look like the final finished version.
+
+Because the code is in fragments scattered through the book my students can not look at (and run) the full code in the version that it was in by the end of chapter 7.
+
+This is not a major drawback. I expect the student to learn by typing in code and stitching together code fragments. I don't want to deny them the work that they must do to learn to code themselves, but I personally would like to be able to verify that the fragments that I have written up to the end of chapter 7 do in fact work as I claim that they do in my book.
+
+In some ways that is the modest goal of this project, to allow me to upgrade the utility of my BCS system.
+
+==Java Chunks
+In order to false color the java code that I do in my BCS system I wrote a couple hundred lines of JavaScript code to parse fragments to java (which in my markdown format is exactly vanilla java code that I cut and past from my IDE - the only requirement being that I must indent that code in my markdown. It is the indenting that makes text into code. Unindented text is English paragraphs. Indented text is Java code and must be preprocessed into colorful HTML by my JavaToHtm.js code).
+
+That JavaToHtm parser is much simpler than a real Java code parser. Its actual purpose is to split code into 3 different classes of stuff 1. Code, 2. Comments, 3. String or char Literals. The reason for that subdivision is both so that I can false color literal Strings and comment differently from code, but more importantly so that I can tell whether a single brace character or a single parenthesis character was part of a code chunk and thus MUST be properly nested or if it is just a meaningless literal { that was included in a comment or a string and so could be unbalanced.
+
+I knew that if at some point I wanted to import existing java code into something that resembled a real IDE, I would need to build a more proper Java Parser.
+
+JavaChunks is what I wrote to help with that importing task. The only reason that I mention it here is because I was my first really successful, inspiring actually, use of ChatGPT to write some actually useful code. I will say no more about it here in the intro but will probably devote a section on it to show how fabulous ChatGPT can be if used correctly.
+
+==Skip List style trees
+There is a data structure called a skip list that is an alternative to standard list that makes it more like a tree. The idea is fairly simple. Imagine that you had a linked list of words in sorted order. If you are looking through the list to see if the word "magic" is in there you have no choice but to start at the front and run the O(N) brute search algorithm to see if it is there. Imagine now that you have another list, a second list, that skips over every ten items in the previous list. i.e. it is a list that points to every tenth item in the first list. You could run through that list ten times as fast as the first list and then when you get close to where the word "magic" should be you can drop into the slow list and see if it is there. (the fast list may skip over any particular word so you do need to notice in the fast list that one word was just before "magic" and the next one just after so that you can know when to slow down for a more complete search.)
+
+And of course you don't need just one high speed second list that is 10 times faster, you could have a 3rd list that skips every ten in the 2nd list. You can have a cascade of these skip lists and make list searching into something that is NOT O(N) but is instead O(lg N) which is what you get if you had something like a Binary Search Tree.
+
+Skip Lists have many other features that I haven't mentioned and are worth looking up if you are not familiar with them.
+
+The thing that I took away from all of this was that Hierarchical Structures can often be represented as a tree structure that resembles that Skip List structure. You can have your really fast lane as a list of Directories that hold Classes in a project. The sibling of a directory is yet another directory - that is the fast lane. The kid of a directory is a Class, or rather it is a pointer to the first class in a slower list of classes defined in the directory. And Classes have Members, variables and function, and functions have parameters and a single Body, and Bodies are a list of statements and statement can contain Blocks etc.
+
+A single base class SibKid<A,B> can be a useful way to represent such a hierarchy of structured data
+
+==One Letter Parser
+This is probably a bad idea, but I just can't seem to shake it and I spend an enormous amount of time trying to cram many of my designs into something like this. Parsing is so much easier if the tokenizer/parser does not need to do any lookahead. If you can read a single letter in you input stream and KNOW what state you are transitioning into. D means directory, C means class, V means variable, F means function, O means function that is an override, N means constructor (because constructors use "new" and because C means class). You see, this is a complete waste of time. It is a nasty Unix/Linux reflex - "I want my serialization format to be human-readable text made with as few characters as possible and yet is still readable) Bah! waste of time. Slap me when you see me doing this.
+
+==Uses: Fcn: UsedBy:
+
+I did this as an experiment by hand, and it worked well (sort of) but the hand labor was TOO much and I can't tell from a single experiment whether the utility is worth the effort of automating the labor. It was simpley a different way to show functions in a class AND it has the feature that the presentation could be done in any language with just a bit of work. The idea was this: When I look at a function foo(int k, String str), what I would like to see, is the text of the function, the code - preceeded by a list of all the things (functions or member fields) that it depends on, and followed by a list of all the functions that actually call the function foo().
+
+While I am looking at a Fcn: I want to see what it requires, what it Uses: and what uses it. Any yeah, which I click on one of the items either above or below, for example if foo() requires bar() I should be able to click on the bar() up in the Uses: section to make that the function that I am now looking at.
+
+This is just a way of browsing code. I can edit the function foo, but I can instantly look up or down to see names/buttons that allow me to hop to things it references or that reference it.
+
+The trick I did to let me experiment with this was to take an existing java class and slice it into chunks with end of line comments that looked like this:
+
+::I text
+  //** foo - bar x | baz main
+
+What that single line comment did is that it marked the next line as being the first line in a section named "foo" and that when presenting the foo section I should show links above it sections named "bar" and "x" and I should show below it links to sections named "baz" and "main"
+
+Furthermore, those links show up one per line AND if the section that was marked was a single line, like for example if x was the class member: public int x; // some comment, then show the entire line, and if it was not, like for example bar was a function, as links text show me the first line of that section which would probably be: public String bar(int k){// show name of kth item in the table
+
+My little experiment simply chopped up lines and showed me chunks and links in the desired order. It seemed to be a reasonable way to browse code.
+
+The work involved deciding where to place these comments and then looking through the code to see what things were actually referenced and then being sure that I had not misspelled any of the names that were in those comments.
+
+Clearly this method of slipping in comments that can be interpreted as slicing a source file into chunks could be implemented in any language that supports comments, and give one a way to look at those code fragments in any order.
+
+The actual work involved is to make the insertion of those comments into the source code into meaningful chunks and meaningful presentations. The actual advantage of this method of doing things is that in principle a user, if they had access to the underlying comments, could actually modify WHAT they want to see for any context. "Hey when I look a the function foo() I not only want to see what it references and what references it, I also want to see this other thing over there that is the OTHER way of doing something like foo()" Something like that is extra work for the programmer, but it gives them the freedom to go beyond what an automatic tool can do for them.
+
+ ==log based byte sized delta time stamps
+OK, this one is but a sidebar, not something that I need for this project, but it was cute and I learned something doing it!
+
+At one point I was thinking that I wanted to write my versioning system for my code base to just keep track of every single keystroke that I make in my editor. From that, at blinding electronic speed I can reconstruct the state of my document as it was at any time. This would be the finest granularity of versioning that you could get. I wondered what it would cost to have those keystrokes timestamped. Well Time of day, down to the millisecond, has been kept by system clocks since the start of the Unix era sometime in the late 70s (or the 80s - I forget.) and that clock is kept in a long, 64 bits, to give us decades (centuries?) of range at that fine timescale granularity. Even I had trouble believing that I should store 8 bytes of time stamp data fore each byte of keystroke information, just to get genuinely timestamped keystrokes. So I thought about how I could reduce the numerical demands and do GOOD ENOUGH timestamping that would use only a byte of data for each keystroke.
+
+The idea was to let each one byte time stamp represent a delta time, a lapsed time from the previous time stamp. So you would start your project at some fixed 64 bit time, but after that you would only track the changes. I decided that typing 10 characters a second is a pretty good typing speed so I could limit the low end of the scale to .1 sec but what would be the high end. I certainly don't want to use a linear scale for time. the 255 values I could get in a byte starting at .1 sec would only let me represent up to a 22.5 sec delta time. I do occasionally sleep at night and can go for days without working on a project. I will need an exponential scale for my time stamps. Each successive bit value will be a fixed multiple times the previous
+delta. I decided that my last delta time stamp, 0xFF, should be on the order of several years or maybe a decade.
+
+You plug in the values of what you want the times to be, that last number will be the magic multiplier raised the the 255th power. Take some logs solve for M you get some lovely real number. (I forget that actual number and I wrote the code so long ago I don't have it to reference.) Anyway, I printed out the list of what actual delta times I got and noticed that one of them was close to ten times bigger than one that was k steps earlier. Oh, of course in a geometric scale M must be close to the kth root of 10. Every delta time will be about 10 times smaller or larger than the one that is k steps ahead or back.
+
+Cool, I could make that exact and declare M to be the exact Kth root of 10 and be able to quickly calculate delta times for any of the 256 values using only a small table of k values.
+
+I did all that and started testing it, allowing it to time stamp me typing in some letters. I could play it back and watch it type the same letters as the speed I did. I could easily play the animation at any speed. I realized that I could throw out the idea of starting at an initial timestamp. I could pretend that the initial time was 0, being the 64 bit number that represents 12 midnight Dec 31, which is 0 AM Jan 1,1970 (I looked it up, and no, I did NOT know that computer clocks started at the beginning of the Unix epoch - I didn't know that there was such a thing until I started this little log scale delta time excursion that forced me to look up how existing time stamps are encoded). Anyway I realized that if I start at zero here in the year 2024 and start encoding my key strokes for "Hello World" It uses a maxed out byte of 0xFF to tell me that H was types about a decade after 1970 so about 1080, the 'e' was 1990, 'l' 2000, 'l' 2010, 'o' 2020, an by the space character I am using smaller bytes to encode something less that the full range 10 year gap and I am tracking fractions of seconds.
+
+Of course when I made that change. Suddenly my animations of real time were garbage. I would have taken decades to play back the timestamp sequence that I got when I did not initialize to present time but instead started at zero. I started thinking that my delta time encoding would always suffer from this minor defect. If I stop working on a project for a month and then start up typing, the granularity of the delta time when you are looking at bytes that encode several months, the delta times can be off by days, but the next time stamp can get you to the right day, and the next one into the right hour and then next one to the right minute and you quickly converge. You can pretty safely conclude that no one ever types one character after exactly 3 months and the next one 2.7 days later, and the next one 3 hours later. After a long gap (which is encoded by ANY large byte) just skip ahead a few bytes, total them up and then back fill the time values for the widely spaced events to match the event frequency just a few bytes in.
+
+And then, and perhaps sadly only then, did I realize how stupid this quest was. Yes, it was cool to animate the actual typing that I could do with my accurate time stamps BUT I could have avoided ALL the logarithmic math and all the writing of code by remembering every keystroke but ONLY time stamping every 10th one, Not as accurate per character but WAY easier to code and understand.
+
+So NO, we will not be doing our time stamping with byte long logarithmic delta time stamps, I think I can say that I have safely ruled that option out, but it was not for want of trying. And also for the record I would have known NOTHING about timestamps had I not done the experiment. Also, not that it matters, if it was not obvious from these notes, I am not in the least embarrassed at how stupid I can be. Being a programmer has taught me that no matter how smart I think I am I make stupid mistakes all the time. I type the wrong character and have to hit backspace all the time. I don't think it is bad to show people the mistaken assumptions that you made when you started a project.
+
+==TimedLinks
+
+This is a notion for which I have written just a little bit of code, but believe that I could make work in a bigger system or context. The notion is simply to allow updates to a structure but you do so by replacing pointers to substructure with TimedPointers. A timed point is just a link to something, but all links are constructed at some time. If at a later time you change a pointer, that pointer is updated to the new pointer and the new time, but it remembers (with a list) what it was at the earlier time. So in the normal process of running a list of pointers you just do so, that is what the pointer currently points to, but you can dial back time and say, I want what this used to point to back at time T, and the system can reevaluate every pointer as to what it was at that earlier time.
+
+The notion I have and where I intend to use Timed pointers is when I want to reconstruct for a class what functions were in it at what time, and what the function used to be named, and what statements used to be in that function.
+
+This will give me version control on a line by line basis and even on a individual name basis instead of the gross granularity that you get from something like GIT. If All I cared about was version control, GIT would be fine, but I show people functions the way they first were and then upgrade them with "Oh just add these few lines to that old function". I am essentially walking students through a growing body of code as it grows, line at a time and I essentially want commits at every line insertion and at every name change. I want you to be able to run the code at every stage along the way and see. I am NOT doing version control in any normal sense. I am not trying to maintain consistency in a code base that has hundreds of people working on a single project. I AM trying to build a recorder that with let me record HOW I wrote a project, what I kept, how I tested it, what I threw out etc. Git does not help me with that sort of presentation.
+
+==.LOG in Notepad
+Notepad is the bare bones word processor that shipped as an applet with Windows 1.0. It has a little known feature that has been in it from the first version and dose not appear to have been ripped out yet. The feature was put in when we were working on the first version of windows because we wanted a simple way to keep records of bugs when they cropped up, and what we did about them.
+
+If the first 4 letters of a .txt file are ".LOG" Notepad will not start you at the top of the file so that you can read it as it normally does, instead it will take you to the bottom of the file, add in a line that is a date and time stamp so that you can enter a timed note. It basically works as a timed diary, saving you the effort of typing in the date and time.
+
+I used it while working on Windows 1.0 and still use it. When I start up a project I will often start a project diary to keep track of what I am doing. I have built reading lists to track books I've read, and watch lists to track movies I've watched. "Have we seen Foreign Correspondent?". Humm let me check.
+
+This feature is documented. You can look it up IF you knew it was there and IF you were looking for it. But who reads the documentation for a free app? Where do you even look for documentation? I just looked. It's still there.
+
+==Notebook
+And finally we get to the single event that caused me to finally create the GitHub project that hosts this file that you are reading. It was a trivial event, a mere comment to another good programmer friend of mine. We were talking about things we did for projects we were working on and I mentioned the .LOG feature of notepad that I have used for 40 years now. And I mentioned the down side that I have discovered in all that time. "I can't tell you how many of those trivial little notepad files I have scattered all over my hard drive. I start a project, I start a diary, I keep it carefully for a couple of weeks, then get pulled away on to some other project, lose track of it, trip over it months or years later. Oh yeah, I was working on that back then."
+
+Oh well, the tool is fine, it's just my fault that I don't keep it up. These digital diaries are no different from the paper book diaries that I also have started and never keep up. This is just a personal failing.
+
+And later that night I had a memory of something that one of my Physics professors had told us to do when we were starting physics. "Go buy one of those red lab notebooks and start up a lab notebook. All the design you do before the lab should go in there. All the data you collect should go it there. Write it in pen and date the entries. That way it will work as an acceptable court record if you ever need that. I mean, if you ever get into a patent dispute over who had the idea first the court will view an entire notebook kept in pen and dated regularly as good evidence that it is a genuine historical record." He told us that we were scientist now and that we should keep a notebook.
+
+So I got a notebook and kept my physics labs in it. I also had notebooks for every different class I was taking and I took notes and scribbled in them and threw them out or kept them after the classes finished and never opened them again. I never used my physics notebook after graduation.
+
+Suddenly, that night, after my conversation with my friend, I realized that I misunderstood what a lab notebook was. I was confused by the word "lab" in front of it. The Notebook should be a timestamped entry system for everything you do. Every note, every bit of text, every movie you watch, what you paid for you shoes (if you care) what your Amazon password is, ...
+
+The reason that I have failed in all my note keeping systems is that I had different books, different directories, different projects for all the many things I do. Those stories I write are over in those folders, the java code I write is, well part of them are in those folders from back when I wasn't using an IDE, before IDEs even existed, and there are the ones that NetBeans managed when NetBeans was free and Idea cost too much money, and then those over there in IdeaProjects folder after they developed the Community Edition and... I have NO single time stamped place where I track WHEN I did anything.
+
+It occurred to me that A proper notebook system would let me type in anything, anytime, any topic, and timestamp it. AND unlike notepad and unlike any diary or lab notebook I am not stuck with ONLY looking at it in that timed order in which I entered the data. While I can look at it by time, I could also just filter it on any topic. If I want to work on one of my short stories, just take me to that and let me see what it currently looks like, perhaps I add some more text or edit it. If I want to see what it was prior to the last edits, sure, just roll back time and look at it the way it was then. If I want to switch to another topic and look at something else fine. My notebook should let me enter data, view my data, move it around (I mean change the way I choose to view it now), rename it, search through it. Could I do this with Git on GitHub? WTF? Grovel around in my directory structure, find the folder where I keep the file that tracks movies, add one line to the notepad .LOG file of movies I watched, then over to the terminal to do a commit and push of the file up to the cloud, all before I even get to re-watch that old Star Trek episode.
+
+No, it should be more like notepad. Open it up and get the free time stamp. Typed in a note (perhaps clicking on a topic:movies:watched button to first set a topic for the note) and then close. Done.
+
+30 years is about a Giga-second. If I sleep half of my life and type a character a second all the other 12 hours in a 60-year lifespan I could MAYBE produce a Giga-byte of keystrokes. And I have how many gigabytes of main memory right now on the machine I am typing into?
+
+Yeah, I've GOT to do this. Time to change the way that I enter, edit, store, and view my data. All my data. All my code, All my stories, I can do this. Time to quit thinking about it and doing little sketches. I have seen the light. TimeStamped entry with the ability to filter, view, and roll back time.
+
+It is time to paint the mural! Full speed ahead.
+
+::C Colored Multi-font Output
+::S Relative Coordinates
+In Java a rectangle is stored as 4 numbers X,Y,W,H. The first two are the absolute (x,y) coordinate in pixels and the last two W for width and H for height are relative coordinate or delta coordinates. To get an absolute coordinate for the right hand edge of a rectangle you must add the delta, W, to an actual coordinate, X. So Left = X, and Right = X+W. This is a standard feature of any code that works with 2D coordinates - you must decide whether you want to keep coordinates as absolute or relative.
+
+The advantage of relative coordinate is that when you do something like move a rectangle around on the screen, you only need to change the X,Y. The Right hand side and the Bottom side move in synch with any changes to the Left Top coordinates, and the rectangle appears to be a solid object as you drag it around. Of course if what you want to do is resize a rectangle you will need to write different code that either leaves the Left Top where it was and just changes the W & H values, or if you are dragging the left top corner of the rect you must change all the values. None of this is very difficult or particularly surprising. The code that you must write depends on the choices you make on where to use relative vs absolute coordinates.
+
+As an exercise for my students to show them the differences I started building a demo so show how sometimes things are better, your code can change fewer numbers, when you use relative coordinates. Also, I figured I should show them the sorts of things that you would need to do if you were writing something like a word processor or an HTML browser and needed to lay out some properly aligned multicolor multi-Font multi-Line text. This would give me a chance to point out what a FontMetrics object is and to explain font properties like height, ascent, descent, leading and to show FM functions like stringWidth("Hello") are there to compute the width (a relative coordinate) for a given string in some particular font.
+
+At the same time I wanted to show some of the standard Model View Controller architecture, how you may have your text over here in your model, but the actual layout, the breaking it into lines, the word wrapping, the adjusting the height of lines etc. is all done over in your View code which uses different structures to hold the layout information from whatever structures the model has.
+
+So that was the task I set myself, write some code to deal with the View - just to get the text looking right on the screen, but maximize the use of relative coordinates just to show how they work.
+
+What came from this exercise surprised me. Without ever intending to do so, I discovered that I could get a lot of interesting largely unanticipated View behavior by really maximizing the use of relative coordinates. I have no idea if this is novel or well known to anyone that actually writes things like word processors. It doesn't matter, this is just code hacked out in a couple of days to demo relative coordinates.
+
+::S Getting Started
+I start all my java swing projects by copying a small bit of graphic code that just does the boiler plate stuff to launch a single panel Swing app.
+
+First create two packages in your src folder that we will want
+
+  graphics
+  text
+
+Then add a WinApp class to graphics and paste this code over it
+::I java
+
+--add WinApp to graphics
+  package graphics;
+
+  /*
+   * WinApp is both a JPanel which contains the paint proc and it is an
+   * adaptor for the two types of mouse listeners and the key listener.
+   *
+   * So to build a simple windows app you extend WinApp, override
+   * paintComponent() and any of the listening behaviors like mouseClicked()
+   * or keyTyped() that you need in your app.
+   *
+   * It is only intended for simple swing apps that have but a single window
+   * frame and a single panel. Because it uses static variables you can NOT
+   * have multiple WinApp applications running on your screen at the same time.
+   * It is only intended for quick and dirty simple app development and testing.
+   */
+
+  import java.awt.Dimension;
+  import java.awt.event.KeyEvent;
+  import java.awt.event.KeyListener;
+  import java.awt.event.MouseEvent;
+  import java.awt.event.MouseListener;
+  import java.awt.event.MouseMotionListener;
+  import javax.swing.*;
+
+  public class WinApp extends JPanel implements MouseListener, MouseMotionListener, KeyListener{
+    public static JFrame FRAME;
+    public static WinApp PANEL; // JPanel that is also a lisener
+    public static String TITLE = "No Name";
+    public static Dimension PREF_SIZE = new Dimension(500,400);
+
+    public WinApp(String t, int w, int h){
+      TITLE = t; PREF_SIZE = new Dimension(w,h);
+    }
+
+    public Dimension getPreferredSize() {return PREF_SIZE;}
+
+    private static void createAndShowGUI(){
+      FRAME = new JFrame(TITLE);
+      FRAME.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      FRAME.addKeyListener(PANEL); // keyListener added to frame
+      FRAME.getContentPane().add(PANEL);
+      FRAME.pack();
+      FRAME.setVisible(true);
+    }
+    public static void launch(){
+      // add in the listeners first
+      PANEL.addMouseListener(PANEL); // mouseListeners added to panel
+      PANEL.addMouseMotionListener(PANEL);
+
+      javax.swing.SwingUtilities.invokeLater(
+          new Runnable(){ public void run(){createAndShowGUI();} }
+      );
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent me){}
+    @Override
+    public void mousePressed(MouseEvent me) {}
+    @Override
+    public void mouseReleased(MouseEvent me) {}
+
+    @Override
+    public void mouseEntered(MouseEvent me) {}
+    @Override
+    public void mouseExited(MouseEvent me) {}
+    @Override
+    public void mouseDragged(MouseEvent me) {}
+    @Override
+    public void mouseMoved(MouseEvent me) {}
+
+    @Override
+    public void keyTyped(KeyEvent ke) {}
+    @Override
+    public void keyPressed(KeyEvent ke) {}
+    @Override
+    public void keyReleased(KeyEvent ke) {}
+  }
+
+And in order to test that code
+
+--in sandbox create class RedRect
+  package sandbox;
+  import graphics.WinApp;
+  import java.awt.*;
+
+  public class RedRect extends WinApp{
+
+    public RedRect(){super("Red Rect",1000,700);} // Win Title, Win width, Win height
+
+    public void paintComponent(Graphics g){  // called by OS whenever it needs to show this window
+      g.setColor(Color.RED);         // use the color red..
+      g.fillRect(100,100,100,100);   // to fill in a rectangle
+    }
+
+    public static void main(String[] args){
+      PANEL = new RedRect();  // PANEL is where the paintComponent code lives
+      WinApp.launch();        // fire up the WinApp thread the the OS manages
+    }
+  }
+
+You should be able to run RedRect and see it open a window and draw a red rectangle.
+
+::S View
+
+==View
+The main idea that I had for the view code is that I would keep a list of objects, all of them descended from a single abstract View class. The single abstract function being a show function. In order to show the current view you would just run the view list and call each object's show routine.
+
+Since the show routine for a single view updates all the coordinates so that the next view can know where it will go, we will actually be able to use the show routine for 3 different purposes. We can use it not only to display the view to the screen, but we can use it when we first construct a view object so that the next View that we construct and add to the list will know its context. And we will also be able to use the show routine later on when we get around to doing hit detection. But we will wait just a bit for that extra complication.
+
+--add a package view to the package text
+
+--add View class to view package
+  public abstract class View {
+    abstract View show();
+
+    // shared static members for all views to use and to update
+    public static Graphics G; // need this to hold current font, color and graphics context
+    public static int X,Y,BASE;
+    public static Box B;
+    public static Col C;
+    public static int RT,RH; // row top - to reset Y for new col, RH - to update for new row
+    public static Line L;
+
+    // all Views live in a single list that we can run through calling show
+    public static View head, tail; // points to fist View and last View on list.
+
+    public View next; // this is normally the next View on the list, but can be overridden by show()
+
+    public View(){  // threads new view onto growing list
+      if(tail != null){tail.next = this;} else {head = this;} // properly initialize empty list
+      tail = this; // tail is always last added View
+    }
+
+    public static void showAll(){View v = head; while(v!=null){v=v.show();}} // show the list
+  }
+
+Now normally in that show routine you would pass a Graphics g object, a context that would tell you the font and the color. And typically every view object, which could be any graphics element, like a word, or a line, or a rectangle, that object would be responsible for knowing its location, its size, its color or whatever else it needed to know in order to draw the object. There would also usually be some layout function that figures out what those XY coordinate and either creates those view objects or fills them in.
+
+However, I decided that this time, mostly just for grins, that I would make X and Y into static variables in the base View class. A word View object would not actually know where it was supposed to be drawn. It would not know its X coordinate. It would really only know its width. Instead it would instead rely on those global X,Y and baseline values in order to know where it needed to draw. And then, after drawing, it could update the X value so that it was now correct for the next word on the line. Basically those global coordinate values would update as a side effect of marching through the View list and showing each object.
+
+When I did that, and started working with it, I realized that the show routine, doing the coordinate updates was more useful that I had first thought. Yes I needed to update the coordinates so that I could know where to draw something, but it was also useful to have those same coordinate locations when I was creating a new structure like a Word so that I could do things like word wrap in the context of where the word would go on the current line. So I ended up often calling the show routine in the constructor for a view (usually at the end so that the freshly constructed object's impact on the global state took place making that state available for the next View to be constructed). When I began implementing hit detection to see what word you had clicked on, I realized that once again I needed to know the coordinates for each word to see if it was hit by some target TX,TY so eventually hit detection also got folded into the show routine as well. However I will not attempt to work all those features into this first outline of the classes.
+
+At first I just had Words that knew their widths, and Lines the only knew their height and ascent (so that they could maintain the proper baseline for text). But as I got into it I started adding more features and more classes which allowed me to do more layout and soon I had expanded to Boxes. Tabs and Cols so I could do table layout, Lines and Words, and Braces so I could do code indenting. Rather than just dumping you into all the classes at once I will try to bring this up in stages where we put in some functionality and test it and then upgrade.
+
+==Box
+The class Box holds the upper left corner of a box. These are the only absolute coordinates in any of the Views. At first, that was the only thing that a box was, but later when I decided to also doo Table layout with rows and columns, I decided that instead of having a separate Table class I would just force a Box to hold a list of Col objects. So a simple text Box is actually a Table that happens to have only one single column. That single column contains a single row that is filled with lines of text.
+
+It is important to note that Cols are NOT views, they are just a helper class that holds the width of the column AND points to the next Col element. The primary job of the Col is to calculate where a new line should start, C.x, how wide the column actually is, C.w, and eventually whether word wrap should take place, C.maxW.
+
+--add Col to view package
+  public class Col {
+    public int x, w = 0, maxW = 0; // left (maintained as global state), width, max for wordWrap
+    public Col next=null; // node: this is NOT a view. It is a list of columns held by some Box
+
+    public Col(Col last){if(last!=null){last.next = this;}} // append to end of list
+  }
+
+--add Box to view package
+  public class Box extends View{
+    public int x,y; // left and top of Box: absolute coordinates
+    public int w,h; // adjusted as you add views to this box
+    public Col c; // first col (possibly only col) for box
+
+    public Box(int x, int y, int nCol){
+      this.x=x; this.y=y;
+      c = new Col(null); Col last = c;  for(int i = 1; i<nCol; i++){last = new Col(last);}
+      show();
+      L=new Line();
+    }
+
+    View show() {B=this; X= x; Y=y; C=c ; C.x=X; L=null; RT=0; RH=0; return next;}
+  }
+
+==Line
+
+The Line class holds the height and the ascent of a line. When a Word gets added to a line, if that word is in some new font with a new height it is the job of that word to update the height of the current line to be sure that it accommodates the new word. When you show a line, its primary job is to update the Y value based on the height of the previous line, and to set the X value back to the edge of the Col that it sits in (which will be the edge of the Box if this is a Box with a single Col)
+
+
+  public class Line extends View{
+    public int h, asc, w;
+
+    public Line(){show();}
+
+    View show() {
+      Y+= (L==null ? 0 : L.h); // y increases by previous lines height
+      X=C.x;         // x is set back to left edge of current col
+      BASE=Y+ asc;   // baseline for text is down by ascent of current line
+      L=this;        // and we make this the current line
+      return next;
+    }
+  }
+
+==Word
+
+The Word class will hold the string that makes up a word and knows the width of that word so that it can advance the X value.
+
+  public class Word extends View{
+    public String str = "";
+    public int width;
+
+    public Word(String s){setStr(s);}
+
+    public void setStr(String s){
+      str = s;
+      FontMetrics fm = G.getFontMetrics();
+      width = fm.stringWidth(s);
+      L.h = Math.max(L.h, fm.getHeight()+fm.getLeading()); // update line height for this word
+      L.asc = Math.max(L.asc, fm.getAscent());  // update line ascent for this word
+      L.w = X-C.x;
+      C.w = Math.max(C.w, L.w);
+      X+=width;
+    }
+
+    View show() {
+      G.drawString(str,X,BASE);
+      X+=width; //
+      return next;
+    }
+  }
+
+==Sty
+We will want a class to introduce style changes, i.e. font changes and color changes. I have bundled these together into a single class. I know that eventually I will want to have lists of preferred fonts and sizes and preferred colors. This is typically what happens when you false color certain structures in an IDE, like showing all comments in one particular font and color and all literal strings another standard way. I have made no attempt to capture that uniformity in this class.
+
+  public class Sty extends View{
+    public Font font;
+    public Color color;
+
+    public Sty(Font font, Color color){this.font = font; this.color=color; show();}
+
+    View show() {
+      if(font != null){G.setFont(font);}
+      if(color != null){G.setColor(color);}
+      if(next == null){G.drawString(""+font, X, BASE);} // for
+      return next;
+    }
+
+    public void rndColor(){color = new Color(rnd(256),rnd(256),rnd(256));}
+    public void rndFont(){font = new Font(rndName(), rnd(4), 12+rnd(30));}
+
+    public static Random RND = new Random();
+    public static int rnd(int max){return RND.nextInt(max);}
+
+    public static String[] fontNames = {"Ariel", "Comic Sans", "Times"};
+    public static String rndName(){return fontNames[rnd(fontNames.length)];}
+  }
+
+That should be enough base classes to get started. In the next section we will build some testCode to allow us to try some layouts and see if these work.
+
+::S TestView
+==TestView
+
+Our test application will be a WinApp. The paintComponent function saves the Graphics g into the global View.G and the calls View.showAll(). There is a restart() function that is intended to clear out the previous View list and start over so that if something goes wrong you won't have to actually restart the program you can just type @.
+
+I have put in a keyboard controller that basically maps some special keystrokes to let you create a particular type of View. @ clears the screen, \n creates a new line, ~ sets a new Font, ` sets a new Color, ' ' a space creates a new Word. There are no keyboard events for creating Boxes or Cols. When you set a font or a color, if the last View element is NOT a Sty, then a Sty is created. If it IS a Sty, repeated pressing of ~ or ` just keeps changing to random fonts and colors. And if you look at the Sty code, I forces the show routine to NOTICE if it was the very last view. If so, there is NO view that follows it. No word in that new style to see what it will look like so I forced it in that case to tells us the name of the font in the color. This allows you to choose random fonts and colors until you find something you like. This is of course just testng behavior, not what you would do in an application.
+
+The other thing that the keyboard controller does is it checks whether the last View element is actually a Word, and if so, It will alter the word.str, either deleting a character from an existing word or appending a new one. That makes it behave just a little bit like a word processor, you can mostly type characters and spaces and have them show up on the screen.
+
+You do need to remember that this is NOT a word processor. You cant just type, particularly after you hit return. When you enter a new line, the last View is a Line, not a word. If you just start typing characters the appendChar function refuses to append them to a Line, you must type a ' ' space char first to add a word to the end. Then you can type letters that will go into the word you are creating. When you first start with a blank screen, I recommend that you first try to find a font and color that you want to work in. Type in a few words, then change the font and color (that is what we are testing! - whether we can layout multi-color multi-font text). When you see a font color combo that you like remember to type a spade char next so that you can enter characters into a word.
+
+  package text;
+  import graphics.WinApp;import text.view.*;import java.awt.*;
+  import java.awt.event.KeyEvent;
+
+  public class TestView extends WinApp {
+    public TestView(){super("Test View",1000,500); restart();}
+
+    public void paintComponent(Graphics g){
+      g.setColor(Color.WHITE); g.fillRect(0,0,5000,5000); g.setColor(Color.BLACK);
+      View.G =g;
+      View.showAll();
+    }
+
+    public static void restart(){
+        View.tail = null; View.head = null; new Box(100,100, 0);
+    }
+
+    @Override
+    public void keyTyped(KeyEvent ke) {
+        char ch = ke.getKeyChar();
+        switch(ch){
+            case '@':  restart(); break;
+            case '~':  setSty(true); break;
+            case '`':  setSty(false); break;
+            case '\n': new Line(); break;
+            case ' ':  new Word(""); break;
+            default: appendChar(ch);
+        }
+        repaint();
+    }
+
+    public static void setSty(boolean setFont){
+        if(!(View.tail instanceof Sty)){new Sty(null,null);}
+        Sty sty = (Sty) View.tail;
+        if(setFont){sty.rndFont();} else {sty.rndColor();}
+    }
+
+    public static void appendChar(char ch){
+        if(!(View.tail instanceof Word)){return;}
+        Word word = (Word) View.tail;
+        if(ch=='\b'){
+            int n = word.str.length();
+            if(n==0){return;}
+            word.str = word.str.substring(0,n-1);
+        } else {
+            word.str += ch;
+        }
+        System.out.println("append:"+ch);
+        word.width = View.G.getFontMetrics().stringWidth(word.str+" ");
+    }
+
+    public static void main(String[] args){PANEL=new TestView(); launch();}
+  }
+
+==More Test Code
+I managed to get the simple Lines and Words code running with the setup that I listed in the previous section, but by the time I added more features like hit detection, Tables, rows and cols, Nested items like braces, I found I needed something better to keep track of what was going on, so that I could see how the variables were being updates as I added new Views to the list.
+
+So here is the hand picture that I drew to show me what I wanted see during debug.
+
+<img src="DebugView.png" width="300" height="200"/>
+
+The blue lines tell me the Box values: x,y,w,h.
+
+Inset slightly the red lines tell me where the current Col C.x and C.w and it also shows the Row values RT for the top of the row and RH for the distance that the row goes down. So the red lines are to show me where I am in a multi-col table. We don't currently do anything with RT and RH as you will immediately see. They are currently 0 and unchanging.
+
+Inset even further black lines show me the actual X and Y values.
+
+--add this code to TestView
+    public static void debugView(Graphics g){
+        g.setColor(Color.BLUE);
+        Box B = View.B; Col C = View.C; Line L = View.L;
+        int X=View.X, Y=View.Y, RT=View.RT, RH=View.RH;
+
+        if(View.B != null){
+            wBar(g, "B.x", "", B.x, B.w, B.y-70, 20);
+            hBar(g, "B.y","", 0,20, B.y, B.h);
+        }
+        if(View.C != null){
+            g.setColor(Color.LIGHT_GRAY);
+            if(C.maxW != 0){wBar(g, "C.x", "m", C.x, C.maxW, B.y-45, 20);}
+            g.setColor(Color.RED);
+            wBar(g, "C.x", "", C.x, C.w, B.y-45, 20);
+            hBar(g, "RT","RH", 30,20, RT, RT+RH);
+        }
+        g.setColor(Color.BLACK);
+        wBar(g,"X","", X,0, B.y-20,15);
+        hBar(g, "Y","", 80,15, Y, 0);
+    }
+
+    public static void wBar(Graphics g, String s1, String s2, int x, int w, int y1, int h){
+        FontMetrics fm = g.getFontMetrics();
+        int s1w = fm.stringWidth(s1) + 5;
+        g.drawString(s1, x-s1w, y1+h); // left label
+        g.drawLine(x,y1,x,y1+h); // vertical x1 mark
+        g.drawLine(x,y1+h/2,x+w,y1+h/2); // h line
+        g.drawLine(x+w,y1,x+w,y1+h); // vertical x2 mark
+        g.drawString(s2, x+w+5, y1+h); // right label
+    }
+
+    public static void hBar(Graphics g, String s1, String s2, int x, int w, int y, int h){
+        g.drawString(s1, x, y); // up label
+        g.drawLine(x,y,x+w,y); // top y mark
+        g.drawLine(x+w/2,y,x+w/2,y+h); // v line
+        g.drawLine(x,y+h,x+w,y+h); // bot mark
+        g.drawString(s2, x, y+h+20); // right label
+    }
+
+Now when you run the test you can watch the lines grow as you add members. And you can see the things that we are NOT currently updating as well.
+
+
+
+
+
+::S MetaType
 ==Java MetaTypes
 Meta Language is language/vocabulary that is used to describe language. In English those would be words like "noun", "verb", "direct object", and esoteric things like "counterfactual subjunctives". In talking about the java language (or in fact nearly any other programming language) we need "programming metalanguage" that would be words like "class", "object", "methods", "functions", "abstract functions", "interfaces", "factory methods" - some of these are java keywords, some are OOP (Object Oriented Programming) lingo, and the last was from the Design Patterns book. Most programmers would be familiar with most of these words even if they don't program in Java.
 
 At the onset of this project I am thinking that I can render all of these metatypes down to a single unique character because I can then make parsing of the serialized form easier. e.g. I can use C13 to mean the 13th defined class, or P3 to mean the 3rd parameter of a function. A single letter followed by a number tells me class and location in a list of similarly typed elements. However, at the same time I worry that there may be too many metatypes and the encoding as single letters may be too confusing, so I am also thinking of a multi-character encoding which is essentially a hierarchical tree that is nearly as easy to parse.
 
-So as an example: in my one letter system I would use the letters C,I,E encode classes, interfaces, and enums. The letteres strongly hint the names. I have greater problems when I want to treat static variables as different from non-static variables. I choose letters G (as in Global variable) and M (as in Member variable). In a multi-letter system I would use CC, CI, CE for classes, interfaces and enums which more closely resembles the code structure. Classes, interfaces, and enums (when you are not talking about nested ones) are primarily File level constructs in the Java language, and thus have a lot of features in common. They all start with a package statement telling which directory they belong to. They all have imports to allow the used of short class names internally instead of requiring full file path names for classes used internally. So In all likelyhood the actuall structure/location of these different elements may be a base class, "Cls", that holds all the common matter and then some perhapse nested classes Cls.Cls, Cls.Inf, and Cls.Enu to represent the actual different objects that derive from that base. 
+So as an example: in my one letter system I would use the letters C,I,E encode classes, interfaces, and enums. The letters strongly hint the names. I have greater problems when I want to treat static variables as different from non-static variables. I choose letters G (as in Global variable) and M (as in Member variable). In a multi-letter system I would use CC, CI, CE for classes, interfaces and enums which more closely resembles the code structure. Classes, interfaces, and enums (when you are not talking about nested ones) are primarily File level constructs in the Java language, and thus have a lot of features in common. They all start with a package statement telling which directory they belong to. They all have imports to allow the used of short class names internally instead of requiring full file path names for classes used internally. So In all likelihood the actual structure/location of these different elements may be a base class, "Cls", that holds all the common matter and then some perhaps nested classes Cls.Cls, Cls.Inf, and Cls.Enu to represent the actual different objects that derive from that base.
 
 --MT enum
 
@@ -65,7 +639,7 @@ I will probably also want an enum that will represent all the meta-types, and I 
 
 I have an additional visual/symbolic representation that I will probably want associated with these meta-types. Many of the metaType objects are containers, directories contain classes, which contain functions, which contain parameters, So in reverse, a parameter belongs to a function, which belongs to a class (which might be nested and belongs to another class), which belongs to a directory (which could be a subdirectory). 
 
-In a tradational file system notation a full path looks something like this: foo/bar/baz.com - a simple notation based on the trivial structure that there are a list of directories terminated in a single file. As a result there is a single separator symbol. I want to adapt that to something like this: \dir1\dir2/Cls.foo(p1, p2)loc1;loc2- where a directory contains a directory which contains a class which contains a file which contains a parameter, and another parameter, and the function also contains a pair of local variables. It is not strictly a path because it had 4 leaves, but the meaning should be clear, the symbols both separate names and define the meta-type for the name. And it is certainly true that one could use this path notation to be a genuine path like \dir1\dir2/Cls.foo,p1 is a single unique element, of type parameter (parameters have two symbolic separators, "(" and ",") which simply allows this notation to strongly resemble something like an actual function signature.
+In a traditional file system notation a full path looks something like this: foo/bar/baz.com - a simple notation based on the trivial structure that there are a list of directories terminated in a single file. As a result there is a single separator symbol. I want to adapt that to something like this: \dir1\dir2/Cls.foo(p1, p2)loc1;loc2- where a directory contains a directory which contains a class which contains a file which contains a parameter, and another parameter, and the function also contains a pair of local variables. It is not strictly a path because it had 4 leaves, but the meaning should be clear, the symbols both separate names and define the meta-type for the name. And it is certainly true that one could use this path notation to be a genuine path like \dir1\dir2/Cls.foo,p1 is a single unique element, of type parameter (parameters have two symbolic separators, "(" and ",") which simply allows this notation to strongly resemble something like an actual function signature.
 
 No, even as I typed that I changed my mind. I want single separators for everything. I will use "," for parameters and ";" for locals. I have some other ideas for these path strings but it is too early to talk about them.
 
