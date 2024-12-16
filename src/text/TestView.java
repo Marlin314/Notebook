@@ -1,6 +1,7 @@
 package text;
 import graphics.WinApp;import text.view.*;import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
 public class TestView extends WinApp {
     public TestView(){super("Test View",1000,500); restart();}
@@ -50,6 +51,23 @@ public class TestView extends WinApp {
         System.out.println("append:"+ch);
         word.width = View.G.getFontMetrics().stringWidth(word.str+" ");
     }
+
+    public boolean dragging = false;
+    public void mousePressed(MouseEvent me){
+        int x=me.getX(), y=me.getY();
+        Box B = View.B; if(B==null){return;}
+        if(x<B.x && y <B.y && Math.abs(x-B.x)<10 && Math.abs(y-B.y)<10){dragging = true;}
+        // hit detection:
+        View.hit(x,y);  // this will set TX,TY and run the View list
+        repaint();
+    }
+    public void mouseDragged(MouseEvent me){
+        if(!dragging){return;}
+        Box B = View.B;
+        B.x = me.getX(); B.y = me.getY();
+        repaint();
+    }
+    public void mouseReleased(MouseEvent me){dragging = false;}
 
     public static void main(String[] args){PANEL=new TestView(); launch();}
 

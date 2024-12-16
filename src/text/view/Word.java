@@ -20,8 +20,16 @@ public class Word extends View{
   }
 
   View show() {
-    G.drawString(str,X,BASE);
-    X+=width; //
+    if(TX >= 0){
+      if(X<=TX && (X+width)>=TX && Y<=TY && (Y+L.h)>=TY){
+        hitList.add(this);
+        System.out.println("hit: "+str); // for debugging to show that this word was hit
+      }
+    } else {
+      G.drawString(str,X,BASE);
+      if(hitList.contains(this)){G.drawLine(X,Y,X+width,Y);} // more debug for hit
+    }
+    X+=width;
     return next;
   }
 }

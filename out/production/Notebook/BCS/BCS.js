@@ -106,8 +106,11 @@ var blockOfCode = 0;
 //var startOfCodeBlock = '<pre><div class="CODE">', endOfCodeBlock = '</div></pre>';
 
 var listType = 'u';
+
 function processChunk(chunk){
+
   var type = chunk.substring(0,2); // first two chars are significant
+  if(type == '' && blockOfCode != 0){codeChunk("  "); return;} // blank line in code blocks still code
   // we need to detect transitions in and out of sequences of code.
   if(blockOfCode == 0 && type == '  '){blockOfCode = '';}
   if(blockOfCode != 0 && type != '  '){sectionContents += curIndentEncoder(blockOfCode) ; blockOfCode = 0; }

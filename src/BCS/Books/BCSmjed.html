@@ -67,11 +67,11 @@ Computer languages, on the other hand, are ancient technology. They were develop
 
 Don't get me wrong, Compilers and the Theory of Computer Languages that were synergisticly co-developed in the 1950s were a brilliant creation. The theory of parsing, formal languages, and context free grammars gave us very efficient tools for defining and processing language. But they presuppose that the proper way to represent code is TEXT. Black and white unadorned ASCII text. No pictures, no colors, no boxes, no lines, no diagrams. The comments in your code are just more of the same. ASCII text. no photos, no tables, no lists.
 
-But that is NOT the point. Your CODE does not have pictures in it. Your IDE may false color your code for your benefit but the IDE still assumes that the only thing that you want to edit in an exact sequence of ascii characters that you plan to stuff to your compiler. It assumes that CODE is an exact literal sequence of characters that you will stuff to your compiler.
+But that is NOT the point. Your CODE does not have pictures in it. Your IDE may false color your code for your benefit but the IDE still assumes that the only thing that you want to edit in an exact sequence of ascii characters that you plan to stuff to your compiler. It assumes that CODE is nothing but those characters in that order. Your code is a speech presented to a compiler and must be done in the language of the compiler.
 
-Let me show you a picture, because this is a web page and I can do that. Here is a typically diagram that I might draw on a napkin as I am thinking about how to write some code to reverse a singly linked list. (This used to be a standard Microsoft interview question back in the day when programmers worked in C and you wanted to see if they understood how C deals with pointers and lists.) The picture shows what I will do in a while loop that goes through the list changing one link at a time, moving something from a 'toDo' list to the 'reversed' list. All it does is show me a picture of the way things looked 'before' I change one link, C, to point back to its former predecessor, B.
+Let me show you a picture mostly because this is a web page and I can do that. Here is a typically diagram that I might draw on a napkin as I am thinking about how to write some code to reverse a singly linked list. (This used to be a standard Microsoft interview question back in the day when programmers worked in C and you wanted to see if they understood how C deals with pointers and lists.) The picture shows what I will do in a while loop that goes through the list changing one link at a time, moving something from a 'toDo' list to the 'reversed' list. All it does is show me a picture of the way things looked 'before' I change one link, C, to point back to its former predecessor, B.
 
-<img src="ReverseLinkedList.png" />
+<img src="ReverseLinkedList.png" width="250" height="200"/>
 
 Those pictures and ones like it are the way that I visualize what I need to do in the code which is moving pointer around in graphs, or trees, or other linked structures.
 
@@ -88,7 +88,7 @@ It is the end of 2024 as I type this now, and I have been toying with some of th
 
 I tend to think of code as rather like painting an enormous mural that will fill huge walls with lots of details here and there, and before you paint that mural you first do studies. You draw some faces. You try some expressions. You scribble out how the farmer should be holding his scythe over here. You draw just the hand of God almost touching Adam to see how that will look. And once you convince yourself that you have enough nesting material to weave an entire nest, then you paint the mural.
 
-Well that is the theory. In practice, you never did enough studies. They don't fit together quite as you thought they would. Your prep was not enough and the first thing the war does is destroy all your planning. So it goes. I will try to list here some of the things I have done in the past that were intended to aid in what is still a rather ill-defined end product.
+Well that is the theory. In practice, you typically never do enough studies. When you get to the code the studies don't fit together quite as you thought they would. Your prep is not enough and the first thing the a war does is to destroy all your plans. So it goes. I will try to list here some of the things I have done in the past that were intended to aid in what is still a rather ill-defined end product.
 
 0. BCS - BookChapterSection
 2. JavaChunks - a java parser of sorts
@@ -229,17 +229,17 @@ It is time to paint the mural! Full speed ahead.
 
 ::C Colored Multi-font Output
 ::S Relative Coordinates
-In Java a rectangle is stored as 4 numbers X,Y,W,H. The first two are the absolute (x,y) coordinate in pixels and the last two W for width and H for height are relative coordinate or delta coordinates. To get an absolute coordinate for the right hand edge of a rectangle you must add the delta, W, to an actual coordinate, X. So Left = X, and Right = X+W. This is a standard feature of any code that works with 2D coordinates - you must decide whether you want to keep coordinates as absolute or relative.
+In Java a rectangle is stored as 4 numbers X,Y,W,H. The first two are the absolute (x,y) coordinates for the left top corner in pixels, whereas the last two, W for width and H for height, are relative coordinate or delta coordinates. To get an absolute coordinate for the right hand edge of a rectangle you must add the delta, W, to an actual coordinate, X. So Left = X, and Right = X+W. This is just a standard feature of any code that works with 2D coordinates - you must decide for any coordinate whether you want to keep it as absolute or relative.
 
 The advantage of relative coordinate is that when you do something like move a rectangle around on the screen, you only need to change the X,Y. The Right hand side and the Bottom side move in synch with any changes to the Left Top coordinates, and the rectangle appears to be a solid object as you drag it around. Of course if what you want to do is resize a rectangle you will need to write different code that either leaves the Left Top where it was and just changes the W & H values, or if you are dragging the left top corner of the rect you must change all the values. None of this is very difficult or particularly surprising. The code that you must write depends on the choices you make on where to use relative vs absolute coordinates.
 
-As an exercise for my students to show them the differences I started building a demo so show how sometimes things are better, your code can change fewer numbers, when you use relative coordinates. Also, I figured I should show them the sorts of things that you would need to do if you were writing something like a word processor or an HTML browser and needed to lay out some properly aligned multicolor multi-Font multi-Line text. This would give me a chance to point out what a FontMetrics object is and to explain font properties like height, ascent, descent, leading and to show FM functions like stringWidth("Hello") are there to compute the width (a relative coordinate) for a given string in some particular font.
+As an exercise for my students, in order to show them the differences, I started building a demo to show how sometimes things are better, your code can change fewer numbers, when you use relative coordinates. Also, I want I should show them the sorts of things that you would need to do if you were actually writing something like a word processor or an HTML browser and needed to lay out some properly aligned multicolor, multi-Font, multi-Line text. This would give me a chance to point out what a FontMetrics object is and to explain font properties like height, ascent, descent, leading and to show useful FontMetric functions like stringWidth("Hello") which is used to compute the width, (a relative coordinate!), for a given string in some particular font.
 
-At the same time I wanted to show some of the standard Model View Controller architecture, how you may have your text over here in your model, but the actual layout, the breaking it into lines, the word wrapping, the adjusting the height of lines etc. is all done over in your View code which uses different structures to hold the layout information from whatever structures the model has.
+At the same time I intended to show some of the standard Model View Controller architecture. How you may have your text over here in your model, but the actual layout, the breaking it into lines, the word wrapping, the adjusting the height of lines etc. is all done over in your View code which will use different structures to hold the layout information that augments the model structures that just hold the text.
 
-So that was the task I set myself, write some code to deal with the View - just to get the text looking right on the screen, but maximize the use of relative coordinates just to show how they work.
+So that was the task I set myself, write some code to deal with the View - just to get some text looking right on the screen, but it should be code that maximizes the use of relative coordinates, just to show how they work.
 
-What came from this exercise surprised me. Without ever intending to do so, I discovered that I could get a lot of interesting largely unanticipated View behavior by really maximizing the use of relative coordinates. I have no idea if this is novel or well known to anyone that actually writes things like word processors. It doesn't matter, this is just code hacked out in a couple of days to demo relative coordinates.
+What came from this exercise surprised me. Without ever intending to do so, I discovered that I could get a lot of interesting largely unanticipated View behavior when I used relative coordinates everywhere. I have no idea if this is novel, or well known, to anyone that actually does write things like word processors. Of course, it doesn't much matter, this is just sample code hacked out in a couple of days to demo relative coordinates. Either use it or not as you see fit.
 
 ::S Getting Started
 I start all my java swing projects by copying a small bit of graphic code that just does the boiler plate stuff to launch a single panel Swing app.
@@ -621,13 +621,95 @@ Inset even further black lines show me the actual X and Y values.
 
 Now when you run the test you can watch the lines grow as you add members. And you can see the things that we are NOT currently updating as well.
 
+==Dragging
+Before we move onto the next section where we add some more features to our Views, I would like to remind you i.e. demo one of the reasons that we are building this to maximize our use of relative coordinates. It give us the ability to move things around easily. Since the only absolute coordinates are the B.x and B.y where we start, it means that we should be able to drag the entire box of text around on the screen.
+
+Let's write some mouse code in the TestView app to do this.
+
+--add to TestView
+    public boolean dragging = false;
+    public void mousePressed(MouseEvent me){
+        int x=me.getX(), y=me.getY();
+        Box B = View.B; if(B==null){return;}
+        if(x<B.x && y <B.y && Math.abs(x-B.x)<10 && Math.abs(y-B.y)<10){dragging = true;}
+    }
+    public void mouseDragged(MouseEvent me){
+        if(!dragging){return;}
+        Box B = View.B;
+        B.x = me.getX(); B.y = me.getY();
+        repaint();
+    }
+    public void mouseReleased(MouseEvent me){dragging = false;}
+
+There is now an invisible drag handle that is 10 pixels by 10 pixels whose lower right corner is at (B.x,B.y). If you mouse down at that location you can drag whatever text your wrote and move it around on the screen. And of course you can continue to edit it in whatever location you left it.
+
+Next we will work on Hit Detection.
+
+::S Hit Detection
+==Hit Detection
+Since we have nested structures, Boxes contain Columns which contain Lines which contain Word, we could have a problem distinguishing what exactly the user intended to click on. Since we don't know what that might be, the easiest thing would be to return all the possibilities. That would be something like an ArrayList of Views, that could be a path from the largest to the smallest container that actually hit the target X,Y.
+
+As I mentioned before, the many show routines in the many different Views in the list are the places where the coordinates are being updated, and that would be the natural place to detect the hits. Since the mouse coordinates for any click are always non-negative numbers, we can just put two more static ints into the View class, TX & TY, which will represent the target X,Y. So any show routine can test if TX is negative and if so can just show whatever it needs to show, but if TX happens to be zero or positive, The show routine can skip showing anything and instead test if the View was hit by TX,TY.
+
+If any View was hit, it can add the view to and ArrayList<View> hit. So add these elements to View.
+
+--add to View
+  public static int TX, TY; // target X,Y - if TX >= 0 view.show should add view to hitList if it was a hit.
+  public static ArrayList<View> hitList = new ArrayList<View>();
+
+  public static void hit(int x, int y){TX = x; TY = y; hitList.clear(); showAll(); TX=0;}
+
+Next, we need to upgrade show for anything that can be hit. Since I am most concerned about detecting which word was clicked on we will first fix the Word show. Here is what it used to look like:
+
+  View show() {
+    G.drawString(str,X,BASE);
+    X+=width; //
+    return next;
+  }
+
+And the upgrade that we need could look like this:
+
+  View show() {
+    if(TX >= 0){
+      if(X<=TX && (X+width)>=TX && Y<=TY && (Y+L.h)>=TY){
+        hitList.add(this);
+        System.out.println("hit: "+str); // for debugging to show that this word was hit
+      }
+    } else {
+      G.drawString(str,X,BASE);
+      if(hitList.contains(this)){G.drawLine(X,Y,X+width,Y);} // more debug of hit
+    }
+    X+=width; //
+    return next;
+  }
+
+In order to test that this works we must modify the mousePressed routine in TestView so that it sets TX,TY.
+
+The mousePressed routine was:
+
+    public void mousePressed(MouseEvent me){
+        int x=me.getX(), y=me.getY();
+        Box B = View.B; if(B==null){return;}
+        if(x<B.x && y <B.y && Math.abs(x-B.x)<10 && Math.abs(y-B.y)<10){dragging = true;}
+    }
+
+Which we can updated to:
+
+    public void mousePressed(MouseEvent me){
+        int x=me.getX(), y=me.getY();
+        Box B = View.B; if(B==null){return;}
+        if(x<B.x && y <B.y && Math.abs(x-B.x)<10 && Math.abs(y-B.y)<10){dragging = true;}
+        // hit detection:
+        View.hit(x,y);  // this will set TX,TY and run the View list
+        repaint();   // show the list to hi-lite the clicked word.
+    }
 
 
-
+::C Old Stuff
 
 ::S MetaType
 ==Java MetaTypes
-Meta Language is language/vocabulary that is used to describe language. In English those would be words like "noun", "verb", "direct object", and esoteric things like "counterfactual subjunctives". In talking about the java language (or in fact nearly any other programming language) we need "programming metalanguage" that would be words like "class", "object", "methods", "functions", "abstract functions", "interfaces", "factory methods" - some of these are java keywords, some are OOP (Object Oriented Programming) lingo, and the last was from the Design Patterns book. Most programmers would be familiar with most of these words even if they don't program in Java.
+Meta Language is language/vocabulary that is used to describe language. In English those would be words like "noun", "verb", "direct object", and esoteric things like "counterfactual subjunctives". In talking about the java language (or in fact nearly any other programming language) we need "programming metalanguage" which would be words like "class", "object", "methods", "functions", "abstract functions", "interfaces", "factory methods" - some of these are java keywords, some are OOP (Object Oriented Programming) lingo, and the last was from the Design Patterns book. Most programmers would be familiar with most of these words even if they don't program in Java.
 
 At the onset of this project I am thinking that I can render all of these metatypes down to a single unique character because I can then make parsing of the serialized form easier. e.g. I can use C13 to mean the 13th defined class, or P3 to mean the 3rd parameter of a function. A single letter followed by a number tells me class and location in a list of similarly typed elements. However, at the same time I worry that there may be too many metatypes and the encoding as single letters may be too confusing, so I am also thinking of a multi-character encoding which is essentially a hierarchical tree that is nearly as easy to parse.
 
