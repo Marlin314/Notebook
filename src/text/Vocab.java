@@ -61,7 +61,7 @@ public class Vocab {
       }
     }
   }
-  public void addWords(String[] a){for(int i=0;i<a.length;i++){addWord(a[i]);}}
+  public void addWords(String[] a){for (String s : a) {addWord(s);}}
 
   public String toString(){
     String res = "";
@@ -81,7 +81,9 @@ public class Vocab {
       if(res!=null){ALL.get(res).nUse++; return res;}
       // if s contains a space, it is a phrase. split into words and add those as well
       int k = s.indexOf(' ');
-      if(k>-1){String[] a = s.split(" "); for(int i=0;i<a.length;i++){newWord(a[i]);}}
+      if(k>-1){String[] a = s.split(" ");
+        for (String string : a) {newWord(string);}
+      }
 
       res = ALL.size();
       new Word(s);

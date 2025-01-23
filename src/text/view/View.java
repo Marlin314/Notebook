@@ -16,7 +16,7 @@ public abstract class View {
   public static Box B;         // current Box
   public static Line L;        // current Line
   public static int TX=-1, TY; // target X,Y - if TX >= 0 view.show should add view to hitList if it was a hit.
-  public static ArrayList<View> hitList = new ArrayList<View>();
+  public static ArrayList<View> hitList = new ArrayList<>();
 
   public static void hit(int x, int y){TX = x; TY = y; hitList.clear(); showAll(); TX=0;}
 
