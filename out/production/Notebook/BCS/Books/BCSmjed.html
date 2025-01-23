@@ -67,11 +67,11 @@ Computer languages, on the other hand, are ancient technology. They were develop
 
 Don't get me wrong, Compilers and the Theory of Computer Languages that were synergisticly co-developed in the 1950s were a brilliant creation. The theory of parsing, formal languages, and context free grammars gave us very efficient tools for defining and processing language. But they presuppose that the proper way to represent code is TEXT. Black and white unadorned ASCII text. No pictures, no colors, no boxes, no lines, no diagrams. The comments in your code are just more of the same. ASCII text. no photos, no tables, no lists.
 
-But that is NOT the point. Your CODE does not have pictures in it. Your IDE may false color your code for your benefit but the IDE still assumes that the only thing that you want to edit in an exact sequence of ascii characters that you plan to stuff to your compiler. It assumes that CODE is an exact literal sequence of characters that you will stuff to your compiler.
+But that is NOT the point. Your CODE does not have pictures in it. Your IDE may false color your code for your benefit but the IDE still assumes that the only thing that you want to edit in an exact sequence of ascii characters that you plan to stuff to your compiler. It assumes that CODE is nothing but those characters in that order. Your code is a speech presented to a compiler and must be done in the language of the compiler.
 
-Let me show you a picture, because this is a web page and I can do that. Here is a typically diagram that I might draw on a napkin as I am thinking about how to write some code to reverse a singly linked list. (This used to be a standard Microsoft interview question back in the day when programmers worked in C and you wanted to see if they understood how C deals with pointers and lists.) The picture shows what I will do in a while loop that goes through the list changing one link at a time, moving something from a 'toDo' list to the 'reversed' list. All it does is show me a picture of the way things looked 'before' I change one link, C, to point back to its former predecessor, B.
+Let me show you a picture mostly because this is a web page and I can do that. Here is a typically diagram that I might draw on a napkin as I am thinking about how to write some code to reverse a singly linked list. (This used to be a standard Microsoft interview question back in the day when programmers worked in C and you wanted to see if they understood how C deals with pointers and lists.) The picture shows what I will do in a while loop that goes through the list changing one link at a time, moving something from a 'toDo' list to the 'reversed' list. All it does is show me a picture of the way things looked 'before' I change one link, C, to point back to its former predecessor, B.
 
-<img src="ReverseLinkedList.png" />
+<img src="ReverseLinkedList.png" width="250" height="200"/>
 
 Those pictures and ones like it are the way that I visualize what I need to do in the code which is moving pointer around in graphs, or trees, or other linked structures.
 
@@ -88,7 +88,7 @@ It is the end of 2024 as I type this now, and I have been toying with some of th
 
 I tend to think of code as rather like painting an enormous mural that will fill huge walls with lots of details here and there, and before you paint that mural you first do studies. You draw some faces. You try some expressions. You scribble out how the farmer should be holding his scythe over here. You draw just the hand of God almost touching Adam to see how that will look. And once you convince yourself that you have enough nesting material to weave an entire nest, then you paint the mural.
 
-Well that is the theory. In practice, you never did enough studies. They don't fit together quite as you thought they would. Your prep was not enough and the first thing the war does is destroy all your planning. So it goes. I will try to list here some of the things I have done in the past that were intended to aid in what is still a rather ill-defined end product.
+Well that is the theory. In practice, you typically never do enough studies. When you get to the code the studies don't fit together quite as you thought they would. Your prep is not enough and the first thing the a war does is to destroy all your plans. So it goes. I will try to list here some of the things I have done in the past that were intended to aid in what is still a rather ill-defined end product.
 
 0. BCS - BookChapterSection
 2. JavaChunks - a java parser of sorts
@@ -229,17 +229,19 @@ It is time to paint the mural! Full speed ahead.
 
 ::C Colored Multi-font Output
 ::S Relative Coordinates
-In Java a rectangle is stored as 4 numbers X,Y,W,H. The first two are the absolute (x,y) coordinate in pixels and the last two W for width and H for height are relative coordinate or delta coordinates. To get an absolute coordinate for the right hand edge of a rectangle you must add the delta, W, to an actual coordinate, X. So Left = X, and Right = X+W. This is a standard feature of any code that works with 2D coordinates - you must decide whether you want to keep coordinates as absolute or relative.
+==Relative Coordinates
+
+In Java a rectangle is stored as 4 numbers X,Y,W,H. The first two are the absolute (x,y) coordinates for the left top corner in pixels, whereas the last two, W for width and H for height, are relative coordinate or delta coordinates. To get an absolute coordinate for the right hand edge of a rectangle you must add the delta, W, to an actual coordinate, X. So Left = X, and Right = X+W. This is just a standard feature of any code that works with 2D coordinates - you must decide for any coordinate whether you want to keep it as absolute or relative.
 
 The advantage of relative coordinate is that when you do something like move a rectangle around on the screen, you only need to change the X,Y. The Right hand side and the Bottom side move in synch with any changes to the Left Top coordinates, and the rectangle appears to be a solid object as you drag it around. Of course if what you want to do is resize a rectangle you will need to write different code that either leaves the Left Top where it was and just changes the W & H values, or if you are dragging the left top corner of the rect you must change all the values. None of this is very difficult or particularly surprising. The code that you must write depends on the choices you make on where to use relative vs absolute coordinates.
 
-As an exercise for my students to show them the differences I started building a demo so show how sometimes things are better, your code can change fewer numbers, when you use relative coordinates. Also, I figured I should show them the sorts of things that you would need to do if you were writing something like a word processor or an HTML browser and needed to lay out some properly aligned multicolor multi-Font multi-Line text. This would give me a chance to point out what a FontMetrics object is and to explain font properties like height, ascent, descent, leading and to show FM functions like stringWidth("Hello") are there to compute the width (a relative coordinate) for a given string in some particular font.
+As an exercise for my students, in order to show them the differences, I started building a demo to show how sometimes things are better, your code can change fewer numbers, when you use relative coordinates. Also, I want I should show them the sorts of things that you would need to do if you were actually writing something like a word processor or an HTML browser and needed to lay out some properly aligned multicolor, multi-Font, multi-Line text. This would give me a chance to point out what a FontMetrics object is and to explain font properties like height, ascent, descent, leading and to show useful FontMetric functions like stringWidth("Hello") which is used to compute the width, (a relative coordinate!), for a given string in some particular font.
 
-At the same time I wanted to show some of the standard Model View Controller architecture, how you may have your text over here in your model, but the actual layout, the breaking it into lines, the word wrapping, the adjusting the height of lines etc. is all done over in your View code which uses different structures to hold the layout information from whatever structures the model has.
+At the same time I intended to show some of the standard Model View Controller architecture. How you may have your text over here in your model, but the actual layout, the breaking it into lines, the word wrapping, the adjusting the height of lines etc. is all done over in your View code which will use different structures to hold the layout information that augments the model structures that just hold the text.
 
-So that was the task I set myself, write some code to deal with the View - just to get the text looking right on the screen, but maximize the use of relative coordinates just to show how they work.
+So that was the task I set myself, write some code to deal with the View - just to get some text looking right on the screen, but it should be code that maximizes the use of relative coordinates, just to show how they work.
 
-What came from this exercise surprised me. Without ever intending to do so, I discovered that I could get a lot of interesting largely unanticipated View behavior by really maximizing the use of relative coordinates. I have no idea if this is novel or well known to anyone that actually writes things like word processors. It doesn't matter, this is just code hacked out in a couple of days to demo relative coordinates.
+What came from this exercise surprised me. Without ever intending to do so, I discovered that I could get a lot of interesting largely unanticipated View behavior when I used relative coordinates everywhere. I have no idea if this is novel, or well known, to anyone that actually does write things like word processors. Of course, it doesn't much matter, this is just sample code hacked out in a couple of days to demo relative coordinates. Either use it or not as you see fit.
 
 ::S Getting Started
 I start all my java swing projects by copying a small bit of graphic code that just does the boiler plate stuff to launch a single panel Swing app.
@@ -366,22 +368,20 @@ Since the show routine for a single view updates all the coordinates so that the
 
 --add View class to view package
   public abstract class View {
-    abstract View show();
-
-    // shared static members for all views to use and to update
-    public static Graphics G; // need this to hold current font, color and graphics context
-    public static int X,Y,BASE;
-    public static Box B;
-    public static Col C;
-    public static int RT,RH; // row top - to reset Y for new col, RH - to update for new row
-    public static Line L;
-
-    // all Views live in a single list that we can run through calling show
+       // all Views live in a single list. Which we can run calling show
     public static View head, tail; // points to fist View and last View on list.
 
     public View next; // this is normally the next View on the list, but can be overridden by show()
 
-    public View(){  // threads new view onto growing list
+    abstract View show();   // show returns a next view. Allows a View to decide what should actually come next
+
+    // shared static members for all views to use and to update
+    public static Graphics G; // need this to hold current font, color and graphics context
+    public static int X,Y,BASE;  // info needed to write a Word
+    public static Box B;         // current Box
+    public static Line L;        // current Line
+
+    public View(){  // threads each new view onto growing list
       if(tail != null){tail.next = this;} else {head = this;} // properly initialize empty list
       tail = this; // tail is always last added View
     }
@@ -391,56 +391,59 @@ Since the show routine for a single view updates all the coordinates so that the
 
 Now normally in that show routine you would pass a Graphics g object, a context that would tell you the font and the color. And typically every view object, which could be any graphics element, like a word, or a line, or a rectangle, that object would be responsible for knowing its location, its size, its color or whatever else it needed to know in order to draw the object. There would also usually be some layout function that figures out what those XY coordinate and either creates those view objects or fills them in.
 
-However, I decided that this time, mostly just for grins, that I would make X and Y into static variables in the base View class. A word View object would not actually know where it was supposed to be drawn. It would not know its X coordinate. It would really only know its width. Instead it would instead rely on those global X,Y and baseline values in order to know where it needed to draw. And then, after drawing, it could update the X value so that it was now correct for the next word on the line. Basically those global coordinate values would update as a side effect of marching through the View list and showing each object.
+However, I decided that this time, mostly just for grins, that I would make X and Y into static variables in the base View class. A word View object would not actually know where it was supposed to be drawn. It would not know its X coordinate. It would really only know its width. It would rely instead on those global X,Y and BASE values in order to know where it needed to draw. And then, after drawing, it would update the X value so that it was now correct for the next word on the line. Basically those global coordinate values update as a side effect of marching through the View list and showing each object.
 
-When I did that, and started working with it, I realized that the show routine, doing the coordinate updates was more useful that I had first thought. Yes I needed to update the coordinates so that I could know where to draw something, but it was also useful to have those same coordinate locations when I was creating a new structure like a Word so that I could do things like word wrap in the context of where the word would go on the current line. So I ended up often calling the show routine in the constructor for a view (usually at the end so that the freshly constructed object's impact on the global state took place making that state available for the next View to be constructed). When I began implementing hit detection to see what word you had clicked on, I realized that once again I needed to know the coordinates for each word to see if it was hit by some target TX,TY so eventually hit detection also got folded into the show routine as well. However I will not attempt to work all those features into this first outline of the classes.
+When I did that, and started working with it, I realized that the show routine, doing the coordinate updates was more useful that I had first thought. Yes I needed to update the coordinates so that I could know where to draw something, but it was also useful to have those same coordinate locations when I was creating a new structure like a Word so that I could do things like word wrap in the context of where that word would go on the current line. So I ended up often calling the show routine in the constructor for a view (usually at the end so that the freshly constructed object's impact on the global state took place making that state available for the next View to be constructed).
 
-At first I just had Words that knew their widths, and Lines the only knew their height and ascent (so that they could maintain the proper baseline for text). But as I got into it I started adding more features and more classes which allowed me to do more layout and soon I had expanded to Boxes. Tabs and Cols so I could do table layout, Lines and Words, and Braces so I could do code indenting. Rather than just dumping you into all the classes at once I will try to bring this up in stages where we put in some functionality and test it and then upgrade.
+Then when I began implementing hit detection to see what word you had clicked on, I realized that once again I needed to know the coordinates for each word to see if it was hit by some target TX,TY so eventually hit detection also got folded into the show routine as well. However I will not attempt to work all those features into this first outline of the base classes.
+
+And to be honest, I went TOO far in this direction, started creating even more base classes to do even more types of viewing, Tables, Columns, Rows, left and right justification, and it became a mess, trying to fit too much stuff into this simple model. So I have reduced it back to its basics for this presentation.
 
 ==Box
-The class Box holds the upper left corner of a box. These are the only absolute coordinates in any of the Views. At first, that was the only thing that a box was, but later when I decided to also doo Table layout with rows and columns, I decided that instead of having a separate Table class I would just force a Box to hold a list of Col objects. So a simple text Box is actually a Table that happens to have only one single column. That single column contains a single row that is filled with lines of text.
+The class Box holds the upper left corner of a box. These are the only absolute coordinates in any of the Views. I also decided that a box should keep track of its width, and height, and it should have a maxW, a maximum width that it could use for word wrap. However I would allow the user to set maxW to be zero which would actually mean that you do NOT limit the growth of the width of the box.
 
-It is important to note that Cols are NOT views, they are just a helper class that holds the width of the column AND points to the next Col element. The primary job of the Col is to calculate where a new line should start, C.x, how wide the column actually is, C.w, and eventually whether word wrap should take place, C.maxW.
-
---add Col to view package
-  public class Col {
-    public int x, w = 0, maxW = 0; // left (maintained as global state), width, max for wordWrap
-    public Col next=null; // node: this is NOT a view. It is a list of columns held by some Box
-
-    public Col(Col last){if(last!=null){last.next = this;}} // append to end of list
-  }
 
 --add Box to view package
   public class Box extends View{
-    public int x,y; // left and top of Box: absolute coordinates
-    public int w,h; // adjusted as you add views to this box
-    public Col c; // first col (possibly only col) for box
+    public int x,y;  // left and top of Box: absolute coordinates
+    public int w,h;  // adjusted as you add views to this box
+    public int maxW; // if==0 then NO word wrap, if >0 it is width limit (almost!)
 
-    public Box(int x, int y, int nCol){
+    public Box(int x, int y){
       this.x=x; this.y=y;
-      c = new Col(null); Col last = c;  for(int i = 1; i<nCol; i++){last = new Col(last);}
       show();
       L=new Line();
     }
 
-    View show() {B=this; X= x; Y=y; C=c ; C.x=X; L=null; RT=0; RH=0; return next;}
+    public void wordWrap(String str){
+      if(maxW > 0 && X - B.x + G.getFontMetrics().stringWidth(str) > maxW ){new Line();}
+      new Word(str);
+    }
+
+    View show() {B=this; X= x; Y=y; L=null; return next;}
   }
 
 ==Line
 
-The Line class holds the height and the ascent of a line. When a Word gets added to a line, if that word is in some new font with a new height it is the job of that word to update the height of the current line to be sure that it accommodates the new word. When you show a line, its primary job is to update the Y value based on the height of the previous line, and to set the X value back to the edge of the Col that it sits in (which will be the edge of the Box if this is a Box with a single Col)
+The Line class holds the height and the ascent of a line. When a Word gets added to a line, if that word is in some new font with a new height it is the job of that word to update the height of the current line to be sure that it accommodates the new word. When you show a line, its primary job is to update the Y value based on the height of the previous line, and to set the X value back to the edge of the Box that it sits in.
 
 
   public class Line extends View{
-    public int h, asc, w;
+    public int h, asc, w, indent;
 
     public Line(){show();}
 
     View show() {
-      Y+= (L==null ? 0 : L.h); // y increases by previous lines height
-      X=C.x;         // x is set back to left edge of current col
-      BASE=Y+ asc;   // baseline for text is down by ascent of current line
-      L=this;        // and we make this the current line
+      if(L==null){ // there was a previous line
+        Y+=L.h;  // so increase by previous lines height
+        L.w = X - B.x - indent; // compute previous line's width.
+        B.w = Math.max(B.w, L.w + indent);
+      }else{
+        Y=0;
+      }
+      L=this;        // Make this the current line
+      X=B.x;         // x is set back to left edge of the box
+      BASE=Y + asc;  // baseline for text is down by ascent of current line
       return next;
     }
   }
@@ -451,24 +454,22 @@ The Word class will hold the string that makes up a word and knows the width of 
 
   public class Word extends View{
     public String str = "";
-    public int width;
+    public int w;
 
     public Word(String s){setStr(s);}
 
     public void setStr(String s){
       str = s;
       FontMetrics fm = G.getFontMetrics();
-      width = fm.stringWidth(s);
+      w = fm.stringWidth(s);
       L.h = Math.max(L.h, fm.getHeight()+fm.getLeading()); // update line height for this word
       L.asc = Math.max(L.asc, fm.getAscent());  // update line ascent for this word
-      L.w = X-C.x;
-      C.w = Math.max(C.w, L.w);
-      X+=width;
+      X+=w;
     }
 
     View show() {
       G.drawString(str,X,BASE);
-      X+=width; //
+      X+=w;
       return next;
     }
   }
@@ -504,14 +505,17 @@ That should be enough base classes to get started. In the next section we will b
 ::S TestView
 ==TestView
 
-Our test application will be a WinApp. The paintComponent function saves the Graphics g into the global View.G and the calls View.showAll(). There is a restart() function that is intended to clear out the previous View list and start over so that if something goes wrong you won't have to actually restart the program you can just type @.
+Our test application will be a WinApp. The paintComponent function saves the Graphics g into the global View.G and then calls View.showAll().
 
-I have put in a keyboard controller that basically maps some special keystrokes to let you create a particular type of View. @ clears the screen, \n creates a new line, ~ sets a new Font, ` sets a new Color, ' ' a space creates a new Word. There are no keyboard events for creating Boxes or Cols. When you set a font or a color, if the last View element is NOT a Sty, then a Sty is created. If it IS a Sty, repeated pressing of ~ or ` just keeps changing to random fonts and colors. And if you look at the Sty code, I forces the show routine to NOTICE if it was the very last view. If so, there is NO view that follows it. No word in that new style to see what it will look like so I forced it in that case to tells us the name of the font in the color. This allows you to choose random fonts and colors until you find something you like. This is of course just testng behavior, not what you would do in an application.
+I have put in a keyboard controller that basically maps some special keystrokes to let you create a particular type of View. @ clears the view list and restarts everything, \n creates a new line, ~ sets a new Font, ` sets a new Color, ' ' a space creates a new Word.
 
-The other thing that the keyboard controller does is it checks whether the last View element is actually a Word, and if so, It will alter the word.str, either deleting a character from an existing word or appending a new one. That makes it behave just a little bit like a word processor, you can mostly type characters and spaces and have them show up on the screen.
+When you set a font or a color, if the last View element is NOT a Sty, then a Sty is created. If it IS a Sty, repeated pressing of ~ or ` just keeps changing the last View to random fonts and colors. And if you look at the Sty code, I force the show routine to NOTICE if it was the very last view. If so, then there is NO view that follows it. Since there is no following word so that you can see what it will look like, I have the Sty view tell us the name of the font in the current color. This allows you to choose random fonts and colors until you find something you like. This is of course just testng behavior. It is not what you would do in an application.
 
-You do need to remember that this is NOT a word processor. You cant just type, particularly after you hit return. When you enter a new line, the last View is a Line, not a word. If you just start typing characters the appendChar function refuses to append them to a Line, you must type a ' ' space char first to add a word to the end. Then you can type letters that will go into the word you are creating. When you first start with a blank screen, I recommend that you first try to find a font and color that you want to work in. Type in a few words, then change the font and color (that is what we are testing! - whether we can layout multi-color multi-font text). When you see a font color combo that you like remember to type a spade char next so that you can enter characters into a word.
+The other thing that the keyboard controller does is it checks whether the last View element is actually a Word, and if so, It will alter the word.str, either deleting a character from an existing word or appending a new one. That makes our test routine behave just a little bit like a word processor, you can mostly type characters and spaces and have them show up on the screen.
 
+You do need to remember that this is NOT a word processor. You cant just type, particularly after you hit return to add a new line. When you enter a new line, the last View is a Line, not a word. If you just start typing characters the appendChar function refuses to append them to a Line, you must type a ' ' space char first to add a word to the end. Then you can type letters that will go into the word you are creating. When you first start with a blank screen, I recommend that you first try to find a font and color that you want to work in. Type in a few words, then change the font and color (that is what we are testing! - whether we can layout multi-color multi-font text). When you see a font color combo that you like remember to type a space char next so that you can enter characters into a word.
+
+--create TestView.java
   package text;
   import graphics.WinApp;import text.view.*;import java.awt.*;
   import java.awt.event.KeyEvent;
@@ -521,12 +525,14 @@ You do need to remember that this is NOT a word processor. You cant just type, p
 
     public void paintComponent(Graphics g){
       g.setColor(Color.WHITE); g.fillRect(0,0,5000,5000); g.setColor(Color.BLACK);
+      debugView(g);
       View.G =g;
       View.showAll();
     }
 
     public static void restart(){
-        View.tail = null; View.head = null; new Box(100,100, 0);
+        View.tail = null; View.head = null; Box box = new Box(100,100);
+        box.maxW=200;
     }
 
     @Override
@@ -537,7 +543,7 @@ You do need to remember that this is NOT a word processor. You cant just type, p
             case '~':  setSty(true); break;
             case '`':  setSty(false); break;
             case '\n': new Line(); break;
-            case ' ':  new Word(""); break;
+            case ' ':  View.B.wordWrap(""); break;
             default: appendChar(ch);
         }
         repaint();
@@ -549,10 +555,11 @@ You do need to remember that this is NOT a word processor. You cant just type, p
         if(setFont){sty.rndFont();} else {sty.rndColor();}
     }
 
+    // note: appendChar updates the width but does NOT call setStr
     public static void appendChar(char ch){
         if(!(View.tail instanceof Word)){return;}
         Word word = (Word) View.tail;
-        if(ch=='\b'){
+        if(ch=='\b'){ // BACKSPACE - remove one char if you can
             int n = word.str.length();
             if(n==0){return;}
             word.str = word.str.substring(0,n-1);
@@ -560,42 +567,59 @@ You do need to remember that this is NOT a word processor. You cant just type, p
             word.str += ch;
         }
         System.out.println("append:"+ch);
-        word.width = View.G.getFontMetrics().stringWidth(word.str+" ");
+        word.w = View.G.getFontMetrics().stringWidth(word.str+" ");
     }
 
     public static void main(String[] args){PANEL=new TestView(); launch();}
   }
 
-==More Test Code
-I managed to get the simple Lines and Words code running with the setup that I listed in the previous section, but by the time I added more features like hit detection, Tables, rows and cols, Nested items like braces, I found I needed something better to keep track of what was going on, so that I could see how the variables were being updates as I added new Views to the list.
+You should be able to enter words, change fonts and color at this point.
 
-So here is the hand picture that I drew to show me what I wanted see during debug.
+Also, do test word wrapping. The default Box value is with maxW = 0, which does no word wrap. Just add a line to the reset function in TestView to set box.maxW=200; and see if words do wrap.
 
-<img src="DebugView.png" width="300" height="200"/>
+Notice: in this test app. We first add a word set to "" the empty string. That is the moment that we test if the word fits on the line. When we then later append characters to a word view, we are NOT testing if the word extends beyond maxW. So yes, this app lets you add words that extend past maxW. Word wrap assumed that when you called new Word you actually supplied it with a word that had a true length.
 
-The blue lines tell me the Box values: x,y,w,h.
+==Dragging
 
-Inset slightly the red lines tell me where the current Col C.x and C.w and it also shows the Row values RT for the top of the row and RH for the distance that the row goes down. So the red lines are to show me where I am in a multi-col table. We don't currently do anything with RT and RH as you will immediately see. They are currently 0 and unchanging.
+Just to show off that the coordinates really are all relative we will write some code to let us drag the xy coordinates of the box around on the screen. Since all the coordinates are relative to the Box XY, changing that one point moves everything that you have written.
 
-Inset even further black lines show me the actual X and Y values.
+--add to ViewTest
+    public static boolean dragging = false;
+    public void mousePressed(MouseEvent me){
+        int x=me.getX(), y=me.getY();
+        Box B = View.B; if(B==null){return;}
+        if(x<B.x && y <B.y && Math.abs(x-B.x)<10 && Math.abs(y-B.y)<10){dragging = true;}
+        repaint();
+    }
+    public void mouseDragged(MouseEvent me){
+        if(!dragging){return;}
+        Box B = View.B;
+        B.x = me.getX(); B.y = me.getY();
+        repaint();
+    }
+    public void mouseReleased(MouseEvent me){dragging = false;}
+
+With this code you can click just up and left from the initial box coordinate and draw the text.
+
+
+== More test code
+
+I also wrote some more elaborate debug code to draw markers on the screen showing the current value of X and Y and what the fields in the Box element are. These routines are probably overkill for this simple code. I needed them when I was debugging the more complicated version of this app before I simplified it. I decided to include them here because they do help show what is going on.
 
 --add this code to TestView
     public static void debugView(Graphics g){
         g.setColor(Color.BLUE);
-        Box B = View.B; Col C = View.C; Line L = View.L;
-        int X=View.X, Y=View.Y, RT=View.RT, RH=View.RH;
+        Box B = View.B; Line L = View.L;
+        int X=View.X, Y=View.Y;
 
         if(View.B != null){
+            g.setColor(Color.LIGHT_GRAY);
+            if(B.maxW != 0){wBar(g, "", "max", B.x, B.maxW, B.y-45, 20);}
+            g.setColor(Color.BLUE);
             wBar(g, "B.x", "", B.x, B.w, B.y-70, 20);
             hBar(g, "B.y","", 0,20, B.y, B.h);
         }
-        if(View.C != null){
-            g.setColor(Color.LIGHT_GRAY);
-            if(C.maxW != 0){wBar(g, "C.x", "m", C.x, C.maxW, B.y-45, 20);}
-            g.setColor(Color.RED);
-            wBar(g, "C.x", "", C.x, C.w, B.y-45, 20);
-            hBar(g, "RT","RH", 30,20, RT, RT+RH);
-        }
+
         g.setColor(Color.BLACK);
         wBar(g,"X","", X,0, B.y-20,15);
         hBar(g, "Y","", 80,15, Y, 0);
@@ -619,42 +643,19 @@ Inset even further black lines show me the actual X and Y values.
         g.drawString(s2, x, y+h+20); // right label
     }
 
-Now when you run the test you can watch the lines grow as you add members. And you can see the things that we are NOT currently updating as well.
-
-==Dragging
-Before we move onto the next section where we add some more features to our Views, I would like to remind you i.e. demo one of the reasons that we are building this to maximize our use of relative coordinates. It give us the ability to move things around easily. Since the only absolute coordinates are the B.x and B.y where we start, it means that we should be able to drag the entire box of text around on the screen.
-
-Let's write some mouse code in the TestView app to do this.
-
---add to TestView
-    public boolean dragging = false;
-    public void mousePressed(MouseEvent me){
-        int x=me.getX(), y=me.getY();
-        Box B = View.B; if(B==null){return;}
-        if(x<B.x && y <B.y && Math.abs(x-B.x)<10 && Math.abs(y-B.y)<10){dragging = true;}
-    }
-    public void mouseDragged(MouseEvent me){
-        if(!dragging){return;}
-        Box B = View.B;
-        B.x = me.getX(); B.y = me.getY();
-        repaint();
-    }
-    public void mouseReleased(MouseEvent me){dragging = false;}
-
-There is now an invisible drag handle that is 10 pixels by 10 pixels whose lower right corner is at (B.x,B.y). If you mouse down at that location you can drag whatever text your wrote and move it around on the screen. And of course you can continue to edit it in whatever location you left it.
-
 Next we will work on Hit Detection.
+
 
 ::S Hit Detection
 ==Hit Detection
-Since we have nested structures, Boxes contain Columns which contain Lines which contain Word, we could have a problem distinguishing what exactly the user intended to click on. Since we don't know what that might be, the easiest thing would be to return all the possibilities. That would be something like an ArrayList of Views, that could be a path from the largest to the smallest container that actually hit the target X,Y.
+Since we have nested structures, Boxes contain Lines which contain Words, we could have a problem distinguishing what exactly the user intended to click on. Since we don't know what that might be, the easiest thing would be to return all the possibilities. That would be something like an ArrayList of Views, that could be a path from the largest to the smallest container that actually hit the target X,Y.
 
-As I mentioned before, the many show routines in the many different Views in the list are the places where the coordinates are being updated, and that would be the natural place to detect the hits. Since the mouse coordinates for any click are always non-negative numbers, we can just put two more static ints into the View class, TX & TY, which will represent the target X,Y. So any show routine can test if TX is negative and if so can just show whatever it needs to show, but if TX happens to be zero or positive, The show routine can skip showing anything and instead test if the View was hit by TX,TY.
+As I mentioned before, the many show routines in the many different Views in the list are the places where the coordinates are being updated, and that would be the natural place to detect the hits. Since the mouse coordinates for any click are always non-negative numbers, we can just put two more static ints into the View class, TX & TY, which will represent the target X,Y. So any show routine can test to see if TX is negative. If it is negative it is just a show, but if TX happens to be zero or positive, The show routine is actually a hit test to see if the View was hit by the point TX,TY.
 
-If any View was hit, it can add the view to and ArrayList<View> hit. So add these elements to View.
+If any View was hit, it can add itself to and ArrayList<View> hit. So add these elements to View.
 
 --add to View
-  public static int TX, TY; // target X,Y - if TX >= 0 view.show should add view to hitList if it was a hit.
+  public static int TX=-1, TY; // target X,Y - if TX >= 0 view.show should add view to hitList if it was a hit.
   public static ArrayList<View> hitList = new ArrayList<View>();
 
   public static void hit(int x, int y){TX = x; TY = y; hitList.clear(); showAll(); TX=0;}
@@ -663,22 +664,23 @@ Next, we need to upgrade show for anything that can be hit. Since I am most conc
 
   View show() {
     G.drawString(str,X,BASE);
-    X+=width; //
+    X+=w;
     return next;
   }
 
 And the upgrade that we need could look like this:
 
-  View show() {
+--in Word replace show()
+  public View show() {
     if(TX >= 0){
-      if(X<=TX && (X+width)>=TX && Y<=TY && (Y+L.h)>=TY){
+      if(X<=TX && (X+w)>=TX && Y<=TY && (Y+L.h)>=TY){
         hitList.add(this);
-        G.drawLine(X,Y,X+width,Y); // for debugging to show that this word was hit
+        System.out.println("hit: "+str); // for debugging to show that this word was hit
       }
-    } else {
-      G.drawString(str,X,BASE);
     }
-    X+=width; //
+    if(hitList.contains(this)){G.drawLine(X,Y,X+w,Y);} // more debug of hit
+    G.drawString(str,X,BASE);
+    X+=w;
     return next;
   }
 
@@ -690,6 +692,7 @@ The mousePressed routine was:
         int x=me.getX(), y=me.getY();
         Box B = View.B; if(B==null){return;}
         if(x<B.x && y <B.y && Math.abs(x-B.x)<10 && Math.abs(y-B.y)<10){dragging = true;}
+        repaint();
     }
 
 Which we can updated to:
@@ -697,15 +700,159 @@ Which we can updated to:
     public void mousePressed(MouseEvent me){
         int x=me.getX(), y=me.getY();
         Box B = View.B; if(B==null){return;}
-        if(x<B.x && y <B.y && Math.abs(x-B.x)<10 && Math.abs(y-B.y)<10){dragging = true; return;}
+        if(x<B.x && y <B.y && Math.abs(x-B.x)<10 && Math.abs(y-B.y)<10){dragging = true;}
         // hit detection:
         View.hit(x,y);  // this will set TX,TY and run the View list
-
+        repaint();   // show the list to hi-lite the clicked word.
     }
+
+:: Nested Braces
+==Nested Braces
+Certainly one of the features that I want for my multi-colored text output is to be able to write out code the way that you see it in an IDE, and that includes nested structures. That will be the next feature that we will implement. When I first wrote this, I called the class Brace and used it to implement indenting. But I realized that I could actually do the same thing with other nested or even delimited structures. So we will call this next View class Nest.
+
+The basic idea is that we will support several delimiter pairs: {}, (), [], "", '', /**/, //\n and pretend that they can all be nested even though that is NOT really true. We can't nest block comments (even though you SHOULD be able to!). We can nest block comments inside String literals (at least I think you can, I haven't checked), but you do not nest Strings in Strings and blocks in Strings. Anyway we will pretend that they can all be nested.
+
+What we are actually doing is allowing Views to be nested, regardless of whether or not the underlying Model, the Java code, allows nesting or not.
+
+What I want to happen is this: The Nest class is a View. It will know which pair of characters/strings it represents. A single View for example will know that it is an OPEN bracket, [, AND it will keep a pointer to its mate, the View that was the closing bracket, ]. That closing bracket, which is also a view, will know that it is a closing bracket and will also hang onto a View that is its mate, the original opening bracket.
+
+Of course, being Views, both of them have a next View that points to the next viewed thing, for the open bracket that will be whatever text comes just inside the bracket and for the close it is whatever follows the close. However the Nest view has one more field in it, boolean hid. If the hid field is true for an open, then during showing, it will show the open character just as if it was any other word, but instead of passing back next, it passes back its mate, the close. It "hides" all the content contained in the nested pair. The next thing that will be shown will be its closing mate and whatever follows that.
+
+What we want to do is allow the user to be able show or hide the contents of any of these nested structures, by simply clicking on one of the delimiters.
+
+Part of why I wanted to show this particular demo, was to show that 1) in the standard Model View Controller design pattern, sometimes the thing that you are controlling (i.e. modifying) is NOT the Model, you are just changing the View. When you HIDE some block of code you are NOT changing the code, the code is still there, you are just changing the view. And this is a place where the relative coordinates can save you a whole mess of code when you want to have this sort of dynamic View.
+
+Let's write some code: We need a view class
+
+--create Nest
+  public class Nest extends View{
+    public static String[] pairs = "{ } ( ) [ ] < > \" \" ' ' /* */ // \n".split(" ");
+
+    private int ndx;  // if even is open, if odd is close
+    private int w;
+    private boolean hid = false;
+    private Nest mate; // the opener or closer to this
+
+    private static Stack<Nest> openers = new Stack<>();
+
+    private Nest(int ndx){
+      this.ndx = ndx;
+      FontMetrics fm = G.getFontMetrics();
+      w = fm.stringWidth(pairs[ndx]);
+      L.h = Math.max(L.h, fm.getHeight()+fm.getLeading());
+      L.asc = Math.max(L.asc, fm.getAscent());
+      show();
+    }
+  }
+
+The constructor for this is similar to the Word constructor. It needs to compute the width of the delimiter. It also needs to fix the line height just like any word. We made the constructor private so we could use factory methods to reject illegal ndx values. Here are those factory methods, one for each particular delimiter.
+
+-- add to Nest
+  private static Nest newOpen(int i){Nest n = new Nest(i); openers.push(n); return n;}
+
+  public static void openC(){newOpen(0);} // Curly Brace
+  public static void openP(){newOpen(2);} // Parens
+  public static void openK(){newOpen(4);} // bracKet
+  public static void openA(){newOpen(6);} // Angle bracket
+  public static void openQ(){newOpen(8);} // Quotes
+  public static void openT(){newOpen(10);} // Tic
+  public static void openB(){newOpen(12);} // Block comment
+  public static void openE(){newOpen(14);} // EOL comment
+
+  public static void close(){if(openers.empty()){return;} openers.pop().setMate();}
+  private void setMate(){Nest c = new Nest(ndx + 1); mate = c; c.mate = this; }
+
+And finally we need a couple helpers and a show routine.
+
+  public boolean isOpen(){return (ndx&1) == 0;}
+  public void togHid(){if(isOpen()){hid = !hid;} else {mate.hid = !mate.hid;}}
+
+  public View show() {
+    G.drawString(pairs[ndx],X,BASE);
+    // if Nest is hit, it toggles hid on the opener
+    if (TX >= 0 && TX >= X && TX <= X + w && TY >= Y && TY <= Y + L.h) {hitList.add(this); togHid();}
+    X+=w;
+    if(isOpen() && hid && mate != null){return mate;}
+    return next;
+  }
+
+In order to test it, add just a couple more lines of cases to the switch statement in the key routine:
+
+  case '{':  Nest.openC(); break;
+  case '(':  Nest.openP(); break;
+  case '}':  Nest.close(); break;
+
+Note: don't fool yourself as I did. In this test code I did NOT include a ')' to close the paren. You close any nested object with the '}'. In a properly nested structure if you have a sequence of different opening delimiters you have NO choice in the closing delimiters. They MUST be the proper closers that match the opening sequence in reverse order. That is why the code has many different opening factory methods but only one single close. I could certainly modify the key pressed routine to map ')' to close. Then you could type () and it would do the right thing. But that would also let you type (} and it would convert the } to a ) because that what is forced by the code. Once again, all this test code is NOT intended to be a text and code editor, it is just a harness to let me create views in an order of my choosing and to see if the view looks correct.
+
+Also, just for the record, the inappropriate lack of white space around brace examples, and by that I mean when you type it in you will see output like "here is a brace {and nested content }with stuff after it", is only one step away from a fix. It would be trivial to change any of the elements in the String array of pairs to have extra white space. The work is more in building a user interface (as has already been done for you in the existing IDEs) to let the user customize the desired amount of white space surrounding the punctuation characters.
+
+However, moving right along, next up is indentation which I am going to hardwire into the curly braces. And for those of you that do too much Python coding, who think of braces as an anathema, I leave it to you to change the first two strings on the pair list into the strings "  " and "  ". You would still type '{' and '}' into the app to add and remove indenting
+
+::Indenting
+==Indenting
+
+Indenting is not particularly hard, it just involves several little changes, but before we start we should be clear as to where that unseen white space at the front of a line lives. I believe that we will want an int indent that lives in every Line element. When the Line is setting the initial X up for showing what is on the line it needs to add that indent to the B.x value where lines naturally start.
+
+I think that I want the line width, to be the actual width of the printed matter of the line, thus the X at the end of a printed line is at B.x + L.indent + L.w. I am trying to make that distinction NOW, so that later on, when we get to Tables where we will be dealing with justified text (numbers in columns are typically right justifies, text is often centered), we will need to set up the line indents by doing a calculation involving the extraWhiteSpace == columnWidth - L.w.
+
+I want to add another global variable to the View class, int INDENT, that will allow me to have one View, an open brace, to increments INDENT, and then any of the lines that are defined after that open brace can just set their indent to be INDENT. Similarly, a close brace can decrement INDENT, which will impact lines that come after the close. Note that doing it this way also lets me create a single text Line like, "if(A){B;}else{C;}", because INDENT gets shifted up, then down, then up, then down, for a net change of zero and the output all stays on a single line.
+
+And to be complete, I should also change the debug code that drew things like line widths and box widths to let me see the true line width and the indent.
+
+All I am doing is trying to fix in my mind (and yours) what we are trying to do before we wander through the code and start implementing these changes.
+
+So first go take a look at Line. My copy of the code already had an indent member
+--in the Line class
+  public int indent;
+
+I also had two lines in the show routing that were calculating the width of the line correctly:
+
+  L.w = X - B.x - indent; // compute previous line's width.
+  B.w = Math.max(B.w, L.w + indent);
+
+Later on the show code where I finally set X for the new line I did not include the indent. The line should have been:
+
+  X=B.x + indent;   // x is set back to left edge of the box AND the indent
+
+Lastly, in the Line constructor you should set up the indent for the Line
+  public Line(){indent = INDENT; show();}
+
+Next we should add the indent member to View:
+-- in the View class add
+  public static int INDENT;
+
+The changes to Nest are:
+-- add adjustIndent() to Nest
+  public void adjustIndent(){
+    int KK = 25;
+    if(ndx == 0){INDENT += KK;}
+    if(ndx == 1 && INDENT >=KK){INDENT -= KK;}
+  }
+
+--insert into Next.show()
+  adjustIndent();
+
+We need to update show() in Box so that INDENT gets properly initialized when you start a box
+--add INDENT to Box.show()
+  View show() {B=this; X= x; Y=y; L=null; INDENT=0; return next;}
+
+I did a quick test at this point and it had a problem. I wasn't thinking quite right in my adjustIndent() function. The problem was that while an open brace changes the indent of the NEXT line, a close brace (on an empty line) should perform the unindenting on the line that it sits on.
+
+--change one line in adjustIndent()
+  if(ndx == 1 && INDENT >=KK){INDENT -= KK; if(L.w==0){L.indent=INDENT;}}
+
+That seems to be better.
+
+Now there are problems with this code that you will be able to see if you do any through testing of if you just think about it for a bit. When we HIDE the contents of a nested group IF there were any font changes or color changes that were done inside the nested content, those changes are skipped when we rush through the show code while it was hidden. As a result any line that came AFTER the nested group, is still set to show the height that it should have been if you had done the font change in the skipped code.
+
+I am not going to do anything at this point to try to fix this. The main reason being that I don't expect this to be a problem in any application where I might use this View code. In particular, if I am false coloring java code, with one color for the keywords like public and private and a different color for the classes like Foo and ArrayList and a different color for literal strings and a different color and font for comments, I will be changing font and color ALL the time, and that makes the problem better, not worse. It means that I will almost NEVER start up a new line of text without immediately setting the new font and color for whatever word happens to be at the front of that line. The only problem with hidden material crops up when something after the close brace relies on style changes that were made inside the nested structure.
+
+
+::C Old Stuff
 
 ::S MetaType
 ==Java MetaTypes
-Meta Language is language/vocabulary that is used to describe language. In English those would be words like "noun", "verb", "direct object", and esoteric things like "counterfactual subjunctives". In talking about the java language (or in fact nearly any other programming language) we need "programming metalanguage" that would be words like "class", "object", "methods", "functions", "abstract functions", "interfaces", "factory methods" - some of these are java keywords, some are OOP (Object Oriented Programming) lingo, and the last was from the Design Patterns book. Most programmers would be familiar with most of these words even if they don't program in Java.
+Meta Language is language/vocabulary that is used to describe language. In English those would be words like "noun", "verb", "direct object", and esoteric things like "counterfactual subjunctives". In talking about the java language (or in fact nearly any other programming language) we need "programming metalanguage" which would be words like "class", "object", "methods", "functions", "abstract functions", "interfaces", "factory methods" - some of these are java keywords, some are OOP (Object Oriented Programming) lingo, and the last was from the Design Patterns book. Most programmers would be familiar with most of these words even if they don't program in Java.
 
 At the onset of this project I am thinking that I can render all of these metatypes down to a single unique character because I can then make parsing of the serialized form easier. e.g. I can use C13 to mean the 13th defined class, or P3 to mean the 3rd parameter of a function. A single letter followed by a number tells me class and location in a list of similarly typed elements. However, at the same time I worry that there may be too many metatypes and the encoding as single letters may be too confusing, so I am also thinking of a multi-character encoding which is essentially a hierarchical tree that is nearly as easy to parse.
 

@@ -25,7 +25,7 @@ In my years of teaching classes using these documents as class notes, I have com
 documenting code. What makes them superior is that actual projects locate code in the classes that they belong in and to
 a noob trying to learn a code base, they have no idea what class they ought to look at first. Furthermore the comments in 
 the code (if there are comments in the code) will typically try to point out relationships that were NOT obvious in the
-first virsion of the code by had to change in later versions, or reference subtlties that make no sense to someone that 
+first version of the code by had to change in later versions, or reference subtleties that make no sense to someone that 
 has only a beginner's knowledge of how the system actually works. I have found that the historical development path through
 the development of the project is a valuable alternative way to learn a code base rather than just reading the finished code.
 
@@ -51,4 +51,6 @@ Marlin Nov 24
 
 Well, I have uploaded the BCS system but do not appear to be able to link to it directly here in this intro file. So if you want to see what a BCS html file it looks like you will need to Download the BCS folder onto your machine, look in the Books folder and locally launch one of the books, like BCSsystem.html, and let your browser display it. That book, if I remember correctly, tells you how to use the BCS system.
 
-Marlin Dec 24
+To actually read the docs on the notebook system that I am working on open up the BSCmjed.html file in the Books folder.
+
+Marlin Dec 2024

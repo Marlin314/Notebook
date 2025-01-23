@@ -11,11 +11,11 @@ public class TestView extends WinApp {
       debugView(g);
       View.G =g;
       View.showAll();
-
     }
 
     public static void restart(){
-        View.tail = null; View.head = null; new Box(100,100, 0);
+        View.tail = null; View.head = null; Box box = new Box(100,100);
+        //box.maxW=200;
     }
 
     @Override
@@ -26,7 +26,10 @@ public class TestView extends WinApp {
             case '~':  setSty(true); break;
             case '`':  setSty(false); break;
             case '\n': new Line(); break;
-            case ' ':  new Word(""); break;
+            case ' ':  View.B.wordWrap(""); break;
+            case '{':  Nest.openC(); break;
+            case '(':  Nest.openP(); break;
+            case '}':  Nest.close(); break;
             default: appendChar(ch);
         }
         repaint();
@@ -38,10 +41,11 @@ public class TestView extends WinApp {
         if(setFont){sty.rndFont();} else {sty.rndColor();}
     }
 
+    // note: appendChar updates the width but does NOT call setStr
     public static void appendChar(char ch){
         if(!(View.tail instanceof Word)){return;}
         Word word = (Word) View.tail;
-        if(ch=='\b'){
+        if(ch=='\b'){ // BACKSPACE - remove one char if you can
             int n = word.str.length();
             if(n==0){return;}
             word.str = word.str.substring(0,n-1);
@@ -49,10 +53,10 @@ public class TestView extends WinApp {
             word.str += ch;
         }
         System.out.println("append:"+ch);
-        word.width = View.G.getFontMetrics().stringWidth(word.str+" ");
+        word.w = View.G.getFontMetrics().stringWidth(word.str+" ");
     }
 
-    public boolean dragging = false;
+    public static boolean dragging = false;
     public void mousePressed(MouseEvent me){
         int x=me.getX(), y=me.getY();
         Box B = View.B; if(B==null){return;}
@@ -71,22 +75,20 @@ public class TestView extends WinApp {
 
     public static void main(String[] args){PANEL=new TestView(); launch();}
 
+
     public static void debugView(Graphics g){
         g.setColor(Color.BLUE);
-        Box B = View.B; Col C = View.C; Line L = View.L;
-        int X=View.X, Y=View.Y, RT=View.RT, RH=View.RH;
+        Box B = View.B; Line L = View.L;
+        int X=View.X, Y=View.Y;
 
         if(View.B != null){
+            g.setColor(Color.LIGHT_GRAY);
+            if(B.maxW != 0){wBar(g, "", "max", B.x, B.maxW, B.y-45, 20);}
+            g.setColor(Color.BLUE);
             wBar(g, "B.x", "", B.x, B.w, B.y-70, 20);
             hBar(g, "B.y","", 0,20, B.y, B.h);
         }
-        if(View.C != null){
-            g.setColor(Color.LIGHT_GRAY);
-            if(C.maxW != 0){wBar(g, "C.x", "m", C.x, C.maxW, B.y-45, 20);}
-            g.setColor(Color.RED);
-            wBar(g, "C.x", "", C.x, C.w, B.y-45, 20);
-            hBar(g, "RT","RH", 30,20, RT, RT+RH);
-        }
+
         g.setColor(Color.BLACK);
         wBar(g,"X","", X,0, B.y-20,15);
         hBar(g, "Y","", 80,15, Y, 0);
